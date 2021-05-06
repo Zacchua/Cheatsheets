@@ -1,0 +1,513 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.11.3)  18 APR 2021 15:58
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**2040sCheatSheet.tex
+(./2040sCheatSheet.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-03-06>
+(/usr/local/texlive/2020/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count167
+\c@section=\count168
+\c@subsection=\count169
+\c@subsubsection=\count170
+\c@paragraph=\count171
+\c@subparagraph=\count172
+\c@figure=\count173
+\c@table=\count174
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/local/texlive/2020/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count175
+\Gm@cntv=\count176
+\c@Gm@tempcnt=\count177
+\Gm@bindingoffset=\dimen135
+\Gm@wd@mp=\dimen136
+\Gm@odd@mp=\dimen137
+\Gm@even@mp=\dimen138
+\Gm@layoutwidth=\dimen139
+\Gm@layoutheight=\dimen140
+\Gm@layouthoffset=\dimen141
+\Gm@layoutvoffset=\dimen142
+\Gm@dimlist=\toks16
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/mathtools/mathtools.sty
+Package: mathtools 2020/03/24 v1.24 mathematical typesetting tools
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count178
+\calc@Bcount=\count179
+\calc@Adimen=\dimen143
+\calc@Bdimen=\dimen144
+\calc@Askip=\skip49
+\calc@Bskip=\skip50
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count180
+\calc@Cskip=\skip51
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/mathtools/mhsetup.sty
+Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2020/01/20 v2.17e AMS math features
+\@mathmargin=\skip52
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks17
+\ex@=\dimen145
+))
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen146
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count181
+LaTeX Info: Redefining \frac on input line 227.
+\uproot@=\count182
+\leftroot@=\count183
+LaTeX Info: Redefining \overline on input line 389.
+\classnum@=\count184
+\DOTSCASE@=\count185
+LaTeX Info: Redefining \ldots on input line 486.
+LaTeX Info: Redefining \dots on input line 489.
+LaTeX Info: Redefining \cdots on input line 610.
+\Mathstrutbox@=\box45
+\strutbox@=\box46
+\big@size=\dimen147
+LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
+\macc@depth=\count186
+\c@MaxMatrixCols=\count187
+\dotsspace@=\muskip16
+\c@parentequation=\count188
+\dspbrk@lvl=\count189
+\tag@help=\toks18
+\row@=\count190
+\column@=\count191
+\maxfields@=\count192
+\andhelp@=\toks19
+\eqnshift@=\dimen148
+\alignsep@=\dimen149
+\tagshift@=\dimen150
+\tagwidth@=\dimen151
+\totwidth@=\dimen152
+\lineht@=\dimen153
+\@envbody=\toks20
+\multlinegap=\skip53
+\multlinetaggap=\skip54
+\mathdisplay@stack=\toks21
+LaTeX Info: Redefining \[ on input line 2859.
+LaTeX Info: Redefining \] on input line 2860.
+)
+LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 130.
+LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 130.
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 130.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 130.
+\g_MT_multlinerow_int=\count193
+\l_MT_multwidth_dim=\dimen154
+\origjot=\skip55
+\l_MT_shortvdotswithinadjustabove_dim=\dimen155
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen156
+\l_MT_above_intertext_sep=\dimen157
+\l_MT_below_intertext_sep=\dimen158
+\l_MT_above_shortintertext_sep=\dimen159
+\l_MT_below_shortintertext_sep=\dimen160
+\xmathstrut@box=\box47
+\xmathstrut@dim=\dimen161
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
+\c@tracingmulticols=\count194
+\mult@box=\box48
+\multicol@leftmargin=\dimen162
+\c@unbalance=\count195
+\c@collectmore=\count196
+\doublecol@number=\count197
+\multicoltolerance=\count198
+\multicolpretolerance=\count199
+\full@width=\dimen163
+\page@free=\dimen164
+\premulticols=\dimen165
+\postmulticols=\dimen166
+\multicolsep=\skip56
+\multicolbaselineskip=\skip57
+\partial@page=\box49
+\last@line=\box50
+\maxbalancingoverflow=\dimen167
+\mult@rightbox=\box51
+\mult@grightbox=\box52
+\mult@gfirstbox=\box53
+\mult@firstbox=\box54
+\@tempa=\box55
+\@tempa=\box56
+\@tempa=\box57
+\@tempa=\box58
+\@tempa=\box59
+\@tempa=\box60
+\@tempa=\box61
+\@tempa=\box62
+\@tempa=\box63
+\@tempa=\box64
+\@tempa=\box65
+\@tempa=\box66
+\@tempa=\box67
+\@tempa=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\c@minrows=\count266
+\c@columnbadness=\count267
+\c@finalcolumnbadness=\count268
+\last@try=\dimen168
+\multicolovershoot=\dimen169
+\multicolundershoot=\dimen170
+\mult@nat@firstbox=\box92
+\colbreak@box=\box93
+\mc@col@check@num=\count269
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2019/11/30 v1.2a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2019/11/30 v1.4a Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen171
+\Gin@req@width=\dimen172
+)
+(/usr/local/texlive/2020/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+File: l3backend-pdfmode.def 2020-03-12 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count270
+\l__pdf_internal_box=\box94
+)
+(./2040sCheatSheet.aux)
+\openout1 = `2040sCheatSheet.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 16.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: landscape 
+* h-part:(L,W,R)=(14.22636pt, 816.59412pt, 14.22636pt)
+* v-part:(T,H,B)=(14.22636pt, 569.05515pt, 14.22636pt)
+* \paperwidth=845.04684pt
+* \paperheight=597.50787pt
+* \textwidth=816.59412pt
+* \textheight=569.05515pt
+* \oddsidemargin=-58.04362pt
+* \evensidemargin=-58.04362pt
+* \topmargin=-95.04362pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=57.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2020/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count271
+\scratchdimen=\dimen173
+\scratchbox=\box95
+\nofMPsegments=\count272
+\nofMParguments=\count273
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count274
+\MPscratchDim=\dimen174
+\MPnumerator=\count275
+\makeMPintoPDFobject=\count276
+\everyMPtoPDFconversion=\toks23
+) (/usr/local/texlive/2020/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+<BinSearch.png, id=1, 463.7325pt x 248.93pt>
+File: BinSearch.png Graphic file (type png)
+<use BinSearch.png>
+Package pdftex.def Info: BinSearch.png  used on input line 31.
+(pdftex.def)             Requested size: 139.12082pt x 74.67957pt.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 35.
+
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 35.
+
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+<Partition.png, id=3, 485.815pt x 355.3275pt>
+File: Partition.png Graphic file (type png)
+<use Partition.png>
+Package pdftex.def Info: Partition.png  used on input line 44.
+(pdftex.def)             Requested size: 131.1718pt x 95.9397pt.
+<Partition3.png, id=4, 460.72125pt x 132.495pt>
+File: Partition3.png Graphic file (type png)
+<use Partition3.png>
+Package pdftex.def Info: Partition3.png  used on input line 45.
+(pdftex.def)             Requested size: 184.28523pt x 52.99706pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--50
+
+ []
+
+<Rotation.jpeg, id=5, 1499.6025pt x 541.02126pt>
+File: Rotation.jpeg Graphic file (type jpg)
+<use Rotation.jpeg>
+Package pdftex.def Info: Rotation.jpeg  used on input line 65.
+(pdftex.def)             Requested size: 104.9829pt x 37.87535pt.
+<Select.png, id=6, 464.73625pt x 285.065pt>
+File: Select.png Graphic file (type png)
+<use Select.png>
+Package pdftex.def Info: Select.png  used on input line 71.
+(pdftex.def)             Requested size: 116.18378pt x 71.26607pt.
+<rank.png, id=7, 467.7475pt x 240.9pt>
+File: rank.png Graphic file (type png)
+<use rank.png>
+Package pdftex.def Info: rank.png  used on input line 71.
+(pdftex.def)             Requested size: 140.32532pt x 72.27055pt.
+<Interval.png, id=8, 470.75874pt x 258.9675pt>
+File: Interval.png Graphic file (type png)
+<use Interval.png>
+Package pdftex.def Info: Interval.png  used on input line 73.
+(pdftex.def)             Requested size: 117.68939pt x 64.7417pt.
+<RightTraversal.png, id=9, 409.53pt x 295.1025pt>
+File: RightTraversal.png Graphic file (type png)
+<use RightTraversal.png>
+Package pdftex.def Info: RightTraversal.png  used on input line 76.
+(pdftex.def)             Requested size: 102.38225pt x 73.77544pt.
+<LeftTraversal.png, id=10, 395.4775pt x 295.1025pt>
+File: LeftTraversal.png Graphic file (type png)
+<use LeftTraversal.png>
+Package pdftex.def Info: LeftTraversal.png  used on input line 76.
+(pdftex.def)             Requested size: 98.86913pt x 73.77544pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 51--83
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--117
+
+ []
+
+<BF.jpeg, id=11, 801.99625pt x 401.5pt>
+File: BF.jpeg Graphic file (type jpg)
+<use BF.jpeg>
+Package pdftex.def Info: BF.jpeg  used on input line 130.
+(pdftex.def)             Requested size: 96.2354pt x 48.17792pt.
+<BF2.jpeg, id=12, 1546.77875pt x 423.5825pt>
+File: BF2.jpeg Graphic file (type jpg)
+<use BF2.jpeg>
+Package pdftex.def Info: BF2.jpeg  used on input line 131.
+(pdftex.def)             Requested size: 154.68694pt x 42.36072pt.
+<Dijkstra.jpeg, id=13, 1520.68124pt x 1173.38374pt>
+File: Dijkstra.jpeg Graphic file (type jpg)
+<use Dijkstra.jpeg>
+Package pdftex.def Info: Dijkstra.jpeg  used on input line 135.
+(pdftex.def)             Requested size: 136.85541pt x 105.59998pt.
+<Dijkstra2.jpeg, id=14, 1390.19376pt x 947.54pt>
+File: Dijkstra2.jpeg Graphic file (type jpg)
+<use Dijkstra2.jpeg>
+Package pdftex.def Info: Dijkstra2.jpeg  used on input line 136.
+(pdftex.def)             Requested size: 125.11203pt x 85.27492pt.
+<DAG.jpeg, id=15, 1699.34875pt x 857.2025pt>
+File: DAG.jpeg Graphic file (type jpg)
+<use DAG.jpeg>
+Package pdftex.def Info: DAG.jpeg  used on input line 144.
+(pdftex.def)             Requested size: 203.91306pt x 102.85986pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--151
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--151
+
+ []
+
+[1
+
+{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./BinSe
+arch.png> <./Partition.png> <./Partition3.png> <./Rotation.jpeg> <./Select.png>
+ <./rank.png> <./Interval.png> <./RightTraversal.png> <./LeftTraversal.png>]
+<Prim.jpeg, id=39, 826.08624pt x 536.0025pt>
+File: Prim.jpeg Graphic file (type jpg)
+<use Prim.jpeg>
+Package pdftex.def Info: Prim.jpeg  used on input line 183.
+(pdftex.def)             Requested size: 165.21431pt x 107.1986pt.
+<Prim2.jpeg, id=40, 834.11626pt x 510.90875pt>
+File: Prim2.jpeg Graphic file (type jpg)
+<use Prim2.jpeg>
+Package pdftex.def Info: Prim2.jpeg  used on input line 184.
+(pdftex.def)             Requested size: 150.13445pt x 91.9596pt.
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 1
+84.
+
+(/usr/local/texlive/2020/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 184.
+<Kruskal.jpeg, id=41, 711.65875pt x 547.04375pt>
+File: Kruskal.jpeg Graphic file (type jpg)
+<use Kruskal.jpeg>
+Package pdftex.def Info: Kruskal.jpeg  used on input line 187.
+(pdftex.def)             Requested size: 156.5654pt x 120.34999pt.
+<Boruvka.jpeg, id=42, 860.21375pt x 364.36125pt>
+File: Boruvka.jpeg Graphic file (type jpg)
+<use Boruvka.jpeg>
+Package pdftex.def Info: Boruvka.jpeg  used on input line 192.
+(pdftex.def)             Requested size: 180.6502pt x 76.51811pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 152--197
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--201
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--206
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--210
+
+ []
+
+[2 <./BF.jpeg> <./BF2.jpeg> <./Dijkstra.jpeg> <./Dijkstra2.jpeg> <./DAG.jpeg> <
+./Prim.jpeg> <./Prim2.jpeg> <./Kruskal.jpeg> <./Boruvka.jpeg>]
+(./2040sCheatSheet.aux) ) 
+Here is how much of TeX's memory you used:
+ 3250 strings out of 480608
+ 47464 string characters out of 5903630
+ 311288 words of memory out of 5000000
+ 19120 multiletter control sequences out of 15000+600000
+ 534545 words of font info for 33 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 37i,5n,29p,269b,244s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2020/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbx7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi5.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmmi7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr5.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr7.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+5.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
+pfb>
+Output written on 2040sCheatSheet.pdf (2 pages, 4810701 bytes).
+PDF statistics:
+ 78 PDF objects out of 1000 (max. 8388607)
+ 37 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+

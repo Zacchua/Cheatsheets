@@ -1,0 +1,506 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[a4paper, top=0.75cm, bottom=0.75cm, left=0.75cm, right=0.75cm, landscape]{geometry}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{multicol}
+\usepackage{setspace}
+
+
+
+
+\author{Zach}
+\date{3 November 2020}
+\setstretch{1.25}
+
+\begin{document}
+	\scriptsize %tiny
+	\setlength\parindent{0pt}
+	\setlength{\columnseprule}{0.1pt}
+	
+	\begin{center}
+		{\large MA1521 cheatsheet 20/21}\\
+		by Zachary Chua
+	\end{center}
+	
+	\begin{multicols*}{3}
+		
+		{\normalsize\textbf{Functions}}
+			\begin{itemize}
+				\setlength\itemsep{0em}
+				\item $(f \pm g)(x) = f(x) \pm g(x)$
+				\item $fg(x) = f(x)g(x)$
+				\item $\left(\frac{f}{g}\right)(x) = \frac{f(x)}{g(x)}, g(x) \neq 0$
+				\item Let $f: D \to R$ and $g: D1 \to R$\\
+				$(f \circ g)(x) = f(g(x))$ for D1 $\subseteq$ D
+				\item $f \circ g \neq g \circ f$
+			\end{itemize}
+		
+		\textbf{Limits}\\
+		Suppose $lim_{x \to a} f(x) = L$ and $lim_{x \to a} g(x) = L'$
+		\begin{itemize}
+			\setlength\itemsep{0em}
+			\item $\lim_{x \to a} (f \pm g)(x) = L \pm L'$
+			\item $\lim_{x \to a} (fg)(x) = LL'$
+			\item $\lim_{x \to a}\frac{f}{g}(x) = \frac{L}{L'}$ , provided $L' \neq 0$
+			\item $\lim_{x \to a} kf(x) = kL$, any real number $k$
+		\end{itemize}
+	
+		{\normalsize\textbf{Differentiation}}\\ %change this such that spacing betw nested list is small
+		$f'(a) = lim_{x \to a} \frac{f(x) - f(a)}{x - a}$
+		\begin{itemize}
+			\setlength\itemsep{0em}
+			\item Linearity
+			\begin{itemize}
+				\setlength\itemsep{0em}
+				\item $(kf)'(x) = kf'(x)$
+				\item $(f \pm g)'(x) = f'(x) \pm g'(x)$ 
+			\end{itemize}
+			\item Product rule
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\item $(fg)'(x) = f'(x)g(x) + f(x)g'(x)$
+				\end{itemize}
+			\item Quotient rule 
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\item $\left(\frac{f}{g}\right)'(x) = \frac{f'(x)g(x) - f(x)g'(x)}{g^2(x)}$
+				\end{itemize}
+			\item Chain Rule
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\item $(f \circ g)'(x) = f'(g(x))g'(x) \cong (f' \circ g)(x)g'(x)$
+				\end{itemize}
+			\item Power
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\item $\frac{d}{dx}x^n = nx^{n - 1}$ 
+				\end{itemize}		
+			\item Trigonometry
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\setlength\itemsep{0em}
+					\item $\frac{d}{dx}(\sin x) = \cos x$
+					\item $\frac{d}{dx}(\cos x) = -\sin x$
+					\item $\frac{d}{dx}(\tan x) =  \sec^2 x$
+					\item $\frac{d}{dx}(\sec x) = \sec x \tan x$
+					\item $\frac{d}{dx}(\cot x) = -\csc^2 x$
+					\item $\frac{d}{dx}(\csc x) = -\csc x \cot x$ 
+				\end{itemize} 
+			\item Exponent and Logarithms
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\setlength\itemsep{0em}
+					\item $\frac{d}{dx} e^x = e^x$
+					\item $\frac{d}{dx} a^x = a^x\ln a$
+					\item $\frac{d}{dx} \ln x = \frac{1}{x}$
+					\item $\frac{d}{dx} (\log_a x) = \frac{1}{x \ln a}$
+				\end{itemize}
+			\item Inverse Trigonometry
+				\begin{itemize}
+					\setlength{\itemindent}{-2em}
+					\setlength\itemsep{0em}
+					\item $\frac{d}{dx}(\arcsin x) = \frac{1}{\sqrt{1 - x^2}}$
+					\item $\frac{d}{dx}(\arccos x) = -\frac{1}{\sqrt{1 - x^2}}$
+					\item $\frac{d}{dx}(\arctan x) = \frac{1}{1 + x^2}$
+					\item $\frac{d}{dx}(sec^{-1} x) = \frac{1}{\lvert x \rvert \sqrt{x^2 - 1}}$
+					\item $\frac{d}{dx}(\cot^{-1} x) = - \frac{1}{1 + x^2}$
+					\item $\frac{d}{dx}(\csc^{-1} x) = 1\frac{1}{\lvert x \rvert \sqrt{x^2 - 1}}$
+				\end{itemize}
+		\end{itemize}
+	
+	\textbf{Parametric Differentiation}
+		\begin{itemize}
+			\setlength\itemsep{0em}
+			\item $\frac{dy}{dx} = \frac{dy}{dt} \times \frac{dt}{dx}$
+			\item $\frac{d^2y}{dx^2} = \frac{d}{dx} \left(\frac{dy}{dx}\right) = \frac{\frac{d}{dt} \left( \frac{dy}{dx} \right)}{\frac{dx}{dt}}$
+		\end{itemize}
+	
+	\textbf{Implicit Differentiation}\\
+	Implementation of Chain Rule on y\\
+	eg. $\frac{d}{dx}y^2 = 2y(\frac{dy}{dx})$\\
+	
+	\textbf{Maxima and Minima}\\
+	Points where f can have an extreme value are
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item Interior points where $f'(x) = 0$
+		\item Interior points where $f'(x)$ does not exist
+		\item End points of the domain of $f$
+	\end{itemize}
+
+	\textbf{First Derivative Test}\\
+	Suppose that $c \in (a. b)$ is a critical point of f, if
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item $f'(x) > 0$ for $x \in (a, c)$, and $f'(x) < 0$ for $x \in (c, b)$, then $f(c)$ is a local maximum.
+		\item $f'(x) < 0$ for $x \in (a, c)$ , and $f'(x) > 0$ for $x \in (c, b)$, then $f(c)$ is a local minimum
+	\end{itemize}
+		 
+	\textbf{Second Derivative test}
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item if $f'(c)$ and $f''(c) < 0$, then $f$ has a local maximum at $x = c$
+		\item If $f'(c) = 0$ and $f''(c) > 0$, then $f$ has a local minimum at $x = c$
+	\end{itemize}
+
+	\textbf{L'Hospital's Rule}\\
+	Suppose
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item $f$ and $g$are differentiable in a neighbourhood of $x_0$
+		\item $f(x_0) = g(x_0) = 0 / \infty$
+		\item $g'(x) \neq 0$ except possibly at $x_0$
+	\end{itemize}
+	Then $\lim_{x \to a} \frac{f(x)}{g(x)} = \lim_{x \to a} \frac{f'(x)}{g'(x)}$
+	(Can chain this rule multiple times)
+		
+	{\normalsize\textbf{Integration}}\\
+	A differentiable function $F(x)$ is an antiderivative of a function $f(x)$ if, 
+	
+    \centerline{$F'(x) = f(x)$, for all x in domain of $f$}
+	
+	\textbf{Rules of definite Integral}
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item $\int_{a}^{a} f(x) dx = 0$
+		\item $\int_{a}^{b} f(x) dx = - \int_{b}^{a} f(x) dx$
+		\item $\int_{a}^{b} kf(x) dx = k \int_{a}^{b} f(x)dx$, for any constant k\\ $\left( \text{n paritcular,} \int_{a}^{b} -f(x)dx = - \int_{a}^{b} f(x)dx \right)$
+		\item $\int_{a}^{b} [f(x) \pm g(x)] dx = \int_{a}^{b} f(x)dx \pm \int_{a}^{b} g(x)dx$
+		\item If $f(x) \geq g(x) \text{on} [a, b]$, then $ \int_{a}^{b} f(x)dx \geq \int_{a}^{b} g(x)dx$
+		\item If $f$ is continuous on $(a, b) and (b, c)$, then\\ $\int_{a}^{b} f(x)dx + \int_{b}^{c} f(x)dx = \int_{a}^{c} f(x)dx$
+	\end{itemize}
+
+	\textbf{Fundamental Theorem of Calculus}\\
+	$F(x) = \int_{a}^{x} f(t)dt$ has a derivative at every point of [a, b], and \\
+	\centerline{$\frac{d}{dx}F(x) = \frac{d}{dx} \int_{a}^{x} f(t) dt = f(x)$}
+	eg. \begin{itemize}
+		\setlength\itemsep{0em}
+		\item $\frac{d}{dx} \int_{-\pi}^{\pi} \cos t dt - \cos x$
+		\item $ \frac{d}{dx} \int_{0}^{x} \frac{dt}{1 - t^2} = \frac{1}{1 -x^2}$
+		\item $\frac{d}{dx} \int_{1}^{x^2} \cos t dt = \left( \frac{d}{dx^2} \int_{1}^{x^2} \cos t dt \right) \frac{d}{dx}x^2 = (\cos x^2)2x = 2x\cos (x^2)$
+	\end{itemize}
+	If $f$ is continuous at every point on [a, b] and $F$ is any antiderivative of $f$ on [a. b], then\\
+	\centerline{$\int_{a}^{b} f(x)dx = F(b) - F(a)$}\\
+	
+	\textbf{Integration by Substitution}\\
+	\centerline{$ \int_{a}^{b} f(g(x))g'(x) dx = \int_{g(a)}{g(b)} f(u) du$}\\
+	
+	\textbf{Integration by Parts}\\
+	\centerline{$\int \frac{d}{dx} (uv) = \int u \frac{dv}{dx} + \int v \frac{du}{dx}$}\\
+	\centerline{$uv = \int udv + \int vdu$}\\
+	\centerline{$\int udv = uv - \int vdu$}\\
+		
+	\textbf{Area between two curves}\\ 
+		\centerline{Area $= \int_{a}^{b} [f_2(x) - f_1(x)] dx$ }\\
+		Sometimes we may like to view the curve as $x = g(y)$ instead of $y = g(x)$ when evaluating area.\\
+		
+	\textbf{Volume of solids of revolution}\\
+	\centerline{Volume $ = \int \pi y^2 dx$}		
+	
+	{\normalsize\textbf{Series}}\\
+	
+	\textbf{Geometric Series}\\
+	Geomeric series converges to the sum $\frac{a}{1-r}$ if $\lvert r \rvert < 1$ and diverges if $\lvert r \rvert \geq 1$\\
+	
+	\textbf{Rules on Series}\\
+	If $\sum a_n = A$ and $\sum b_n = B$, then 
+	\begin{itemize}
+		\item $\sum (a_n \pm b_n) = A \pm B$
+		\item $\sum (ka_n) = kA$ 
+	\end{itemize} 
+
+	\textbf{Ratio Test}\\
+	Can be used on other series as well, not just geometric series.\\
+	For geometric series, check any two consecutive terms, $\frac{a_{n+1}}{a_n}$\\
+	For other series, check $\lim_{n \to \infty} \lvert \frac{a_{n+1}}{a_n}\rvert < 1$
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item $\lvert r \rvert > 1$ diverges
+		\item $\lvert r \rvert = 1$ diverges for Geometric series, otherwise not conclusive
+		\item $\lvert r \rvert < 1$ converges
+	\end{itemize}
+	
+	\textbf{Power series about x = 0}\\
+	In the form of \\
+	\centerline{$\sum_{n = 0}^{\infty} c_nx^n$}\\
+	Power series can be considered a function of x when it is convergent\\
+	
+	\textbf{Power series about x = a}\\
+	In the form of \\
+	\centerline{$\sum_{n = 0}^{\infty} c_n (x - a)^n$}\\
+	where a is the centre of the series, something like shifting of the origin in coordinate geoometry.\\
+	
+	\textbf{Convergence of Power Series}\\
+	Power Series is always convergent at its centre, ie $x = a$\\
+	3 possibilities
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item converges only at the centre
+		\item converges in a region, $(a - h, a + h)$, where $h$ is known as the radius of convergence
+		\item converges for all values of x
+	\end{itemize}
+	Use ratio test, and put in the form of $\lvert x - a \rvert < h$\\
+	
+	\textbf{Differentiating Power Series}\\
+	If a power serieshas radius of convergence h, then it defines the function f
+	\centerline{$f(x) = \sum_{n = 0}^{\infty} c_n(x - a)^n \text{, } a - h < x < a + h$}\\
+	then f has derivatives of all orders within $(a - h, a + h)$,\\
+	\centerline{$f'(x) = \sum_{n = 0}^{\infty} nc_n(x -a)^{n - 1}$}\\
+	and similarly for higher order derivatives. The differentiated series also converges within $(a - h, a + h)$.\\
+	
+	\textbf{Integrating Power Series}\\
+	The power series would have anti-derivatives in $(a - h, a + h)$\\
+	\centerline{$\int f(x)dx = \sum_{n = 0}^{\infty} c_n \frac{(x - a)^{n + 1}}{n + 1} + C$}\\
+	The integrated series also converges for $(a - h, a + h)$.\\
+	
+	\textbf{Taylor Series}\\
+	Taylor series of f at a is\\
+	\centerline{$\sum_{k = 0}^{\infty} \frac{f^{(k)}(a)}{k!}(x - a)^{k} = f(a) + f'(a)(x - a) + \cdots + \frac{f^{(n)}(a)}{n!} (x - a)^n + \cdots$}\\
+	Used to approximate and represent complex functions at a value of x (a).
+	
+	\textbf{Taylor Polynomials}\\
+	The nth order Taylor Polynomial of f at a is \\
+	\centerline{$P_n(x) = \sum_{k = 0}^{n} \frac{f^{(k)}(a)}{k!}(x - a)^k = f(a) + f'(a)(x - a) + \cdots + \frac{f^{(n)}(a)}{n!}(x - a)^n$} 
+	It provides the best polynomial approximation of degree n.\\
+	At degree 1 it would be the tangent line.\\
+	
+	{\normalsize\textbf{3D Space}}\\
+	
+	\textbf{Vectors}\\
+	Let P and Q be points in the xyz-space with coordinates $(x, y, z)$ and $(x_1, y_1, z_1)$.
+	Then the vector $\overrightarrow{PQ} = (x_1 - x, y_1 - y, z_1 - z)$\\
+	
+	\textbf{Magnitude/ Norm of Vectors}\\
+	Magnitude of vector $v_1 = (x_1, y_1, z_1)$ is $||v_1|| = \sqrt{x_1^2 + y_1^2 + z_1^2}$, $||cv_1|| = |c| ||v_1||$\\
+	
+	\textbf{Angle Between Two Vectors}\\
+	Using Cosine Rule,\\
+	\centerline{$\cos{\theta} = \frac{x_1x_2 + y_1y_2 + z_1z_2}{||v_1||||v_2||}$}\\
+	Or can be written as\\
+	\centerline{$\cos{\theta} = \frac{v_1 \cdot v_2}{||v_1||||v_2||}$}
+	
+	\textbf{Dot / Scalar Product}\\
+	Let $v_1 = (x_1, y_1, z_1)$ and $v_2 = (x_2, y_2, z_2)$, then the dot product is given by\\
+	\centerline{$v_1 \cdot v_2 = x_1x_2 + y_1y_2 + z_1z_2$}\\
+	Or can be written as, \\
+	\centerline{$v_1 \cdot v_2 = ||v_1||||v_2||\cos{\theta}$}
+	Properties of Dot Product
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item $v \cdot v = ||v||^2$, $v \cdot v = 0$ if and only if $v = 0$
+		\item Commutative $v_1 \cdot v_2 = v_2 \cdot v_1$
+		\item Distributive 
+		\item Scalars can be "pulled" out $(cv_1 \cdot v_2) = (v_1 \cdot cv_2) =  c(v_1 \cdot v_2)$
+	\end{itemize}
+
+	\textbf{Unit Vector}\\
+	Vector with magnitude or length 1.
+	Can normalize any vector to get a unit vector by $\frac{1}{||w||} w$
+	
+	\textbf{Projection}\\
+	The projection of a vector $\overrightarrow{b}$ onto a vector $\overrightarrow{a}$, is denoted by $proj_a b$ is given by \\
+	\centerline{$proj_a b = \frac{\overrightarrow{a} \cdot \overrightarrow{b}}{||\overrightarrow{a}||^2} \overrightarrow{a}$}
+	
+	\textbf{Vector Product }\\
+	Vector product returns a vector that is perpendicular to the plane including both input vectors. And is given by\\
+	\centerline{$v_1 \times v_2 = \begin{vmatrix} i & j & k \\ x_1 & y_1 & z_1 \\ x_2 & y_2 & z_2 \end{vmatrix}$}
+	Properties of Vector Product
+	\begin{itemize}
+		\setlength\itemsep{0em}
+		\item Non-commutative
+		\item Distributive
+		\item Scalar Multiple can be put anywhere like dot product
+		\item $v_1 \times v_1 = 0$
+	\end{itemize}
+	Magnitude of Cross Product,\\
+	\centerline{$||v_1 \times v_2 || = ||v_1||||v_2||\sin{\theta}$}
+	
+	\textbf{Lines in 3D space}\\
+	Vector equation of a line:\\
+	\centerline{$\overrightarrow{OP} = \overrightarrow{r} = \overrightarrow{r_0} + t\overrightarrow{v}$}\\
+	where $\overrightarrow{r_0}$ is a fixed point on the line and $\overrightarrow{v}$ is a vector parallel to the line. \\
+	
+	Symmetric Form of the Equation: no parameter\\
+	\centerline{$ \frac{x - x_0}{a} = \frac{y - y_0}{b} = \frac{z - z_0}{c} = t$}\\
+	
+	Shortest Distance from point to Line:\\
+	Find vector connecting point to line, find length of projection of that vector onto the parallel, and use Pythagoras' Theorem.
+	
+	\textbf{Planes in 3D space}\\
+	Equation of a Plane:\\
+	let vector perpendicular to the plane be $\overrightarrow{n}$, and $\overrightarrow{r_0}$ be a known point on the plane, then any point, $\overrightarrow{r}$ on the plane is given by,\\
+	\centerline{$\overrightarrow{r} \cdot \overrightarrow{n} = \overrightarrow{r_0} \cdot \overrightarrow{n}$}\\
+	or, \\
+	\centerline{$ax + by + cz = d$}, \\where $\overrightarrow{n} = (a, b, c)$, $\overrightarrow{r} = (x, y, z)$ and $d = \overrightarrow{r_0} \cdot \overrightarrow{n}$\\
+	
+	Distance from a Point to a Plane\\
+	\centerline{$h = \frac{| ax_0 + by_0 + cz_0 - d|}{\sqrt{a^2 + b^2 + c^2}}$}
+	
+	{\normalsize\textbf{Partial Differentiation}}\\
+	\textbf{First-Order Partial Differentiation}\\
+	Let $f(x, y)$ be a function of two variables. Then the first order partial derivative of $f$ with respect to $x$ at the point $(a, b)$ is
+	\centerline{$\left.\frac{d}{dx} f(x, b) \right\vert_{x = a} = \lim_{h \to 0}\frac{f(a + h, b) -f(a, b)}{h} $}
+	When the above partial derivative exists, it is denoted by,\\
+	\centerline{$\left .\frac{\partial f}{\partial x}\right\vert_{a, b}$ or $f_x(a, b)$}\\
+	
+	Geometric Interpretation\\
+	The gradient of the line y = b or x = a translated upwards to cut the surface of the graph. \\
+	
+	 \textbf{Higher Order Partial Derivatives}
+	 \begin{itemize}
+	 	\setlength\itemsep{0em}
+	 	\item $f_{xx} = \frac{\partial^2f}{\partial x^2}$
+	 	\item $f_{xy} = f_{yx} = \frac{\partial^2 f}{\partial x \partial y} = \frac{\partial^2 f}{\partial y \partial x}$, for functions in this course.
+	 	\item $f_{yy} = \frac{\partial^2 f}{\partial y^2}$
+ 	\end{itemize}
+   Can use $f_{xy}$ to find $f_{yx}$ and vice-versa if one is difficult to differentiate.\\
+   
+   \textbf{Chain Rule} \\
+   Chain Rule for 2 dependent variables and 1 independent variable. \\eg $z = f(x, y)$ and $x = x(t)$, $y = y(t)$\\
+   \centerline{$\frac{dz}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt}$}\\
+   
+   Chain rule for 2 independent variables on $f(x, y)$\\
+   eg. $z = f(x, y)$ and $x = x(s, t)$, $y = y(s, t)$\\
+   \centerline{$\frac{\partial z}{\partial s} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial s} + \frac{\partial f}{\partial y} \frac{\partial y}{\partial s}$}\\
+   \centerline{$\frac{\partial z}{\partial t} = \frac{\partial f}{\partial x}\frac{\partial x}{\partial t} + \frac{\partial f}{\partial y}\frac{\partial y}{\partial s}$}\\
+   
+   Chain Rule for 3 dependent variables and 1 independent variable\\
+   eg. $w = f(x, y, z)$ and $z = z(t)$, $y = y(t)$, $x = x(t)$\\
+   \centerline{$\frac{dw}{dt} = \frac{\partial f}{\partial x}\frac{dx}{dt} + \frac{\partial f}{\partial y}\frac{dy}{dt} + \frac{\partial f}{\partial z}\frac{dz}{dt}$}\\
+   
+   \textbf{Gradient Vector}\\
+   The Vector which shows the direction (and magnitude) of greatest rate of change of f.\\
+   \centerline{$\nabla f(x, y) = f_x(x, y)\overrightarrow{i} + f_y(x, y)\overrightarrow{j}$}\\
+   
+   \textbf{Directional Derivatives}\\
+   Measures the gradient with respect to $\overrightarrow{u}$ or gradient in the direction of $\overrightarrow{u}$\\
+   Note that $\overrightarrow{u}$ must be a unit vector.\\
+   \centerline{$D_{\overrightarrow{u}}f(a, b) = \nabla f(a, b) \cdot \overrightarrow{u} = f_x(a, b)u_1 + f_y(a, b)u_2$}\\
+   
+   Another way of writing,\\
+   \centerline{$D_{\overrightarrow{u}}f(a, b) = ||\nabla f(a, b)||||\overrightarrow{u}||\cos{\theta} = ||\nabla f(a, b)||\cos{\theta}$} \\
+   Therefore, \\
+   \centerline{$-||\nabla f(a, b)|| \leq D_{\overrightarrow{u}}f(a, b) \leq ||\nabla f(a, b)||$}\\
+   when $\theta = \pi$ and $\theta = 0$ respectively\\
+   Formula for functions of 3 variables and above are the same:\\
+   Gradient Vector $\cdot$ unit direction vector.\\
+   
+   \textbf{Maximum and Minimum}\\
+   The critical point where $\nabla f(a, b) = 0$. ie.\\
+   \centerline{$f_x(a. b) = 0$ and $f_y(a, b) = 0$}\\
+   Or where $f_x(a, b)$ and $f_y(a, b)$ do not exist.\\
+   
+   How to tell min/ max/ saddle\\
+   Second Derivative Test, using determinant\\
+   \centerline{$D = \begin{vmatrix} f_{xx}(a, b) & f_{xy}(a, b)\\ f_{yx}(a, b) & f_{yy}(a, b) \end{vmatrix} = f_{xx}(a, b)f_{yy}(a, b) - f_{xy}^2(a, b)$}\\
+   
+   Local min: $D > 0$, $f_{xx}(a, b) > 0$\\
+   Local max: $D > 0$, $f_{xx}(a, b) < 0$\\
+   Saddle: $D < 0$\\
+   No conclusion: $D = 0$\\
+   
+   {\normalsize\textbf{Double Integration}}\\
+   \textbf{Definition}\\
+   Let $\Delta A_i$ be the area of $R_i$ and $(x_i, y_i)$ be a point in $R_i$\\
+   let $f(x, y)$ be a function of two variables. Then the double integral of $f$ over $R$ is\\
+   \centerline{$\int \int_{R} f(x, y) dA = \lim_{n \to \infty} \sum_{i = 1}^{n} f(x_i, y_i) \Delta A_i$}\\
+   Geometrically, it is the volume of under the surface, over the area R.\\
+   
+   \textbf{Properties of Double Integrals}
+   \begin{itemize}
+   	\setlength\itemsep{0em}
+   	\item $\int\int_R (f(x, y) + g(x, y)) dA = \int \int_R f(x, y) dA + \int \int_R g(x, y) dA$
+   	\item $ \int \int_R cf(x, y) dA = c \int \int_R f(x, y) dA$, where $c \in \mathbb{R}$
+   	\item if $f(x, y) \geq g(x, y)$ for all $(x, y) \in R$, \\then $\int \int_R f(x, y) dA \geq \int \int_R g(x, y) dA$
+   	\item $\int \int_R dA = A(R)$, the area of $R$
+   	\item $\int \int_R f(x, y) dA = \int \int_{R_1} f(x, y) dA + \int \int_{R_2} f(x, y) dA$, where $R = R_1 \cup R_2$, and $R_1$, $R_2$ do not overlap except on their boundary.
+   \end{itemize}
+
+   \textbf{Calculating Rectangular Region}\\
+   The region can be expressed in terms of inequalities\\
+   \centerline{$a \leq x \leq b$ and $c \leq y \leq d$}\\
+   Then the double integral is given by\\
+   \centerline{$\int \int_R f(x, y) dA = \int_c^d\int_a^b f(x, y) dxdy = \int_a^b\int_c^d f(x, y) dydx$}\\
+   
+   In general if $f(x, y) = g(x)h(y)$, then\\
+   \centerline{$\int\int_Rg(x)h(y) dA = \left(\int_a^b g(x) dx \right)\left(\int_c^d h(y) dy \right)$}\\
+   
+   \textbf{Non-Rectangular}\\
+   	Type A: set the left and right extremes to be parallel to the y-axis,\\ ie $x = a$, $x = b$, and top and bottom boundaries to be functions of x, ie $y = g(x)$, $y = h(x)$ then the inequalities become\\
+   	\centerline{$h(x) \leq y \leq g(x)$ and $a \leq x \leq b$}\\
+   	And the double integral becomes \\
+   	\centerline{$\int_a^b \int_{h(x)}^{g(x)} f(x, y) dydx$}\\
+   	
+   	Type B: set the top and bottom extremes, and left and right boundaries become functions of y.\\
+   	Inequalities\\
+   	\centerline{$g(y) \leq x \leq h(y)$ and $c \leq y \leq d$}\\
+   	Double Integral:\\
+   	\centerline{$\int_c^d\int_{g(y)}^{h(y)} f(x, y) dxdy$}\\
+   	
+   	\textbf{Polar Coordinates}\\ 
+   	Used when R is circular.\\
+   	Converting cartesian coordinates to polar coordinates\\
+    \centerline{$x = r\cos{\theta}$ and $y = r\sin{\theta}$,}\\
+    where r is the radius of the circle and $\theta$ is the angle in radians from the x-axis.\\
+    Double integral becomes, eg\\
+    $\int \int_R (x + y) dA = \int_{r_1}^{r_2} \int_{\theta_1}^{\theta_2} r\cos{\theta} + r\sin{\theta} rd\theta dr \\ 
+    =  \int_{\theta_1}^{\theta_2} \int_{r_1}^{r_2} r\cos{\theta} + r\sin{\theta} rdrd\theta$\\
+    
+    \textbf{Surface Area}\\
+    If $f$ has continuous firs partial derivatives on a closed region $R$ of the xy-plane, then the area $S$ of that portion of the surface z = f(x, y) that projects onto $R$ is\\
+    \centerline{$S = \int\int_R \sqrt{\left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right) + 1} dA$}\\
+    
+    {\normalsize\textbf{Differential Equations}}\\
+    
+    \textbf{Ordinary Differential Equations}\\
+    Differential equations of only one variable.\\
+    Order of equation: Highest order derivative.\\
+    Linearity of equation: power of derivative eg $(f'')^2$\\
+    
+    \textbf{Separable equations}\\
+    Can be written in the form $M(x)dx - N(y)y' = 0$ or $M(x)dx = N(y)dy$. Separated because everything on the left is x and everything on the right is y. \\
+    
+    Radioactive substances equation:\\
+    \centerline{$Y = Y_0 e^{-\frac{\ln 2}{T}t}$}
+    where $Y$ is the amount of radioactive substance left, $Y_0$ is the initial amount, $T$ is the half-life, and $t$ is the time elapsed. \\
+    
+    \textbf{Non-Separable Equations}\\
+    Use a substitution to convert it into separable form.\\
+    Can try to use the substitution $y = vx$ which will result in $\frac{dy}{dx} = \frac{dy}{dx}x + v$\\
+    
+    \textbf{Linear First Order ODEs}\\
+    A differential equation which can be written in the form \\
+    \centerline{$\frac{dy}{dx} + P(x)y = Q(x)$}\\
+    where P and Q are funtions of x. Note that the coefficient of $\frac{dy}{dx}$ must be 1.\\
+    
+    How to solve:\\
+    1. Let $R = e^{\int P dx}$, no constant\\
+    2. $y = \frac{1}{R} \int RQdx$\\
+    
+    \textbf{Reduction to Linear Form}\\
+    Certain non-linear differential equations can be reduced to linear form. The most important class of such differential equations are called Bernoulli equations which have the form $y' + p(x)y = q(x)y^n$, where $n \in \mathbb{R}$\\
+    
+    How to solve:\\
+    1. $y' + Py = Qy^n$\\
+    2. $y^{-n}y' + Py^{1-n} = Q$\\
+    3. let $z = y^{1 - n}$, where $n \neq 1$ or $0$\\
+    4. Solve the Linear First Order ODE in terms of z\\
+    
+    \textbf{Application to Population Growth}\\
+    let $B$ be the birth rate per capita, and $D$ be the death rate per capita, $N$ be the population, $\hat{N}$ be the original population\\
+    
+    Malthusian Model:\\
+    \centerline{$\frac{dN}{dt} = (B - D)N = kN$}\\
+    or equivalently,\\
+    \centerline{$N = \hat{N}e^{kt}$}\\
+    
+    Logistic Model:\\
+    {\large\centerline{$N = \frac{\hat{N}N_\infty}{\hat{N} + (N_\infty - \hat{N})e^{-Bt}}$}}\\
+    or equivalently, \\
+    {\large\centerline{$N = \frac{N_\infty}{1 + (\frac{N_\infty}{\hat{N}} - 1)e^{-Bt}}$}}\\
+    where $N_\infty$ is the carrying capacity, or $\lim_{t \to \infty} N = N_\infty$, $N_\infty = \frac{B}{S}$
+   
+	
+	\end{multicols*}
+\end{document}
