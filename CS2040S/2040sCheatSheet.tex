@@ -28,7 +28,7 @@
 		{\normalsize\textbf{Searching and Sorting}}\\
 		\textbf{Binary Search} \\
 		Can be used for any monotonic function, not necessarily just for searching for number in array\\
-		\includegraphics[scale = .3]{BinSearch.png}\\
+		\includegraphics[scale = .3]{./assets/BinSearch.png}\\
 		\textbf{Peak Finding}\\
 		For finding local peak - Binary Search + recurse on larger side\\ 
 		\textbf{Sorts}\\
@@ -41,8 +41,8 @@
 		Random: $O(nlogn)$ for worst and best case.\\
 		Paranoid random: Expected 2 tries.\\
 		Can make stable with extra $O(n)$ space.\\
-		\includegraphics[scale = .27]{Partition}\\
-		\includegraphics[scale=.4]{Partition3}\\
+		\includegraphics[scale = .27]{./assets/Partition}\\
+		\includegraphics[scale=.4]{./assets/Partition3}\\
 		\textbf{QuickSelect}\\
 		Select the kth element, runtime = $O(n)$\\
 		1. Partition then recurse into the correct side.\\
@@ -62,18 +62,18 @@
 		1. Left heavy\\
 		1.1 Balanced or Left-heavy: right-otation\\
 		1.2 Right-heavy: Left-rotate left child then right-rotation\\
-		\includegraphics[scale=.07]{Rotation}\\
+		\includegraphics[scale=.07]{./assets/Rotation}\\
 		Insertions: $\leq$ 2 rotations, Deletions: $O(logn)$ rotations(walk up to root)\\
 		\textbf{Trie} - Search: $O(L)$ Insert: $O(L + Overhead)$\\
 		Useful for prefix, longest prefix, wildcard queries\\
 		\textbf{Augmented Tree}\\
 		Order Statistics Tree - weights $v.weight = v.left.weight + v.right.weight + 1$ and parent pointers\\
-		\includegraphics[scale=0.25]{Select} \includegraphics[scale=.3]{rank}\\
+		\includegraphics[scale=0.25]{./assets/Select} \includegraphics[scale=.3]{./assets/rank}\\
 		Interval Tree - Keyed by left edge, hold max endpoint in subtree in node\\
-		\includegraphics[scale=.25]{Interval}\\
+		\includegraphics[scale=.25]{./assets/Interval}\\
 		Orthogonal Range Finding - nodes are max value in left subtree, values are stored at leaves $O(k + logn)$, where $k$ is the number of points found.\\
 		- Find split node, LeftTraversal on node.left, RightTraversal on node.right\\
-		\includegraphics[scale=.25]{RightTraversal} \includegraphics[scale=.25]{LeftTraversal}\\
+		\includegraphics[scale=.25]{./assets/RightTraversal} \includegraphics[scale=.25]{./assets/LeftTraversal}\\
 		\textbf{$(a, b)$ trees} - B-trees are (B, 2B) trees.\\
 		1. Root $[2, b]$ children, $[1, b-1]$ keys; Internal $[a, b]$ children, $[a - 1, b - 1]$ keys; Leaf 0 children, $[a - 1, b - 1]$ keys\\ 
 		2. Non-leaf node must have one more child than number of keys (ensures all ranges covered by children)\\
@@ -127,13 +127,13 @@
 		Implemented implicitly by call stack, doesn't return shortest path graph\\
 		\textbf{Shortest Path in Weighted Graphs}\\
 		Bellman-Ford - $O(VE)$, doesn't work on graphs w -ve weight cycles (NWC), can terminate early if sequence of $|E|$ relax have no effect.\\
-		\includegraphics[scale=.12]{BF}
-		\includegraphics[scale=.1]{BF2}
+		\includegraphics[scale=.12]{./assets/BF}
+		\includegraphics[scale=.1]{./assets/BF2}
 		After k times, k hop estimate for nodes on shortest path is correct.\\
 		Run n times to detect NWC (change on nth time)\\ 
 		Dijkstra's - Relax in the right order (each edge relaxed once), works on graphs without -ve weight edges, $O(ElogV)$\\
-		\includegraphics[scale=.09]{Dijkstra}
-		\includegraphics[scale=.09]{Dijkstra2}\\
+		\includegraphics[scale=.09]{./assets/Dijkstra}
+		\includegraphics[scale=.09]{./assets/Dijkstra2}\\
 		Main Requirement: Extending a path does not decrease its estimate.\\
 		Cannot reweight graphs w -ve weight edges as paths with multiple edges will add more weight.\\
 		\textbf{DAG, Topo Sort} - Only DAGs have topological orderings, converse is true\\
@@ -141,7 +141,7 @@
 		2. edges only point forward.\\
 		Constructing Topo Ordering - not unique, $O(V + E)$\\
 		1. Post Order DFS - Process (prepend to list) each node when it is last visited\\
-		\includegraphics[scale=.12]{DAG}\\
+		\includegraphics[scale=.12]{./assets/DAG}\\
 		2. Kahn's Algorithm, runtime here $O(ElogV)$ but can be done in $O(V + E)$\\
 		Add nodes with no incoming edges to topo order, remove outgoing edges from that node, repeat. 
 		Implement using a PQ, nodes keyed by incoming edges.\\
@@ -180,16 +180,16 @@
 		6. Min weight adj edge of every node is in MST (6), converse not true\\
 		Can reweight edges, so can MST on graph w -ve weights, MaxST: run Kruskal's in reverse.\\
 		\textbf{Prim's} - $O(ElogV)$\\ 
-		\includegraphics[scale=.2]{Prim}\\
-		\includegraphics[scale=.18]{Prim2} Have a set $S$ of nodes, initially start node, add min weight edge across cut \{$S, V - S$\}, MST, node to $S$.\\
+		\includegraphics[scale=.2]{./assets/Prim}\\
+		\includegraphics[scale=.18]{./assets/Prim2} Have a set $S$ of nodes, initially start node, add min weight edge across cut \{$S, V - S$\}, MST, node to $S$.\\
 		\textbf{Kruskal's}: $O(ElogV)$\\
 		Sort weights in ascending order.  For each edge, if both endpoints in same tree (using UFDS), then discard, if not add to MST\\ 
-		\includegraphics[scale=.22]{Kruskal}\\
+		\includegraphics[scale=.22]{./assets/Kruskal}\\
 		Sorting: $O(ElogE) = O(ElogV)$; Find and Union: $O(logV)$ $E$ times\\
 		\textbf{Boruvka's}: $O(ElogV)$\\
 		For all nodes, add min adj weight edge, adds $\geq$ $n/2$ edges each step, n is the number of connected components\\
 		For each node store a component identifier: $O(V)$\\
-		\includegraphics[scale=.21]{Boruvka}\\ 
+		\includegraphics[scale=.21]{./assets/Boruvka}\\ 
 		DFS/ BFS: $O(V + E)$, Merge CC: $O(V)$, update component IDs\\
 		Each Boruvka Step: $O(V + E)$ , $O(logV)$ steps.\\
 		\textbf{Steiner Tree 2 approximation}\\
