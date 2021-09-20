@@ -730,11 +730,68 @@
 		\textbf{ALUControl}\\
 		All control signals other than ALUControl can be generated from opcode only (the signals are the same for all R-type), only ALUControl needs funct code (as opcode is 0 for all R-type)\\
 		- only exception is shifts?\\
+		\includegraphics[scale=0.25]{./assets/ALUControl}\\
+		\includegraphics[scale=0.25]{./assets/ALUCircuit}\\
+		Picture shows 1 "slice" of 32-bit ALU. Can think of actual ALU as 32 slices back to back\\
+		NOTE: \texttt{SUB} is implemented by inverting all bits in B, setting first $C_{in}$ to $1$
 		
-				
-				
-				
+		\centerline{$A + B' + 1 = A +$ 2s comp of $B$}
 		
+		\textbf{Multilevel Decoding}\\
+		- Use some of the input to reduce cases, then generate full output\\
+		- Simplifies design process, reduce size of main controller, speedup circuit\\
+		
+		\textbf{Intermediate Signal: ALUop}\\
+		- Use opcode to generate 2-bit \texttt{ALUop} signal
+		\begin{verbatim}
+			Instruction  |  ALUop  |  What
+			lw/sw        |  00     |  ADD
+			beq          |  01     |  SUB
+			R-type       |  10     | depends on funct
+		\end{verbatim}
+		Use \texttt{ALUop} signal and \texttt{funct} field from R-type to generate 4-bit \texttt{ALUControl}\\
+		\includegraphics[scale=0.25]{./assets/ALUop}\\
+		\includegraphics[scale=0.25]{./assets/ALUControlTable}\\
+		- Table of Opcode, funct field and corresponding ALUop and ALUcontrol signals\\
+		\includegraphics[scale=.25]{./assets/ALUControlTable2}\\
+		- Table of how to generate each bit of ALUControl\\
+		\includegraphics[scale=.25]{./assets/ALUControlBlockCircuit}\\
+		- Circuit of ALUControl Block\\
+		
+		$ALUControl0 = (ALUop_1 \cdot F_3) + (ALUop_1 \cdot F_0) = ALUop_1 \cdot (F_0 + F_3)$\\
+		$ALUControl1 = (ALUop_1 \cdot F_2)'$\\
+		$ALUControl2 = ALUop_0 + ALUop_1 \cdot F_1$\\
+		$ALUControl3 = 0$\\
+		
+		\textbf{Control Design}\\
+		\includegraphics[scale=.25]{./assets/controlTable}\\
+		- Table of control signals for various instructions (outputs)\\
+		\includegraphics[scale=.25]{./assets/opcodeTable}\\
+		- Table of opcode for the various types of instructions (inputs)\\
+		\includegraphics[scale=0.17]{./assets/controlCircuit}\\	
+		
+		\textbf{Instruction Execution}\\
+		1. Read contents of register or memory\\
+		2. Perform computation\\
+		3, Write results\\
+		Perform all within a clock period to prevent reading a storage element when it is being written\\
+		
+		\textbf{Single Cycle Implementation}\\
+		- All instructions take one cycle\
+		- Cycle must be at least as long as slowest instruction\\
+		- All instructions take as much time as slowest instruction\\
+		
+		\textbf{Multicycle Implementation}\\
+		- Break up instructions into execution steps (IF, ID, EX, MEM, WR)\\
+		- Each execution step takes 1 clock cycle $\implies$ cycle time much shorter\\	
+		- Cycle must be long enough to accomodate longest step\\
+		- Each step takes as much time as longest step\\
+		- Instructions take variable number of clock cycles to complete execution\\
+		Not covered\\
+		
+		\textbf{Pipelining}\\
+		- One step per clock cycle\\
+		- Execute different steps of multiple instructions simultaneously\\
 		
 		
 		
