@@ -1,0 +1,80 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[a4paper, top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm, landscape]{geometry}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+
+
+\author{Zachary Chua Yan Ern}
+\date{22 September 2021}
+\setstretch{1.25}
+
+\newcommand{\highlight}[1]{{\color{red}\textbf{#1}}}
+
+\begin{document}
+	\scriptsize %tiny
+	\setlength\parindent{0pt}
+	\setlength{\columnseprule}{0.1pt}
+	
+	\begin{center}
+		{\large CS2105 CheatSheet}\\
+		by Zachary Chua
+	\end{center}
+	
+	\begin{multicols*}{3}
+		{\normalsize\textbf{Internet}}\\
+		- The Internet is a network of connected computing devices\\
+		- Devices are known as \highlight{hosts} or \highlight{end systems}\\
+		- Hosts run network applications (like browsers) and communicate over links\\
+		
+		\textbf{Network Edge (Access Network)}\\
+		- Hosts access the Internet through \highlight{access network}\\
+		- eg Home/ Institute access networks\\
+		
+		\textbf{Wireless Access Network}\\
+		1. Wireless LAN (WIFI): Short range (100 ft)\\
+		2. Wide-area wireless access (3G/ 4G): Long range (10s km)\\	
+		
+		\textbf{Physical Media}\\
+		Host connect to access network via physical media
+		- Guided media: signals propogate in solid media (ethernet cable/ fibre optics)\\
+		- Unguided media: signals propagate freely (radio)\\
+		
+		\textbf{Network Core}\\
+		A mesh of interconnected routers\\
+		Data transmitted by\\
+		1. Circuit Switching: dedicated circuit per call\\
+		2. Packet Switching: data sent through net in discrete "chunks"\\
+		
+		\textbf{Circuit Switching}\\
+		End-to-end resources \highlight{allocated to and reserved for} "call" between source and dest\\
+		- call setup required\\
+		- circuit-like (\highlight{guaranteed}) performance\\
+		- circuit segment idle if not used by call\\
+		- used in traditional telephone networks\\
+		- limited capacity\\
+		
+		\textbf{Packet Switching}\\
+		Host sending function\\
+		- breaks application message into smaller chunks, known as \highlight{packets} of length \highlight{L} bits\\
+		- transmits packets onto the link at \highlight{transmission rate R}\\
+		- link transmission rate is known as \highlight{link capacity} or \highlight{link bandwidth}\\
+		
+		Packet Transmission Delay = $\frac{L}{R}$, assuming packet size $L$ bits and link bandwidth $R$ bits/sec\\
+		
+		\highlight{Store and Forward}: entire packet must arrive at a router before it can be transmitted on the next link (check packet integrity; if corrupted, drop packet)\\
+		
+		\textbf{Routing and Addressing}\\
+		
+		
+		
+		
+		
+		
+	\end{multicols*}
+\end{document}

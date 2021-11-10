@@ -6,11 +6,14 @@
 \usepackage{multicol}
 \usepackage{setspace}
 \usepackage{graphicx}
+\usepackage{xcolor}
 
 
 \author{Zachary Chua Yan Ern}
 \date{16 September 2020}
 \setstretch{1.25}
+
+\newcommand{\highlight}[1]{{\color{red}\textbf{#1}}}
 
 \begin{document}
 	\scriptsize %tiny
@@ -95,7 +98,7 @@
 		
 		\textbf{Operator Precedence}\\
 		\includegraphics[scale= .5]{./assets/logicOperators}\\
-		Note that precedence of $\&\&$ is greater than that of $||$\\
+		\highlight{Note} that precedence of $\&\&$ is greater than that of $||$\\
 		$\&\&$ and $||$ use short-circuit evaluation\\
 		
 		\textbf{Loops}\\
@@ -147,7 +150,7 @@
 		- 2 Zeroes: $+0 = 00000000$ and $-0 = 11111111$\\
 		- Range: $-(2^{n - 1} - 1)$ to $2^{n - 1} - 1$\\
 		To negate a number, invert all bits\\
-		Note that the first bit still represents the sign: 0 for positive and 1 for negative.\\
+		\highlight{Note} that the first bit still represents the sign: 0 for positive and 1 for negative.\\
 		
 		\textbf{2s Complement}\\
 		Negated value of $x$ is given by $-x = 2^n - x$\\
@@ -156,7 +159,7 @@
 		- Range: $-2^{n - 1}$ to $2^{n - 1} - 1$\\
 		To negate a number, invert all bits, then add 1\\
 		For fractions same thing, flip then add one to LSB\\
-		Note that MSB still represents the sign, and that MSB "has a value" of $-2^{n - 1}$\\
+		\highlight{Note} that MSB still represents the sign, and that MSB "has a value" of $-2^{n - 1}$\\
 		
 		\textbf{Sign Extension}\\
 		For 1s and 2s complement: Extend sign bit\\
@@ -234,7 +237,7 @@
 		Once a\_ptr points to a, can access a through a\_ptr using \textit{indirection operator}, (or dereferencing operator) *\\
 		ie. a\_ptr* === a\\
 		
-		Note that\\
+		\highlight{Note} that\\
 		- \texttt{int *a\_ptr} is a declaration of a pointer to an int with the name a\_ptr\\
 		- \texttt{*a\_ptr} is the value AT the address stored in a\_ptr\\
 		
@@ -242,7 +245,7 @@
 		Incrementing a pointer means that the pointer will look at the NEXT chunk of data,\\
 		ie. incrementing an int/ float ptr increases value by 4, incrementing a char ptr increases value by 1, incrementing double ptr increases value by 8\\
 		
-		Note remember to assign the pointer variable an address before using if not it would be pointing somewhere unknown\\
+		\highlight{Note} remember to assign the pointer variable an address before using if not it would be pointing somewhere unknown\\
 		
 		\textbf{User Defined Functions}\\
 		Function Definitions follow the following syntax
@@ -379,7 +382,7 @@
 		- Uses pass-by-value, entire structure is copied over\\
 		- To modify a structure's content, need to pass address of structure to function, using \& operator\\
 		- Therefore to access members need to use (*player).name, for example. 
-		- Note that dot operator (.) has higher precedence than indirection operator (*), therefore the () are needed\\
+		- \highlight{Note} that dot operator (.) has higher precedence than indirection operator (*), therefore the () are needed\\
 		- (*ptr\_name).member can be rewritten as ptr\_name--$>$member\\
 		
 		{\normalsize\textbf{MIPS}}\\
@@ -387,7 +390,7 @@
 		Mips uses Load-Store architecture, ie. both instructions and data are stored in memory\\
 		- Limit memory operations\\
 		- Rely on registers (mips has 32) for storage during execution\\
-		Note that Registers have no data type!!\\
+		\highlight{Note} that Registers have no data type!!\\
 		
 		\textbf{Arithmetic Operations}\\
 		Addition and Subtraction\\
@@ -437,7 +440,7 @@
 		- How to load a 32 bit constant into a register\\
 		- use \texttt{lui} instruction to set upper 16 bits (lower 16 bits would be set to 0)\\
 		- then use \texttt{ori} instruction to set lower bits, (16 bit immediate would be 0-extended to 32-bit)\\
-		Note that logical operators 0 extend immediates to 32 bits whereas arithmetic operations sign-extend(extend first bit)\\
+		\highlight{Note} that logical operators 0 extend immediates to 32 bits whereas arithmetic operations sign-extend(extend first bit)\\
 
 		\textbf{Memory Instruction}\\
 		Load Word\\
@@ -449,7 +452,7 @@
 		- address = value of \texttt{\$s0} + $12$, eg $8000$ stored in \texttt{\$s0}, then address = $8012$\\
 		- Content of \texttt{\$t0} stored into the word at \texttt{Mem[8012], ie, 8012 - 8015}\\
 		
-		- Note that offset must be a multiple of 4 (because word is 4 bytes in mips)\\
+		- \highlight{Note} that offset must be a multiple of 4 (because word is 4 bytes in mips)\\
 		- MIPS does not allow unaligned load and stores with lw and sw, need to use pseudo-instructions ulw and usw\\
 		- Other load-store instructions include load byte \texttt{(lb)} and store byte \texttt{(sb)}, used for chars and char arrays, for these instructions, offset no need multiple of 4\\
 		  
@@ -469,7 +472,7 @@
 		- processor always follows the branch\\
 		- eg \texttt{j label}\\
 		
-		Note that label is an "anchor" in code. Labels are not instructions\\
+		\highlight{Note} that label is an "anchor" in code. Labels are not instructions\\
 		- Later on labels will be converted to numbers, ie PC relative addressing for branch and truncated adress for jump\\
 		Common technique: when there is only one branch, ie if with no else, then invert the conditional for more succint code\\
 		
@@ -508,7 +511,7 @@
 		- Can branch up to $2^{15}$ words away from PC, $2^{17}$ bytes\\
 		Branch Calculation:\\
 		\includegraphics[scale=.25]{./assets/branchCalculation}\\
-		Note: immd field specifies number of words to jumps, which is the \textbf{same} as the number of instructions to skip over\\
+		\highlight{Note}: immd field specifies number of words to jumps, which is the \textbf{same} as the number of instructions to skip over\\
 		
 		\textbf{J-format}\\
 		For jumps, can jump anywhere in memory, not small jumps so cannot use PC-relative addressing\\
@@ -549,7 +552,7 @@
 		Eg. For \texttt{0xDE AD BE EF}\\
 		- Big-endian: \texttt{0: DE, 1: AD, 2: BE, 3: EF}\\
 		- Little-endiand: \texttt{0: EF, 1: BE, 2: AD, 3: DE}\\
-		NOTE: Ordering \textbf{within} bytes are not affected, only ordering \textbf{between} bytes\\
+		\highlight{NOTE}: Ordering \textbf{within} bytes are not affected, only ordering \textbf{between} bytes\\
 		
 		\textbf{Addressing Modes}\\
 		In MIPS, 3 addressing modes\\
@@ -582,7 +585,7 @@
 		3. ALU: Arithmetic and Logical operations\\
 		4. Memory Access: Memory operation (load/store)\\
 		5. Result Write: Write back result of operation to register if needed\\
-		NOTE: can merge instruction decode and operand fetch because decode is simple for MIPS\\
+		\highlight{NOTE}: can merge instruction decode and operand fetch because decode is simple for MIPS\\
 		
 		\textbf{1. Instruction Fetch}\\
 		1. Use PC to fetch instruction from memory\\
@@ -630,7 +633,7 @@
 		For store instructions, need to connect RD2 (rt) to Write Data.\\
 		Need to choose between output from Read Data and output from ALU stage\\
 		\includegraphics[scale=.25]{./assets/memStage}\\
-		NOTE: MemToReg mux is mounted upside down ie. 1 is Read Data, 0 is ALU result\\
+		\highlight{NOTE}: MemToReg mux is mounted upside down ie. 1 is Read Data, 0 is ALU result\\
 		 
 		\textbf{5. Register Write Stage}\\
 		Write to register (stores, arithmetics, loads, slt, etc)\\
@@ -643,7 +646,7 @@
 		- Generate all of these signals using opcode (and funct, for R-type) using a combinational circuit\\
 		
 		\textbf{PCSrc}\\
-		Note only need opcode (that it is a branch instruction) but also if the branch is taken (\texttt{isZero === 1}).\\
+		\highlight{Note} only need opcode (that it is a branch instruction) but also if the branch is taken (\texttt{isZero === 1}).\\
 		- Therefore, need to combine the two signals using \texttt{AND} gate\\
 		
 		\textbf{ALUControl}\\
@@ -652,7 +655,7 @@
 		\includegraphics[scale=0.25]{./assets/ALUControl}\\
 		\includegraphics[scale=0.25]{./assets/ALUCircuit}\\
 		Picture shows 1 "slice" of 32-bit ALU. Can think of actual ALU as 32 slices back to back\\
-		NOTE: \texttt{SUB} is implemented by inverting all bits in B, setting first $C_{in}$ to $1$
+		\highlight{NOTE}: \texttt{SUB} is implemented by inverting all bits in B, setting first $C_{in}$ to $1$
 		
 		\centerline{$A + B' + 1 = A +$ 2s comp of $B$}
 		
@@ -717,13 +720,13 @@
 		- Or (+)\\
 		
 		\textbf{Boolean Algebra Laws}\\
-		TODO: add pictures here\\
+		\includegraphics[scale=.35]{./assets/booleanAlgebraLaws}\\
 		
 		\textbf{Duality}\\
 		If AND/OR operators and identity elements 0/1 in a Boolean Equation are interchanged, it remains valid\\
 		
 		\textbf{Theorems}\\
-		TODO: add picture here\\
+		\includegraphics[scale=.35]{./assets/booleanAlgebraTheorems}\\
 		
 		\textbf{Standard Form}\\
 		Every boolean expression can be expressed in SOP or POS.\\
@@ -739,11 +742,274 @@
 		- Maxterm of \textit{n} variables is a \textbf{sum term} that contains \textit{n} literals from all the variables.\\
 		eg. for two variables \texttt{x, y}, maxterms are \texttt{x'+y', x'+y, x+y', x+y}\\
 		
-		TODO add pic of named minterm and maxterms
+		\includegraphics[scale=.35]{./assets/mintermAndMaxterm}\\
 		
-		Note: Each minterm is the compement of its corresponding maxterm, and vice-versa\\
+		\highlight{Note}: Each minterm is the compement of its corresponding maxterm, and vice-versa\\
 		
 		\textbf{Canonical Forms}
+		- Sum of minterms = Canonical sum of products\\
+		- Product of maxterms = Canonical product of sums\\
+		
+		Given truth table\\
+		- Obtain \textbf{sum of minterms} by gathering minterms (where output is 1)\\
+		- Obtain \textbf{product of maxterms} by gathering maxterms (where output is 0)\\
+		
+		Conversion between standard forms\\
+		\textbf{sum of minterm} $\rightarrow$ \textbf{product of max terms}\\
+		-eg $F2 = \sum m(1,4,5,6,7) = \prod M(0,2,3)$\\
+		
+		{\normalsize\textbf{Logic Circuit}}\\
+		\textbf{NAND/NOR Gates}\\
+		\includegraphics[scale=.35]{./assets/NANDNOR}\\
+		
+		\textbf{XOR/XNOR Gate}\\
+		\includegraphics[scale=.4]{./assets/XORXNOR}\\
+		
+		SOP expression can be implemented using\\
+		- 2-level AND-OR circuit\\
+		- 2-level NAND circuit\\
+		
+		POS expression can be implemented using\\
+		- 2-level OR-AND circuit\\
+		- 2 level NOR circuit\\
+		
+		{\normalsize\textbf{Simplification}}\\
+		- Algebraic: using theorems\\
+		- K-map: no more than 6 variables\\
+		- Quine-McClusky: non-examinable\\
+		
+		\textbf{Gray Code}\\
+		- Unweighted\\
+		- Only a \textbf{single bit change} from one code value to the next\\
+		\includegraphics[scale=.5]{./assets/grayCode}\\
+		
+		\textbf{K-maps}\\
+		- Limited to 5 or 6 variables\\
+		- Each square represents a minterm\\
+		- Two adjacent squares represent minterms that differs by exactly 1 literal\\
+		- K-map of $n$ variables has $2^n$ squares, each cell has $n$ neighbors\\
+		\includegraphics[scale=.5]{./assets/2VarKMap}\\
+		\highlight{Note}: there is wrap-around in kmaps\\
+		
+		\textbf{How to use K-Map}\\
+		- Group as many cells together as possible: larger group $\rightarrow$ less literals\\
+		- As few groups to cover all 1s: fewer groups $\rightarrow$ fewer product terms\\
+		\includegraphics[scale=.4]{./assets/validInvalidGroupings}\\
+		
+		\textbf{PI and EPI}\\
+		Prime Implicant: product term obtained by combining the \highlight{maximum possible number of minterms} from adjacent squares, biggest group.\\
+		\includegraphics[scale=.5]{./assets/primeImplicant}\\
+		
+		Essential Prime Implicant: A prime implicant that includes \highlight{at least one minterm not covered} by any other PIs.\\
+		Reduces number of redundant groups.\\
+		\includegraphics[scale=.5]{./assets/EPI}\\
+		
+		\textbf{Algorithm for SOP}\\
+		1. Find PIs\\
+		2. Find EPIs\\
+		3. Choose all EPIs\\
+		4. Choose PIs that cover minterms not covered by EPIs\\
+		
+		\textbf{Algorithm for POS}\\
+		1. Same as SOP, but group maxterms (0s) instead
+		\includegraphics[scale=.5]{./assets/POSKmap}\\
+		
+		\textbf{Don't Care Conditions}\\
+		- If output is not specified or invalid, it can be 0 or 1, and are denoted by X or d.\\
+		- Can be chosen to be either 1 or 0 to make a simpler SOP or POS expression.\\
+		
+		{\normalsize\textbf{Combinational Circuit}}\\
+		- Combinational: output depends solely on immediate inputs.\\
+		- Sequential: output depends on immediate inputs and state.\\
+		
+		\textbf{Gate Level Design}\\
+		- draw truth table, do kmap for each output and simplify\\
+		
+		{\normalsize\textbf{Sequential Logic}}\\
+		Two types of sequential circuits\\
+		- Synchronous: outputs change only at specific time\\
+		- Asynchronous: outputs change at any time
+		Multivibrator: a class of sequential circuits\\
+		- Bistable (2 stable states)\\
+		- Monostable or one-shot (1 stable state)\\
+		- Astable (no stable state)\\
+		Bistable Logic devices\\
+		- \textbf{Latches and Flip-Flops}\\
+		- Latches: pulse triggered\\
+		- Flip-flops: edge triggered\\
+		
+		\textbf{S-R Latch}\\
+		Two inputs: $S$ and $R$\\
+		Two complementary outputs: $Q$ and $Q'$\\
+			- When $Q$ = 1, in \highlight{SET} state\\
+			- When $Q$ = 0, in \highlight{RESET} state\\
+		For Active High S-R Latch\\
+			- R = 1. S = 0: RESET\\
+			- R = 0, S = 1: SET\\
+			- R = 0, S = 0: No change\\
+			- R = 1, S = 1: invalid\\
+		For Active Low S-R Latch\\
+			- flip\\
+		Gated Latches\\
+			- Enable input $EN$ changes only if $EN$ is HIGH\\
+		Characteristic Table (Active High)\\
+		\includegraphics[scale=.5]{./assets/ActiveHighSRTable}
+		
+		\textbf{D Latch}\\
+		- Same as SR Latch without invalid condition and only 1 input\\
+		- Single input D, D sent to S input, negated D sent to R input\\
+		- $Q^+ = D$\\
+		\includegraphics[scale=.5]{./assets/DLatchTable}
+		
+		\textbf{Flip Flops}\\
+		Change state at rising or falling edge of clock signal\\
+		\includegraphics[scale=.5]{./assets/flipflops}
+		
+		\textbf{J-K Flip-flop}\\
+		$Q$ and $Q'$ are fed back to the pulse-steering NAND gates.\\
+		- No invalid state: when $J$ and $K$ are 1 $\rightarrow$ \highlight{Toggle}\\
+		\includegraphics[scale=.5]{./assets/JKFlipFlop}
+		
+		\textbf{T Flip-flop}\\
+		Single input version of the J-K flip-flop, tie both input together\\
+		\includegraphics[scale=.5]{./assets/TFlipFlop}
+		
+		\textbf{Asynchronous Inputs}\\
+		Affect state of flip-flop independent of clock\\
+		- $PRE = 1$, Q is \highlight{immediately} set to 1\\
+		- $CLR = 1$, Q is \highlight{immediately} set to 0\\
+		- $PRE = 0, CLR = 0$, normal flip-flop operation\\
+		
+		\textbf{Characteristic Table}\\
+		\includegraphics[scale=.6]{./assets/CharacteristicTable}
+		
+		\textbf{Analysis of Sequential Circuit}\\
+		1. Derive state equations / input equations from ff inputs, and output functions (if 
+		any)\\
+		2. Derive state table and hence diagram, using state equations and characteristic table\\
+		
+		\textbf{Excitation Table}\\
+		Excitation Tables: given the required transition from present state to next state, determine the flip-flop inputs\\
+		\includegraphics[scale=.7]{./assets/excitationTables}
+		
+		\textbf{Design Procedure}\\
+		1. Start with specs - state diagram or state table.\\
+		2. Derive state table\\
+		3. Perform state reduction if necessary\\
+		4. Perform state assignment\\
+		5. Determine number of flip-flops and label them.\\
+		6. Choose type of flip-flop\\
+		7. Derive Circuit excitation and output tables from the state table\\
+		8. Derive circuit output functions and flip-flop input functions (simplify w kmap if necessary)\\
+		9. draw logic diagram\\
+		
+		{\normalsize\textbf{Pipelining}}\\
+		Pipelining doesn't help latency of single task, but helps throughput of entire workload\\
+		Multiple tasks operating simultaneously using different resources\\
+		Delays\\
+		- limited by slowest pipeline stage\\
+		- stall for dependencies\\
+		
+		\textbf{MIPS Pipeline}\\
+		Five pipelining stages\\
+		- \highlight{IF}: Instruction Fetch\\
+		- \highlight{ID}: Instruction Decode and Register Read\\
+		- \highlight{EX}: Execute operation or calc address (ALU)\\
+		- \highlight{MEM}: Read/Write from/to memory\\
+		- \highlight{WB}: Write back the result into a register\\
+		
+		Each execution stage takes 1 clock cycle\\
+		General flow of data is from one stage to the next\\
+		
+		Exception: Update of PC and write back to reg file\\
+		
+		\textbf{Pipeline Datapath}\\
+		Data used by \highlight{same instruction} in later pipeline stages need to be stored somewhere (due to multicycle(?))\\
+		- Additional registers in datapath called \highlight{pipeline registers}\\
+		- \texttt{IF / ID}: Register between \texttt{IF} and \texttt{ID}\\
+		- \texttt{ID / EX}: Register between \texttt{ID} and \texttt{EX}\\
+		- \texttt{EX / MEM}: Register between \texttt{EX} and \texttt{MEM}\\
+		- \texttt{MEM / WB}: Register between \texttt{MEM} and \texttt{WB}\\
+		No need for register at end of \texttt{WB} stage as it is the end of the command.\\
+		\highlight{Note:} Need to send the "Write Register" number along through the pipeline registers so that it can be used in \texttt{WB} stage\\
+		
+		\textbf{Pipeline Control}\\
+		Difference from single-cycle datapath: Each control signal belongs to a particular pipeline stage\\
+		\includegraphics[scale=.5]{./assets/groupedControls}
+		
+		\highlight{Number of cycles needed in Idea pipeline}, with $I$ instructions:\\
+		$I + N - 1$ in an N cycle pipeline (need $N-1$ cycles to fill pipeline)\\ 
+
+		Pipeline processor can gain N times speedup, where N is the number of pipeline stages (ideal pipeline)\\
+		
+		{\normalsize\textbf{Pipeline Hazards}}\\
+		Problems that prevent next intruction from immediately following previous instruction\\
+		1. Structural hazards: Simultaneous use of hardware\\
+		2. Data hazards: Data dependencies between instructions\\
+		3. Control hazards: Change in program flow\\
+		2 and 3 are Instruction Dependencies (instructions have relationships that prevent pipeline execution)\\
+		
+		\textbf{Structural Hazards}\\
+		1. \texttt{IF} and \texttt{MEM} both access memory, clash between Inst 1 and 3\\
+		\highlight{Solution}: Split memory into Data Memory and Instruction Memory.\\
+		
+		2. \texttt{ID} and \texttt{WB} both use reg file\\
+		\highlight{Solution}: Registers are fast; Split cycle into two, write in first half, read in second half\\
+		
+		\textbf{Data dependency: RAW}\\
+		Read-After-Write: Occurs when a later instruction \highlight{reads} from the destination register \highlight{writter} by an earlier instruction\\
+		\highlight{Solution}: \highlight{Forward} the result to any later instruction before it is reflected in the register file. Replace data read from reg file of later inst.\\
+		\includegraphics[scale=.7]{./assets/dataForwarding}
+		
+		\highlight{Exception}: \texttt{lw} cannot be solved with forwarding. Data is produced in \texttt{MEM}. Must stall 1 cycle\\
+		
+		\textbf{Control Dependency}\\
+		Definition: An instruction \texttt{j} is control dependent on \texttt{i} if \texttt{i} controls whether or not \texttt{j} executes. (branch inst)\\
+		
+		\highlight{Problem}: Branch Decision is made at \texttt{MEM} stage.\\
+		\highlight{Solution}: \\
+		1. Stall the pipeline for 3 cycles.\\
+		2. Early Branching: move the branch decision to an earlier stage\\
+		3. Branch Prediction: Guess outcome of branch\\
+		4. Delayed Branching: Do something useful while waiting for outcome\\
+		
+		\textbf{Early Branching}\\
+		Make decision in \texttt{ID} stage instead of \texttt{MEM}\\
+		- Move branch target address calculation\\
+		- Move register comparison $\rightarrow$ cannot use \texttt{ALU} for register comparison any more\\
+		- Still need to stall 1 cycle\\
+		\highlight{NOTE} if register involved in comparison is produced by preceding instruction (RAW), need to stall \highlight{extra 1} cycle\\
+		If preceding instruction is \highlight{lw}, need to stall \highlight{extra 2} cycles $\rightarrow$ back to 3 cycles of delay\\
+		
+		\textbf{Branch Prediction}\\
+		Simplest prediction scheme: branch not taken\\
+		\highlight{Not taken}: Guessed correctly $\rightarrow$ No pipeline stall\\
+		\highlight{Taken}: Guessed wrongly $\rightarrow$ Wrong instructions in the pipeline $\rightarrow$ \textbf{Flush} successor instruction from the pipeline\\
+		
+		\textbf{Delayed Branching}\\
+		Move \textbf{non-control dependent instructions} into the X slots following a branch (1 if early branching)\\
+		- These instructions are executed \textbf{regardless} of branch outcome\\
+		- Must have the same behaviour as original code
+		\highlight{NOTE}: Unless branch prediction is used in which case wrong instruction \textbf{will be flushed!}\\
+		
+		Best Case Scenario:\\
+		There is an instruction \textbf{preceding the branch} which \textbf{can be moved} into the delayed slot.\\
+		- Program correctness must be preserved
+		
+		Worst Case Scenario
+		No instruction can be found
+		- no-op instruction instead (\texttt{nop})\\
+		
+		
+		
+		
+		
+		
+		
+				
+		
+		
+		
 		
 		
 		
@@ -751,4 +1017,6 @@
 				
 	\end{multicols*}
 
+	\includegraphics[scale=1.5]{./assets/pipelineDatapath}\\
+	
 \end{document}
