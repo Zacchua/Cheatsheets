@@ -6,7 +6,7 @@
 \usepackage{multicol}
 \usepackage{setspace}
 \usepackage{graphicx}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 
 
 \author{Zachary Chua Yan Ern}
@@ -14,6 +14,9 @@
 \setstretch{1.25}
 
 \newcommand{\highlight}[1]{{\color{red}\textbf{#1}}}
+\newcommand{\blue}[1]{{\color{MidnightBlue}#1}}
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color{ForestGreen}#1}}
 
 \begin{document}
 	\scriptsize %tiny
@@ -999,8 +1002,144 @@
 		Worst Case Scenario
 		No instruction can be found
 		- no-op instruction instead (\texttt{nop})\\
-		
-		
+
+		{\normalsize\textbf{Cache}}\\
+		small but fast SRAM near CPU, makes slow main memory appear faster\\
+
+		\textbf{Memory Hierarchy}\\
+		Registers are in the processor, if operands are in memory, need to load them into processor, operate, store back.\\
+		- Fast RAM -> expensive\\
+		- Cheap RAM -> slow\\
+		Therefore have small but fast memory near CPU, large but slow memory farther from CPU\\
+		Keep frequently and recently used data in \highlight{smaller but faster} memory\\
+
+		\textbf{Principle of Locality}\\
+		Program accesses only a small portion of the memory address space within a small time interval\\
+		Types of Locality\\
+		1. Temporal Locality - If an item is referenced, it will tend to be referenced soon again\\
+		2. Spatial Locality - If an item is referenced, nearby items will tend to be referenced soon\\
+		Different locality for instruction and data\\
+
+		\textbf{Terminology}\\
+		- \green{Hit}: Data is in the cache\\
+		- \green{Hit rate}: Fraction of memory accesses that hit\\
+		- \green{Hit time}: Time to access cache\\
+		- \red{Miss}: Data is not in cache\\
+		- \red{Miss Rate}: 1 - \green{Hit Rate}\\
+		- \red{Miss Penalty}: Time to replace cache block + \green{Hit Time}\\
+		Hit time < Miss penalty\\
+		\highlight{Average Access Time} = Hit rate x Hit time + (1 - Hit rate) x Miss penalty\\
+
+		\textbf{Memory to Cache Mapping}\\
+		\highlight{Cache Block}: Unit of transfer between memory and cache\\
+		- Typically 1 or more words (spatial locality)\\
+
+		Observations:\\
+		1. $2^{N}$-byte blocks are aligned at $2^{N}$-byte boundaries\\
+		2. Addresses of words within a $2^{N}$-byte block have identical $(32-N)$ MSB.\\
+		3. Bits $[31:N] \rightarrow$ \highlight{block number}\\
+		4. Bits $[N-1:0] \rightarrow$ \highlight{byte offset} within a block\\
+
+		\textbf{Direct Mapped Cache}\\
+		- Each Block has exactly one location to be mapped to in cache (known as the \highlight{cache index})\\
+		- Multiple blocks may be mapped to the same location in cache\\
+		- But each is uniquely identified by its tag\\
+		\highlight{Tag} = block number / no. of cache blocks.\\
+
+		\includegraphics[scale=.3]{./assets/DirectCacheBits}\\
+		\highlight{Note}: For MIPS, the 2 LSB of the offset is byte number, next 2 bit are word number within the block.\\
+		Word number within block tells you which words to bring into cache\\
+
+		\textbf{Cache Structure}\\
+		- Data block\\
+		- Tag\\
+		- Valid bit\\
+
+		\textbf{Reading Data}\\
+		Cache hit when Tag[index] = Tag[Memory Address] \highlight{and}
+		Valid bit = 1\\
+		\highlight{Note}: initially all valid bits = 0\\
+		\includegraphics[scale=.28]{./assets/readCacheData}\\
+
+		\textbf{Writing Data}\\
+		Changing only memory or cache $\rightarrow$ cache and memory out of sync\\
+		Two policies:\\
+		1. Write-through cache: Write data to both cache and memory\\
+		2. Write-back cache: Only write to cache, write to main memory when cache block is evicted\\
+
+		\textbf{Write Through Cache}\\
+		\red{Problems}: Writes slowly at the speed of main memory\\
+		\green{Solution}: Put a write buffer between cache and memory; CPU write to cache and buffer, mem controller write to memory\\
+
+		\textbf{Write Back Cache}\\
+		\red{Problem}: Wasteful to write back every block that is evicted\\
+		\green{Solution}: Add a 'Dirty Bit' to each block and only write to memory if dirty bit = 1\\
+
+		\textbf{Types of Misses}\\
+		1. \blue{Compulsory / Cold Misses}: On the first access to a block; the block must be brought into the cache\\
+		2. \blue{Conflict / Collision Misses}: Occurs in SA cache and Direct Mapped cache; when several blocks are mapped to the same block/set\\
+		3. \blue{Capacity Misses}: Occurs when blocks are discarded from cache as cache cannot contain all blocks needed\\
+
+		\textbf{Handling Cache Misses}\\
+		- \blue{Read Miss}: load block into cache, read from cache\\
+		- \blue{Write Miss}: Write Allocate - Load block into cache, change word, write to main memory depending on write policy\\
+		- \blue{Write Miss}: Write Around - Write \highlight{straight to main mem} without loading block into cache\\
+		\includegraphics[scale=.28]{./assets/writeDataCache}
+
+		\textbf{Block Size}\\
+
+
+		\textbf{Set Associative Cache}\\
+		Solution to the problem that there are too many conflicts\\
+		\blue{N-way Set Associative Cache} - Memory block can be placed in N locations in cache\\
+
+		In 2-way SA cache\\
+		- Cache is split into sets, each set contains 2 blocks.\\
+		- Memory block is mapped to a unique set, and can be placed in either block\\
+		$\rightarrow$ need to search \highlight{both blocks} when searching cache\\
+		\includegraphics[scale=.32]{./assets/SACache}
+		\highlight{Note}: Formula is similar to DM cache, but \highlight{Set Index} rather than \highlight{Index}\\
+
+		\textbf{Advantage of Associativity}\\
+		Rule of Thumb - A direct mapped cache of size N has about the same miss rate as a 2-way SA cache of size N/2\\
+
+		\textbf{Fully Associative Cache}\\
+		Memory block can be placed in any location in cache\\
+		\green{Pros}: Can be placed in any location in cache\\
+		\red{Cons}: Need to search all of the locations in cache for a block\\
+		\includegraphics[scale=.3]{./assets/FACache}\\
+		\highlight{Note}: No conflict misses but have capacity misses\\
+
+		\textbf{Cache Performance}\\
+		1. Compulsory/Cold misses remain same irrespective of cache size and associativity\\
+		2. Conflict Misses decrease with increasing associativity\\
+		3. Conflict Misses = 0 for FA cache\\
+		4. Capacity Misses decrease with cache size\\
+
+		\textbf{Block Replacement Policy} (for SA and FA cache)\\
+		Least Recently Used (LRU) policy:\\
+		- \blue{How}: for each cache hit, record the cache block that was accessed. When replacing, choose the block that has not been accessed for a long time\\
+		- \blue{Why}: Temporal Locality\\
+		- Note: need a supporting Data Structure to keep track of LRU\\
+		\red{Drawback}: Hard to keep track if there are many choices\\
+
+		Other replacement policies\\
+		- First in First out\\
+		- Random Replacement\\
+		- Least Frequently Used\\
+
+
+
+
+
+
+
+
+
+
+
+
+
 		
 		
 		
@@ -1010,8 +1149,7 @@
 		
 		
 		
-		
-		
+
 		
 		
 				
