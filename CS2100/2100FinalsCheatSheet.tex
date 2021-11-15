@@ -538,7 +538,7 @@
 		5. Encoding the Instruction Set\\
 		
 		\textbf{1. Data Storage}\\
-		\includegraphics[scale=.25]{./assets/dataStorage}\\
+		\includegraphics[scale=.2]{./assets/dataStorage}\\
 		
 		\textbf{2. Memory Addressing Mode}\\
 		- Given $k$ bit address, address space is of size $2^k$\\
@@ -605,7 +605,7 @@
 		- \texttt{RegWrite} is the control signal to indicate writing fo register; 1 = write, 0 = no write\\
 		- Need to use multiplexer with \texttt{RegDst} control signal to choose between \texttt{rt} and \texttt{immediate} for write register\\
 		- Need to sign extend \texttt{immediate} to 32 bit and output to ALU\\
-		\includegraphics[scale=.27]{./assets/decodeStage}\\
+		\includegraphics[scale=.2]{./assets/decodeStage}\\
 		
 		\textbf{3. ALU Stage aka EX stage}\\
 		- takes in 2 32 bit numbers\\
@@ -748,11 +748,7 @@
 		\includegraphics[scale=.35]{./assets/mintermAndMaxterm}\\
 		
 		\highlight{Note}: Each minterm is the compement of its corresponding maxterm, and vice-versa\\
-		
-		\textbf{Canonical Forms}
-		- Sum of minterms = Canonical sum of products\\
-		- Product of maxterms = Canonical product of sums\\
-		
+
 		Given truth table\\
 		- Obtain \textbf{sum of minterms} by gathering minterms (where output is 1)\\
 		- Obtain \textbf{product of maxterms} by gathering maxterms (where output is 0)\\
@@ -762,12 +758,6 @@
 		-eg $F2 = \sum m(1,4,5,6,7) = \prod M(0,2,3)$\\
 		
 		{\normalsize\textbf{Logic Circuit}}\\
-		\textbf{NAND/NOR Gates}\\
-		\includegraphics[scale=.35]{./assets/NANDNOR}\\
-		
-		\textbf{XOR/XNOR Gate}\\
-		\includegraphics[scale=.4]{./assets/XORXNOR}\\
-		
 		SOP expression can be implemented using\\
 		- 2-level AND-OR circuit\\
 		- 2-level NAND circuit\\
@@ -784,28 +774,28 @@
 		\textbf{Gray Code}\\
 		- Unweighted\\
 		- Only a \textbf{single bit change} from one code value to the next\\
-		\includegraphics[scale=.5]{./assets/grayCode}\\
+		\includegraphics[scale=.4]{./assets/grayCode}
 		
 		\textbf{K-maps}\\
 		- Limited to 5 or 6 variables\\
 		- Each square represents a minterm\\
 		- Two adjacent squares represent minterms that differs by exactly 1 literal\\
 		- K-map of $n$ variables has $2^n$ squares, each cell has $n$ neighbors\\
-		\includegraphics[scale=.5]{./assets/2VarKMap}\\
+		\includegraphics[scale=.3]{./assets/2VarKMap}\\
 		\highlight{Note}: there is wrap-around in kmaps\\
 		
 		\textbf{How to use K-Map}\\
 		- Group as many cells together as possible: larger group $\rightarrow$ less literals\\
 		- As few groups to cover all 1s: fewer groups $\rightarrow$ fewer product terms\\
-		\includegraphics[scale=.4]{./assets/validInvalidGroupings}\\
+		\includegraphics[scale=.35]{./assets/validInvalidGroupings}
 		
 		\textbf{PI and EPI}\\
 		Prime Implicant: product term obtained by combining the \highlight{maximum possible number of minterms} from adjacent squares, biggest group.\\
-		\includegraphics[scale=.5]{./assets/primeImplicant}\\
-		
+		\includegraphics[scale=.4]{./assets/primeImplicant}
+
 		Essential Prime Implicant: A prime implicant that includes \highlight{at least one minterm not covered} by any other PIs.\\
 		Reduces number of redundant groups.\\
-		\includegraphics[scale=.5]{./assets/EPI}\\
+		\includegraphics[scale=.4]{./assets/EPI}
 		
 		\textbf{Algorithm for SOP}\\
 		1. Find PIs\\
@@ -815,19 +805,58 @@
 		
 		\textbf{Algorithm for POS}\\
 		1. Same as SOP, but group maxterms (0s) instead
-		\includegraphics[scale=.5]{./assets/POSKmap}\\
+		\includegraphics[scale=.45]{./assets/POSKmap}
 		
 		\textbf{Don't Care Conditions}\\
 		- If output is not specified or invalid, it can be 0 or 1, and are denoted by X or d.\\
 		- Can be chosen to be either 1 or 0 to make a simpler SOP or POS expression.\\
-		
-		{\normalsize\textbf{Combinational Circuit}}\\
-		- Combinational: output depends solely on immediate inputs.\\
-		- Sequential: output depends on immediate inputs and state.\\
-		
-		\textbf{Gate Level Design}\\
-		- draw truth table, do kmap for each output and simplify\\
-		
+
+		{\normalsize\textbf{MSI Components}}\\
+		Medium Scale Integration\\
+
+		\textbf{Decoder}\\
+		Chooses one (of $2^n$) output lines based on $n$ input lines. \\
+		Each output corresponds to minterm of the $n$ functions\\
+		\includegraphics[scale=.18]{./assets/decoder}
+
+		Decoder with enable\\
+		- output 0 when disabled, E = 0 in one enabled decoder\\
+
+		Active Low decoder\\
+		- selected line = 0, other lines 1\\
+		- implement function using NAND instead\\
+
+		Larger decoders can be constructed from smaller decoders and inverter using one of the inputs as enable signal\\
+
+		Implementing functions\\
+		- use decoder to generate minterms or maxterms\\
+		- inputs as selector lines to choose minterms or maxterms\\
+		\includegraphics[scale=.23]{./assets/decoderFunctions}
+
+		\textbf{Encoder}\\
+		- only one input = 1, returns the corresponding number of the input.\\
+		- Opposite of decoder\\
+
+		Priority Encoder\\
+		- Encoder output depends only on MSB, can have $ > 1$ input line = 1\\
+
+		\textbf{Demultiplexer}\\
+		- Directs data from input line to one of the output lines, depending on the selector lines\\
+		- Circuit is same as decoder with enable, data input -> enable, selector lines -> decoder input\\
+
+		\textbf{Multiplexer}\\
+		Directs one of $2^n$ inputs to a single output line, using $n$ selector lines. Known as a \red{data selector}\\
+		- output is the sum of (product of data lines and selection lines)\\
+		- $Output = I_0 \cdot (S_1' \cdot S_0') + I_1 \cdot (S_1' \cdot S_0) + I_2 \cdot (S_1 \cdot S_0') + I_3 \cdot (S_1 \cdot S_0)$\\
+		- $Output = I_0 \cdot m_0 + I_1 \cdot m_1 + I_2 \cdot m_2 + I_3 \cdot m_3$\\
+
+		Implementing Functions with Multiplexers\\
+		1. Express function in sum-on-minterm form\\
+		2. Connect $n$ variables to $n$ selector lines\\
+		3. Connect $1$ to data line if it is a minterm of function or $0$ otherwise\\
+		\highlight{Note}: Can use smaller multiplexers\\
+		\includegraphics[scale=.2]{./assets/smallerMux}
+
 		{\normalsize\textbf{Sequential Logic}}\\
 		Two types of sequential circuits\\
 		- Synchronous: outputs change only at specific time\\
@@ -840,7 +869,6 @@
 		- \textbf{Latches and Flip-Flops}\\
 		- Latches: pulse triggered\\
 		- Flip-flops: edge triggered\\
-		
 		\textbf{S-R Latch}\\
 		Two inputs: $S$ and $R$\\
 		Two complementary outputs: $Q$ and $Q'$\\
@@ -855,18 +883,14 @@
 			- flip\\
 		Gated Latches\\
 			- Enable input $EN$ changes only if $EN$ is HIGH\\
-		Characteristic Table (Active High)\\
-		\includegraphics[scale=.5]{./assets/ActiveHighSRTable}
-		
 		\textbf{D Latch}\\
 		- Same as SR Latch without invalid condition and only 1 input\\
 		- Single input D, D sent to S input, negated D sent to R input\\
 		- $Q^+ = D$\\
-		\includegraphics[scale=.5]{./assets/DLatchTable}
-		
+
 		\textbf{Flip Flops}\\
 		Change state at rising or falling edge of clock signal\\
-		\includegraphics[scale=.5]{./assets/flipflops}
+		\includegraphics[scale=.4]{./assets/flipflops}
 		
 		\textbf{J-K Flip-flop}\\
 		$Q$ and $Q'$ are fed back to the pulse-steering NAND gates.\\
@@ -883,7 +907,7 @@
 		- $CLR = 1$, Q is \highlight{immediately} set to 0\\
 		- $PRE = 0, CLR = 0$, normal flip-flop operation\\
 		
-		\textbf{Characteristic Table}\\
+		\textbf{Characteristic Table (for analysis)}\\
 		\includegraphics[scale=.6]{./assets/CharacteristicTable}
 		
 		\textbf{Analysis of Sequential Circuit}\\
@@ -891,9 +915,9 @@
 		any)\\
 		2. Derive state table and hence diagram, using state equations and characteristic table\\
 		
-		\textbf{Excitation Table}\\
+		\textbf{Excitation Table (for Design)}\\
 		Excitation Tables: given the required transition from present state to next state, determine the flip-flop inputs\\
-		\includegraphics[scale=.7]{./assets/excitationTables}
+		\includegraphics[scale=.6]{./assets/excitationTables}
 		
 		\textbf{Design Procedure}\\
 		1. Start with specs - state diagram or state table.\\
@@ -965,6 +989,7 @@
 		\includegraphics[scale=.7]{./assets/dataForwarding}
 		
 		\highlight{Exception}: \texttt{lw} cannot be solved with forwarding. Data is produced in \texttt{MEM}. Must stall 1 cycle\\
+		In general, without data forwarding stall \highlight{2} cycles (3 if \texttt{lw} is preceding).\\
 		
 		\textbf{Control Dependency}\\
 		Definition: An instruction \texttt{j} is control dependent on \texttt{i} if \texttt{i} controls whether or not \texttt{j} executes. (branch inst)\\
@@ -981,7 +1006,7 @@
 		- Move branch target address calculation\\
 		- Move register comparison $\rightarrow$ cannot use \texttt{ALU} for register comparison any more\\
 		- Still need to stall 1 cycle\\
-		\highlight{NOTE} if register involved in comparison is produced by preceding instruction (RAW), need to stall \highlight{extra 1} cycle\\
+		\highlight{NOTE} if register involved in comparison is produced by preceding instruction (RAW), need to stall \highlight{extra 1} cycle (total 2 cycles)\\
 		If preceding instruction is \highlight{lw}, need to stall \highlight{extra 2} cycles $\rightarrow$ back to 3 cycles of delay\\
 		
 		\textbf{Branch Prediction}\\
@@ -1059,7 +1084,7 @@
 		Cache hit when Tag[index] = Tag[Memory Address] \highlight{and}
 		Valid bit = 1\\
 		\highlight{Note}: initially all valid bits = 0\\
-		\includegraphics[scale=.28]{./assets/readCacheData}\\
+		\includegraphics[scale=.22]{./assets/readCacheData}
 
 		\textbf{Writing Data}\\
 		Changing only memory or cache $\rightarrow$ cache and memory out of sync\\
@@ -1070,7 +1095,6 @@
 		\textbf{Write Through Cache}\\
 		\red{Problems}: Writes slowly at the speed of main memory\\
 		\green{Solution}: Put a write buffer between cache and memory; CPU write to cache and buffer, mem controller write to memory\\
-
 		\textbf{Write Back Cache}\\
 		\red{Problem}: Wasteful to write back every block that is evicted\\
 		\green{Solution}: Add a 'Dirty Bit' to each block and only write to memory if dirty bit = 1\\
@@ -1079,15 +1103,14 @@
 		1. \blue{Compulsory / Cold Misses}: On the first access to a block; the block must be brought into the cache\\
 		2. \blue{Conflict / Collision Misses}: Occurs in SA cache and Direct Mapped cache; when several blocks are mapped to the same block/set\\
 		3. \blue{Capacity Misses}: Occurs when blocks are discarded from cache as cache cannot contain all blocks needed\\
-
 		\textbf{Handling Cache Misses}\\
 		- \blue{Read Miss}: load block into cache, read from cache\\
 		- \blue{Write Miss}: Write Allocate - Load block into cache, change word, write to main memory depending on write policy\\
 		- \blue{Write Miss}: Write Around - Write \highlight{straight to main mem} without loading block into cache\\
-		\includegraphics[scale=.28]{./assets/writeDataCache}
+		\includegraphics[scale=.22]{./assets/writeDataCache}
 
 		\textbf{Block Size}\\
-
+		Reduces cache miss rate (due to spatial locality) up to a point, then increases (due to lower number of blocks in cache)\\
 
 		\textbf{Set Associative Cache}\\
 		Solution to the problem that there are too many conflicts\\
@@ -1097,7 +1120,7 @@
 		- Cache is split into sets, each set contains 2 blocks.\\
 		- Memory block is mapped to a unique set, and can be placed in either block\\
 		$\rightarrow$ need to search \highlight{both blocks} when searching cache\\
-		\includegraphics[scale=.32]{./assets/SACache}
+		\includegraphics[scale=.3]{./assets/SACache}
 		\highlight{Note}: Formula is similar to DM cache, but \highlight{Set Index} rather than \highlight{Index}\\
 
 		\textbf{Advantage of Associativity}\\
@@ -1107,7 +1130,7 @@
 		Memory block can be placed in any location in cache\\
 		\green{Pros}: Can be placed in any location in cache\\
 		\red{Cons}: Need to search all of the locations in cache for a block\\
-		\includegraphics[scale=.3]{./assets/FACache}\\
+		\includegraphics[scale=.28]{./assets/FACache}\\
 		\highlight{Note}: No conflict misses but have capacity misses\\
 
 		\textbf{Cache Performance}\\
@@ -1128,31 +1151,9 @@
 		- Random Replacement\\
 		- Least Frequently Used\\
 
+		\includegraphics[scale=.28]{./assets/nandGate}\\
+		\includegraphics[scale=.28]{./assets/norGate}\\
 
-
-
-
-
-
-
-
-
-
-
-
-		
-		
-		
-		
-		
-				
-		
-		
-		
-
-		
-		
-				
 	\end{multicols*}
 
 	\includegraphics[scale=1.5]{./assets/pipelineDatapath}\\
