@@ -988,9 +988,9 @@
 		\highlight{Solution}: \highlight{Forward} the result to any later instruction before it is reflected in the register file. Replace data read from reg file of later inst.\\
 		\includegraphics[scale=.7]{./assets/dataForwarding}
 		
-		\highlight{Exception}: \texttt{lw} cannot be solved with forwarding. Data is produced in \texttt{MEM}. Must stall 1 cycle\\
-		In general, without data forwarding stall \highlight{2} cycles (3 if \texttt{lw} is preceding).\\
-		
+		\highlight{Exception}: \texttt{lw} cannot be fully solved with forwarding. Data is produced in \texttt{MEM}. Must stall 1 cycle\\
+		In general, without data forwarding stall \highlight{2} cycles (even if \texttt{lw} is preceding).\\
+
 		\textbf{Control Dependency}\\
 		Definition: An instruction \texttt{j} is control dependent on \texttt{i} if \texttt{i} controls whether or not \texttt{j} executes. (branch inst)\\
 		
