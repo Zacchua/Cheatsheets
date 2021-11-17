@@ -1017,7 +1017,7 @@
 		\textbf{Delayed Branching}\\
 		Move \textbf{non-control dependent instructions} into the X slots following a branch (1 if early branching)\\
 		- These instructions are executed \textbf{regardless} of branch outcome\\
-		- Must have the same behaviour as original code
+		- Must have the same behaviour as original code\\
 		\highlight{NOTE}: Unless branch prediction is used in which case wrong instruction \textbf{will be flushed!}\\
 		
 		Best Case Scenario:\\
@@ -1027,6 +1027,32 @@
 		Worst Case Scenario
 		No instruction can be found
 		- no-op instruction instead (\texttt{nop})\\
+
+		\highlight{Summary}\\
+		Nothing:\\
+		- RAW (even lw preceding): 2 cycles delay\\
+		- Branch: 3 cycles delay\\
+
+		Data forwarding:\\
+		- RAW: No delay\\
+		- RAW ($\rightarrow$ \texttt{lw}): 1 cycle \\
+		- Branch: 3 cycle \\
+
+		No Data forwarding + Early Branching:\\
+		- RAW: 2 cycle \\
+		- Branch: 1 cycle \\
+
+		Data forwarding + Early Branching:\\
+		- RAW: No delay\\
+		- RAW ($\rightarrow$ \texttt{lw}): 1 cycle \\
+		- RAW ($\rightarrow$ branch): 1 cycle \\
+		- RAW (\texttt{lw} $\rightarrow$ branch): 2 cycle \\
+		- Branch: 1 cycle\\
+
+		Branch Prediction:\\
+		- Correct: no delay\\
+		- Wrong (early branching): 1 cycle\\
+		- Wrong (no early branching): 3 cycle\\
 
 		{\normalsize\textbf{Cache}}\\
 		small but fast SRAM near CPU, makes slow main memory appear faster\\
