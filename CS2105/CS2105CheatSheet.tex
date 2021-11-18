@@ -297,6 +297,26 @@
 		- TCP: two processes communicate as if there is a ``pipe'' between them. Send data $\rightarrow$ write data to pipe, \blue{no need to attach} dest IP and port to each packet. Pipe is there until one of the two processes closes it. Pipe is also \blue{reliable}\\
 		- UDP: Form UDP packet explicitly and \blue{attach} dest IP and port no to every packet.\\
 
+		{\normalsize\textbf{Transport Layer}}\\
+		Deliver messages between application processes running on different hosts\\
+		- \blue{TCP} and \blue{UDP}\\
+
+		What do they do\\
+		- Sender: break app message into \blue{segments}, passes them to network (IP) layer\\
+		- Receiver: reassembles segments into message, passes to app layer\\
+		- Routers in between: check dest IP to determine routing\\
+
+		Note:
+		- Each IP datagram contains \blue{source and dest IP addr}\\
+		- Each IP datagram carries \blue{one transport layer segment}\\
+		- Each segment contains \blue{src and dest port numbers}\\
+
+		\textbf{Connectionless Transport: UDP}\\
+		UDP adds the following services (very few)\\
+		- \blue{Multiplexing} at sender: UDP gathers data from processes, forms packets and passes them to IP\\
+		- \blue{De-multiplexing} at receiver: UDP receives packets from lower layer and sends them to right processes\\
+		- \blue{Checksum}\\
+		\red{NOTE}: UDP transmission is \highlight{unreliable}\\
 
 
 
