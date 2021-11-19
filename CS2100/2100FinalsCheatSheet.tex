@@ -1018,15 +1018,16 @@
 		Move \textbf{non-control dependent instructions} into the X slots following a branch (1 if early branching)\\
 		- These instructions are executed \textbf{regardless} of branch outcome\\
 		- Must have the same behaviour as original code\\
-		\highlight{NOTE}: Unless branch prediction is used in which case wrong instruction \textbf{will be flushed!}\\
-		
+
 		Best Case Scenario:\\
 		There is an instruction \textbf{preceding the branch} which \textbf{can be moved} into the delayed slot.\\
 		- Program correctness must be preserved
 		
 		Worst Case Scenario
 		No instruction can be found
-		- no-op instruction instead (\texttt{nop})\\
+		- no-op instruction instead (\texttt{nop}) (this is without branch prediction)\\
+
+		\highlight{NOTE}: Branch prediction and delayed branching can be implemented together. EG. without early branching, 3 delay slots, can find 2 non-control dependent instructions, last instruction will come from predicted branch, if wring prediction, flush \red{just that 1 instruction}.\\
 
 		\highlight{Summary}\\
 		Nothing:\\
