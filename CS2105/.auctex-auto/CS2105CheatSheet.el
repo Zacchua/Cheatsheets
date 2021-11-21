@@ -17,6 +17,7 @@
     "graphicx"
     "xcolor")
    (TeX-add-symbols
+    '("tab" 0)
     '("green" 1)
     '("red" 1)
     '("blue" 1)

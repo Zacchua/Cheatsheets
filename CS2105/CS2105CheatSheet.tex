@@ -18,6 +18,7 @@
 \newcommand{\blue}[1]{{\color{MidnightBlue}#1}}
 \newcommand{\red}[1]{{\color{red}#1}}
 \newcommand{\green}[1]{{\color{ForestGreen}#1}}
+\newcommand{\tab}[0]{\hspace*{2mm}}
 
 \begin{document}
 	\scriptsize %tiny
@@ -317,6 +318,293 @@
 		- \blue{De-multiplexing} at receiver: UDP receives packets from lower layer and sends them to right processes\\
 		- \blue{Checksum}\\
 		\red{NOTE}: UDP transmission is \highlight{unreliable}\\
+		Reasons for UDP:\\
+		- No connection establishment (less delay)\\
+		- Simple: no connection state at sender, receiver\\
+		- small header size\\
+		- No congestion control: UDP can blast away as fast as desired\\
+
+		\textbf{Connectionless Demultiplexing}\\
+		When UDP \red{receiver} recieves UDP segment\\
+		- Checks \blue{dest port no} of segment\\
+		- Directs UDP segment to the socket with that port number\\
+		- IP datagrams (from different soucres) with \blue{same destination port no.} will be directed to the same UDP socket at destination\\
+
+		\textbf{UDP Header}\\
+		Comprises of (8 bytes / 64 bits)\\
+		- Source port no. (16)\\
+		- Dest port no. (16)\\
+		- length \red{in bytes, including header}(16)\\
+		- checksum (16)\\
+
+		\textbf{UDP Checksum}\\
+		To detect errors (flipped bits) in transmitted segment\\
+
+		Sender:\\
+		- Compute checksum value\\
+		- put checksum value in UDP checksum field\\
+		Receiver:\\
+		- Compute checksum of received segment\\
+		- Check if computed value = checksum\\
+		\highlight{NOTE:} Just because checksum = computed value \red{does not} mean that there is no error\\
+
+		Computation:\\
+		1. Treat segment as a sequence of \blue{16-bit} integers\\
+		2. Apply binary addition on every 16 bit integer (checksum field is currently 0)\\
+		3. Carry (if any) from the MSB will be added to the result\\
+		4. Compute 1s complement to get UDP checksum\\
+
+		\textbf{Reliable Data Transfer}\\
+		Network layer is \red{unreliable}, need to build reliable data transfer over this\\
+		Network layer may:\\
+		- corrupt, drop, re-order (not considered in this mod) packets, and deliver packets after an arbitrarily long delay\\
+
+		rdt 2.0: \red{Bit Errors}\\
+		\green{Solution:} Use checksum to detect bit errors, receiver replies with \blue{ACK/NAK} to acknowledge/ negative acknowledge\\
+		- ACK: send next packet\\
+		- NAK: resend current packet\\
+		\red{Problem:} ACK may be corrupted. Sender would resend packet, receiver does not know it is duplicate\\
+
+		rdt 2.1: \red{Bit Errors}\\
+		\green{Solution:} rdt 2.0 with packet sequence number\\
+		- ACK/NAK corrupted: Sender retransmits current packet\\
+		- Sender adds sequence number to each packet.\\
+		- Receiver discards (doesnt deliver to application) duplicate packets.\\
+
+		rdt 2.0: \red{Bit Errors}\\
+		\green{Modification}: NAK free. Receiver sends ACK for \blue{last packet received OK}. ACK now contains seq no.\\
+		Duplicate ACK: resend \blue{current packet}\\
+
+		rdt 3.0: \red{Errors and Loss}\\
+		Channel may now:\\
+		- flip bits\\
+		- lose packets\\
+		- arbitrarily long delay between packets\\
+		- but \red{WON'T} reorder packets\\
+		\green{Solution:} Sender waits for some time for ACK. Sender \blue{retransmits} if no ACK is received till \blue{timeout}\\
+		\highlight{NOTE:} If packet or ACK is just delayed not lost;\\
+		- Timeout triggers retransmission\\
+		- Retransmission generates \blue{duplicates}, receiver uses seq no to detect\\
+		- Reciever must specify the packet seq no of the packet being ACKed\\
+		\red{NOTE:} Sender does not retransmit on ACK with \red{wrong packet no.} (just waits for timeout)\\
+
+		\textbf{Performance of rdt 3.0 (bad)}\\
+		\includegraphics[scale=.145]{./assets/rdtPerformance}
+
+		\textbf{Pipelined Protocols}\\
+		Allows \blue{multiple, yet-to-be-ACKed} packets\\
+		Requires more seq no, and buffering at both sides\\
+		2 generic forms:\\
+		- Go-Back-N (GBN)\\
+		- Selective Repeat (SR)\\
+		Same assumptions as rdt 3.0\\
+
+		\textbf{GBN}\\
+		GBN Sender:\\
+		- Can have up to \blue{N unACKed packets} in pipeline\\
+		- insert k-bits seq no in packet header\\
+		- use ``sliding window'' to keep track of unACKed packets\\
+		- keep a \blue{timer} for the \blue{oldest} unACKed packet\\
+		- on timeout, retransmit all packets in sender window\\
+		- \texttt{timeout(n)}: retransmit packet n and all subsequent packets in the window\\
+
+		GBN Receiver:\\
+		- \blue{In order packets}: ACK (simple receiver - only needs to keep track of the next expected seq no)\\
+		- \blue{Out of order packets}: Discard and ACK the \blue{last in order packet}\\
+		- \red{Cumulative ACK:} \texttt{ACK m} means all packets up to m are received\\
+
+		\textbf{SR}\\
+		SR Sender:\\
+		- maintains timer for each unACKed packet\\
+		- When timer expires, just retransmit \blue{only that unACKed packet}\\
+
+		SR Receiver:\\
+		- \red{Individually acknowledges} all correctly received packets\\
+		- \blue{buffers out of order packets}, as needed, for eventual in-order delivery to upper layer\\
+		\includegraphics[scale=.14]{./assets/selectiveRepeat}
+
+		\textbf{TCP}\\
+		Overview:\\
+		- Point-to-Point: 1 sender, 1 receiver\\
+		- Connection-oriented: handshaking before sending app data\\
+		- Full duplex service: bi-directional data flow in the same connection\\
+		- Reliable, in-order byte stream: use seq no. to label bytes\\
+
+		Connection Oriented De-mux:\\
+		A TCP connection socket is identified by the 4-tuple (srcIP, srcPort, destIP, destPort)\\
+
+		Segment Size:\\
+		A TCP segment typically has an MSS (maximum segment size) of 1460 bytes (app data, without header)\\
+
+		Header:\\
+		\includegraphics[scale=.14]{./assets/tcpHeader}\\
+
+		Sequence Number:\\
+		\blue{Byte number} of the \blue{first} byte of data in a segment\\
+
+		ACK (cumulative):\\
+		TCP ACKs up to the first missing byte in the stream (next expected byte number)\\
+		Eg. If segment is [0-999], receiver would ACK 1000\\
+		\highlight{NOTE:} TCP does not specify how receiver should handle \blue{out of order} segments, it is up to implementer.\\
+
+		TCP Sender Events\\
+		\includegraphics[scale=.17]{./assets/tcpSenderEvents}
+
+		TCP Receiver Events\\
+		\includegraphics[scale=.15]{./assets/tcpReceiverEvents}
+
+		TCP Fast Retransmission\\
+		If sender receives \blue{4 duplicate ACKs} (ACK for the same segment), it supposes the segment is lost.\\
+		Immediately resend segment, even before timer expires\\
+
+		Establishing connection - 3-way Handshaking\\
+		\includegraphics[scale=.15]{./assets/tcpHandshaking}
+
+		Closing Connection\\
+		\includegraphics[scale=.14]{./assets/tcpCloseConnection}
+
+		{\normalsize\textbf{Network Layer}}\\
+		host to host\\
+
+		\textbf{IP Address}\\
+		IP Address is used to identify a host or router\\
+		32-bit integer expressed in either binary or decimal\\
+		Hosts get IP addresses via:\\
+		1. Manual configuration by system administrator\\
+		2. Automatically assigned by Dynamic Host Configuration Protocol (DHCP) server\\
+		DHCP is more scalable\\
+		\highlight{NOTE:} IP addresses are associated with a \blue{network interface}\\
+		- each network interface has its own IP, eg laptop with ethernet port and wifi will have 2 IP addresses\\
+		- routers typically have many interfaces\\
+		\textbf{DHCP}\\
+		Allows a host to dynamically obtain its IP address from DHCP server when it joins network\\
+		- IP addr is renewable\\
+		- allows reuse of IP addresses\\
+		- supports mobile users joining network\\
+
+		\blue{4 step process:}\\
+		1. Host boradcasts \blue{``DHCP discover''} message\\
+		2. DHCP server responds with \blue{``DHCP offer''} message (note that a host may get more than 1 offer)\\
+		3. Host requests IP addr with \blue{``DHCP request''} message\\
+		4. DHCP server sends address with \blue{``DHCP ACK''} message\\
+
+		\includegraphics[scale=.15]{./assets/dhcp}
+		\red{NOTE:} DHCP may also provide additional network information\\
+		- IP address of \blue{first-hop router} (default gateway)\\
+		- IP address of \blue{local DNS server}\\
+		- \blue{Network mask}\\
+		\red{NOTE:} DHCP runs over UDP, server on port 67, client port 68\\
+
+		Special IP Addresses\\
+		\includegraphics[scale=.16]{./assets/specialIpAddr}
+
+		\textbf{Subnets}\\
+		IP addresses comprises of two parts:\\
+		1. network (subnet) prefix\\
+		2. host ID\\
+		\red{Subnet} is a network formed by a group of ``directly'' interconnected hosts\\
+		- hosts in the same subnet have the same network prefix\\
+		- hosts in the same subnet can physically reach each other \blue{without intervening router}\\
+		- They connect to the outside world through a router\\
+
+		\textbf{CIDR}\\
+		Classless Inter-domain Routing is the Internet's IP address assignment strategy\\
+		- subnet prefix is of arbitrary length\\
+		- address format: \highlight{a.b.c.d/x}, where x is the number of bits in subnet prefix\\
+
+		\textbf{Subnet Mask}\\
+		\red{Subnet Mask} is used to determine which subnet an IP address belongs to\\
+		- Made by setting all subnet prefix bits to 1s and host ID bits to 0s\\
+		\texttt{and} with IP address to get subnet prefix\\
+
+		\textbf{Hierarchical Addressing}\\
+		Allows efficient advertisement of routing information\\
+		- instead of having a routing table with $2^{32}$ entries, use block allocations\\
+		- Eg. A router could broadcast ``send me anything with addresses beginning with 200.23.16.0/20''\\
+		Can have smaller and more efficient routing tables\\
+		\highlight{NOTE:} These are not subnet masks/ prefixes!!\\
+		Routers use \highlight{longest prefix match} to determine where to route to\\
+
+		\textbf{Routing Algorithms - Intra AS routing}\\
+		- AS: Autonomous System\\
+		- View network as a graph of nodes (routers) and edges (links)\\
+		- Each link can have an associated cost eg. money, congestion, avail bandwidth etc.\\
+		\red{Goal:} find least cost path between two vertices in graph\\
+
+		\textbf{``link state'' algorithms}\\
+		- All routers have complete knowledge of network topology and link cost; Routers periodically broadcast link costs to each other\\
+		- Use Djikstra's Algo to compute least path (using this global map)\\
+
+		\textbf{``distance vector'' algorithms}\\
+		- Routers know physically-connected neighbours and link costs to neighbours\\
+		- Routers \blue{exchange} local views with neighbours and update own local views based on neighbours'\\
+		- Iterative process of computation: Swap local view with neighbours, update own local view, repeat until no change\\
+		- \blue{Key Difference:} Only broadcast link costs to immediate neighbours\\
+
+		Graph Notations:\\
+		- $c(x, y)$: cost of link between routers $x, y$, $\infty$ if not direct neighbours\\
+		- $d(x, y)$: cost of least-cost path between routers $x, y$\\
+
+		\textbf{Bellman-Ford Equation}\\
+		\centerline{$d_{x}(y) = min_{v}{c(x, y) + d_{v}(y)}$}\\
+		where min is taken over all direct neighbours $v$ of $x$\\
+
+		Intuitively, shortest path from x to y is the minimum of least cost to each neighbour of x + least cost path from neighbour to y\\
+		- To find the least cost path, x needs to know the cost from each of its direct neighbours to y\\
+		- Each neighbour v sends its \blue{distance vector (y, k)} to x, telling x that the cost from v to y is k\\
+
+		Algorithm Steps\\
+		1. Every router \textbf{x, y, z} sends its distance vectors to its directly connected neighbours.\\
+		2. When x finds out that y is advertising a path to z that is cheaper than x currently knows, x will\\
+		\tab 2.1 \blue{update its distance vector to z} accordingly\\
+		\tab 2.2 note that \blue{all packets for z should be sent to y}. This info is used to create x's forwarding table\\
+		3. After several rounds, all routers know least-cost paths to all other routers\\
+
+		\textbf{Routing Information Protocol (RIP)}\\
+		- RIP implements DV algo, using \blue{hop count} as cost metric (insensitive to network congestion)\\
+		- Exchange routing table every 30 seconds over \blue{UDP port 520}\\
+		- ``self-repair'': is no update from a neighbour router for 3 mins, assume neighbour has failed, remove neighbour entry from table\\
+
+		\textbf{Network Address Translation (NAT)}\\
+		Public IP: unique, $2^{32}$ addresses, many are reserved\\
+		Private IP: used within a network, \red{NOT} globally unique, ie. can't be used outside network\\
+
+		\textbf{NAT router}\\
+		NAT routers sit between a local network and wider internet\\
+		- \blue{Replace} (src IP addr, port no.) of \red{every outgoing datagram} to (NAT IP addr, new port no.)\\
+		- \blue{Remember} in NAT translation table, the mapping from (src IP addr, port no.) to (NAT IP addr, new port no.)\\
+		- \blue{Replace} (NAT IP addr, new port no.) in dest fields of every \blue{incoming datagram} with corresponding (src IP addr, port no.) stored in NAT translation table\\
+		\green{Effect:} \red{all} datagrams \red{leaving} local network have the same src NAT IP addr (new port no. are not the same)\\
+
+		\textbf{Benefits of using NAT}\\
+		- No need to rent a range of public IP addr from ISP; just one for NAT router\\
+		- All hosts use private IP addr. Can change address of hosts (within network) without notifying outside world\\
+		- Can change ISP without changing addresses of hosts in local network\\
+		- Hosts insde local network are not explicitly addressable and visible by outside world (security)\\
+
+		\textbf{IPv4 Datagram Format}\\
+		header size: 20 \blue{bytes}\\
+		\includegraphics[scale=.14]{./assets/ipDatagram}
+
+		\textbf{IP Fragmentation and Reassemby}\\
+		- Different links may have different \blue{MTU} (Max Transfer Unit): max amount of data a link layer frame can carry (max size of IP datagram)\\
+		- IP datagrams that are too large may be fragmented by router\\
+		\includegraphics[scale=.15]{./assets/ipFragmentation}\\
+		- Flag = 1 if there is next fragment in same segment, 0 if last fragment\\
+		- Offset is expressed in units of \red{8-bytes}; first byte num / 8 (relative ordering between fragments)\\
+		- ID remains the same for all fragments\\
+
+		\textbf{Internet Control Message Protocol (ICMP)}\\
+		Used by hosts and routers to communicate network-level info\\
+		- Error reporting eg. unreachable host/ network/ port/ protocol\\
+		- Echo request / reply (\texttt{ping})\\
+		ICMP messages are carried in IP datagrams (ICMP header starts after IP header)\\
+		\includegraphics[scale=.14]{./assets/icmp}\\
+		eg. TTL reaches 0, packet discarded, ICMP error message sent to datagram's src addr\\
+
+
+
+
 
 
 
@@ -324,7 +612,7 @@
 
 
 		
-		
+
 		
 		
 	\end{multicols*}
