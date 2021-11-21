@@ -602,6 +602,175 @@
 		\includegraphics[scale=.14]{./assets/icmp}\\
 		eg. TTL reaches 0, packet discarded, ICMP error message sent to datagram's src addr\\
 
+		{\normalsize\textbf{Link Layer}}\\
+		Sending datagrams between adjacent nodes (single link)\\
+		IP datagrams encapsulated in link layer frame for transmission\\
+		Implemented in adapter (NIC) or chip, adapters are semi-autonomous, implementing link and physical layers\\
+
+		\textbf{Link Layer Services (protocols may not implement all)}\\
+		- \blue{Framing}: encapsulate datagram in fram (adding header, trailer)\\
+		- \blue{Link access control}: coordinate which node can send frames and when, when multiple nodes share common link\\
+		- \blue{Reliable delivery}: seldom on low bit error link (fibre) but used on error-prone link (wireless)\\
+		- \blue{Error detection}\\
+		- \blue{Error correction}: identifies and corrects bit errors without retransmission\\
+
+		\textbf{Error Detection and Correction}\\
+		Link Layer uses mainly \blue{Parity Checking} and \blue{CRC} (CRC is good but slow in software $\rightarrow$ not used in TCP/UDP/IP)\\
+		Error detection schemes are not 100\% reliable\\
+
+		Parity Checking\\
+		\includegraphics[scale=.15]{./assets/parityChecking}
+
+		Cyclic Redundancy Check (CRC)\\
+		Bitwise \texttt{xor} operation without carry or borrow\\
+		- \red{D}: data bits, viewed as a binary number\\
+		- \red{G}: generator of $r + 1$ bits, agreed by sender and receiver beforehand\\
+		- \red{R}: will generate CRC of $r$ bits\\
+		Sender sends (D, R)\\
+		Receiver knows G, divides (D, R) by G $\rightarrow$ if non sero remainder, \red{error!}\\
+		\includegraphics[scale=.13]{./assets/crc}
+
+		\textbf{Type of Network Links}\\
+		1. Point to point link: sender and receiver connected by a dedicated link (or switch with star topology)\\
+		2. Broadcast link (shared medium): multiple notes connected to a shared broadcast channel, when a node transmits a frame all other notes receives a copy (wifi, satellite, ethernet with bus topology)\\
+
+		\textbf{Mulitple Access Protocols}\\
+		In broadcast channel, if two or more nodes transmit simultaneously\\
+		- every node receives multiple frames at the same time $\rightarrow$ frames \blue{collide} at nodes and none would be correctly read\\
+
+		\red{Multiple Access Protocols}\\
+		- distributed algorithm that determines how nodes share channel, ie. when a node can transmit\\
+		- However, coordination about channel sharing must use channel itself (no out of band channel signalling)\\
+
+		Types of Multiple Access Protocols\\
+		\red{Channel partitioning}\\
+		- divide channel into fixed smaller ``pieces'' (time slots, frequency)\\
+		- allocate piece to node for exclusive use\\
+		- \red{Cons:} wastage, partitions must be divided beforehand (hard to add new hosts)\\
+		- \green{Pros:} Good if all have equal amount of data to send\\
+		\red{Taking turns}\\
+		- nodes take turns to transmit\\
+		\red{Random Access}\\
+		- Channel is not divided, collisions possible\\
+		- Need to recover from collisions\\
+
+		\textbf{Channel Partitioning}\\
+		Time Division Multiple Access (TDMA)\\
+		- Access to channel in ``rounds''\\
+		- Each node gets fixed length (frame transmission time) slot in each round\\
+		- \blue{Unused slots go idle}\\
+
+		Frequency Division Multiple Access (FDMA)\\
+		- Channel Spectrum is divided into frequency bands\\
+		- Each node is assigned a fixed frequency band\\
+		- Unused transmission time in frequency bands go idle\\
+
+		\textbf{Taking Turns}\\
+		Polling\\
+		- master node ``invites'' slave nodes to transmit in turn\\
+		- Concerns: polling overhead (not huge), single point of failure (master node)\\
+		- Need to be able to detect if master node fails, and choose new master\\
+
+		Token Passing\\
+		- Control token is passed from one node to next sequentially\\
+		- Concerns: token overhead, single point of failure (token)\\
+		- node with token may fail, need algo to generate exactly 1 token\\
+
+		\textbf{Random Access}\\
+		- No prior coordination between nodes on when to transmit\\
+		- two or more transmitting nodes $\rightarrow$ \red{collision}\\
+		Protocols specify:\\
+		- how to detect collisions\\
+		- how to recover from collisions\\
+
+		Slotted ALOHA\\
+		\blue{Assumptions}\\
+		- All frames are of equal size\\
+		- Time is divided into slots of equal length (time to transmit 1 frame)\\
+		- Nodes start to transmit only at the beginning of a slot\\
+
+		\blue{Operations}\\
+		- Listens to channel while transmitting (collision detection)\\
+		- \red{if collision happens:} node \blue{retransmits} a frame in each \blue{subsequent slot} with probability \red{p} until success\\
+		\red{p} is recalculated frequently to take into account things like congestion etc. \\
+		perfect p: 37\%\\
+
+		Pure ALOHA\\
+		No slots, no synchronisation\\
+		- When there is a fresh frame: transmit immediately\\
+		- Chance of collision increases: frame sent at $t_{0}$ collides with other frames sent in $(t_{0}-1, t_{0} + 1)$\\
+		Rude in the sense that a node may start transmitting while another node is already transmitting (better protocol below)\\
+		16\% max utilisation\\
+
+		\textbf{Carrier Sense Multiple Access (CSMA)}\\
+		Sense the channel before transmission, if \green{idle} transmit, if \red{busy}, defer transmission\\
+		- Main idea is not to interrupt others\\
+		But \red{collisions} may still exist\\
+		- when two nodes transmit simultaneously\\
+		- before one detects the other has started due to propagation delay\\
+		Even after detect collision, node still continues to finish transmission of frame, then retransmit later (waste of time)\\
+
+		\textbf{CSMA/CD (collision detection)}\\
+		- Same as CSMA except that when collision is detected, transmission is \blue{aborted immediately} (reduces channel wastage)\\
+		- Retransmit after \blue{random} amount of time\\
+		\includegraphics[scale=.13]{./assets/CSMA}\\
+
+		Minimum Frame Size\\
+		if frame size too small, \red{collision will still appear} but \red{may not be detected} by sending nodes (no retransmission)\\
+		Eg. Ethernet requires min. frame size of 64 Bytes\\
+		\includegraphics[scale=.14]{./assets/csmaMinFrame}
+
+		\textbf{CSMA/CA (Collision Avoidance)}\\
+		Collision detection easy in wired LAN (10V instead of 5V), but difficult in wireless\\
+		Hidden Node Problem:\\
+		\includegraphics[scale=.15]{./assets/hiddenNode}\\
+		In CSMA/CA, receiver returns ACK if frame received OK\\
+
+		\red{NOTE: }Switches are \blue{peer-transparent}, just a way of connecting hosts, doesn't manipulate frames going through them\\
+
+		\textbf{MAC Address}\\
+		- Every adapter (NIC) has a \blue{MAC Address} (Media Access Control)\\
+		- MAC address is used to send and receive link layer frames.\\
+		\tab - When adapter recieves frame, check if dest MAC matches its own\\
+		\tab\tab - if \red{yes}: extract datagram and passes to protocol stack\\
+		\tab\tab - if \red{no}: discard frame without interrupting host\\
+		This check is done very fast without disturbing the CPU\\
+		\red{NOTE:} IP identifies host, MAC identifies NIC\\
+
+		- Every MAC Address is \blue{gloablly unique}, typically \blue{hardcoded (burned)} into NIC ROM, typically \blue{48 bits}
+
+		\textbf{MAC Address vs IP Address}\\
+		\includegraphics[scale=.13]{./assets/macVsIp}\\
+
+		\textbf{Address Resolution Protocol (ARP)}\\
+		To get MAC address of receiving host, knowing its IP (using DNS or otherwise)\\
+		- Each node (host / router) has an \blue{ARP table}\\
+		- ARP table stores the mappings of IP address and MAC address of other nodes in the \red{same subnet}\\
+		- Only stores nodes that it had communications with, not all nodes in subnet
+		- Each entry consists of \red{IP addr, MAC addr, TTL}\\
+
+		\textbf{Sending a frame in the same subnet (A$\rightarrow$B)}\\
+		If A knows B's MAC addr (from ARP table)\\
+		\tab 1 Create a frame with B's MAC addr and send\\
+		\tab 2 \red{Only B} will process this frame\\
+		\tab 3 Other nodes may receive but ignore this frame\\
+		If A does not know B's MAC Addr\\
+		\tab 1 A \red{broadcasts ARP query packet} with B's \blue{IP addr}\\
+		\tab\tab 1.1 Dest MAC addr = FF-FF-FF-FF-FF-FF\\
+		\tab\tab 1.2 All other nodes in subnet will receive but only B will reply\\
+		\tab 2 B replies to A with its MAC Addr\\
+		\tab\tab 2.1 Pass up to network layer to check IP addr\\
+		\tab\tab 2.2 Replay frame is sent to A's MAC address (included in query packet)\\
+		\tab 3 A adds B's IP-to-MAC mapping in ARP table (until TTL expires)\\
+		\highlight{NOTE:} Determine if B is in same subnet by checking network mask + network prefix\\
+		\highlight{NOTE:} Get B IP addr via DNS\\
+
+
+
+
+
+
+
 
 
 
