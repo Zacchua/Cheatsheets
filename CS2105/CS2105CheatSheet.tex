@@ -765,6 +765,116 @@
 		\highlight{NOTE:} Determine if B is in same subnet by checking network mask + network prefix\\
 		\highlight{NOTE:} Get B IP addr via DNS\\
 
+		\textbf{Sending fram to \red{another} subnet}\\
+		1. A creates a link layer frame with \red{R's MAC addr} (R is default gateway), and \red{B's IP addr} as destination\\
+		2. R will move datagram to outgoing link and construct a new frame with the \red{next node's MAC addr} (not B unless B is next node!)\\
+		3. Repeat until reach B\\
+
+		\textbf{Local Area Network (LAN)}\\
+		- Computer network that interconnects computers within a geographical area, like office or campus\\
+		- May be made up of multiple subnets\\
+		- Technologies: Token Ring, Ethernet, Wi-Fi, others\\
+
+		\textbf{Ethernet}\\
+
+		Ethernet Standards\\
+		Twisted Pair Copper Connectors\\
+		- Limited in length due to greater attenuation\\
+		Optical Fibre Connections\\
+		- Single-mode fibre can go very long without repeater\\
+		- Multimode: many colours\\
+
+		Ethernet Topology\\
+		- Bus Topology: popular last time when switches were expensive\\
+		\tab - all nodes connect to one ethernet wire\\
+		\tab - all nodes receive every packet $\rightarrow$ collisions\\
+		\tab - only the node with correct MAC address will respond\\
+		- Star Topology: popular now (switches cheaper)\\
+		\tab - switch in the center\\
+		\tab - all point-to-point\\
+		\tab - nodes do not collide with each other\\
+
+		Ethernet Frame Structure (specifically for CSMA/CD)\\
+		\includegraphics[scale=.16]{./assets/ethernetFrame}
+
+		Preamble:\\
+		- 7 bytes with pattern $AA_{16}$ followed by 1 byte of $AB_{16}$\\
+		- used to synchronise receiver and sender clock rates\\
+		- provides a square wave pattern telling receiver the sender's clock rate\\
+		- tells the receiver the width of a bit (how long each 0 or 1 is)\\
+		- important if there is a long string of bits of the same value\\
+
+		Source and Dest MAC addr:\\
+		- NIC receives frame with \green{matching dest addr or broadcast addr}\\
+		\tab - pass data in frame to network layer protocol\\
+		- \red{Otherwise}\\
+		\tab -NIC discards frame\\
+
+		Type:\\
+		- Indicates higher layer protocol (usually IP)\\
+
+		CRC:\\
+		- to check if corrupted, corrupted $\rightarrow$ drop\\
+
+		Ethernet Data Delivery Service\\
+		- \red{Connectionless}: no handshaking\\
+		- \red{Unreliable}: receiving NIC doesn't send ACK or NAK to sending NIC (higher layers handle retransmission/ data recovery)\\
+		- \red{Multiple Access Protocol:} CSMA/CD with \red{binary (exponential) backoff}\\
+		\red{NOTE}: Collisions may happen in Ethernet of bus topology\\
+
+		\textbf{Ethernet CSMA/CD Algorithm}\\
+		1. NIC receives datagram from network layer, forms frame\\
+		2. If NIC senses channel idle, start frame transmission, if not, wait until channel idle then transmit\\
+		3. If NIC transmits entire frame without detecting another transmission, then done\\
+		4. Else, \red{aborts and sends jam signal}\\
+		5. After aborting NIC enters \highlight{binary backoff}\\
+
+		\textbf{Exponential Backoff}\\
+		- After 1st collision: choose \red{K} at random from {0, 1}; wait \red{K} * 512 bit transmission times before retransmission\\
+		- After 2nd collision: choose \red{k} from {0, 1, ..., $2^{2}-1$}\\
+		- After \red{$m^{th}$} collision, choose \red{K} from {0, 1, ..., $2^{\red{m}} - 1$}\\
+		NOTE: maximum 16 times\\
+		\green{Goal:} adapt retransmission attempts to estimated current load\\
+		- more collisions $\rightarrow$ heavier load\\
+		- longer back-off intervals when more collisions\\
+
+		\textbf{Ethernet Switch}\\
+		- \red{Invisible to hosts}; hosts think they are directly connected with each other (in star topology)\\
+		\tab - No IP address\\
+		- link-layer device used in LANs\\
+		\tab - to store and forward ethernet frames\\
+		\tab - Examine incoming frame MAC address, forward to one or more links\\
+		- Switches buffer frames and are full duplex\\
+		\tab - A and D can send frames to each other \red{simultaneously}\\
+		- No collisions\\
+
+		Switch Forwarding Table\\
+		- Tells switch where to send each packet\\
+		- Each switch has a table, each entry is (MAC addr of host, interface to reach host, TTL)\\
+		- Switches are self-learning, can just plug in and will create the table itself\\
+
+		Self-learning switches\\
+		- When receiving a frame from A, note down location of A in switch table\\
+		- if B is \green{found} in the switch forwarding table, forward frame to that link\\
+		- if B is \red{unknown}, broadcast frame to \red{all outgoing links} (finds out when B replies)\\
+		\highlight{NOTE}: Switches can be connected in hierarchy\\
+
+		\textbf{Switches vs Routers}\\
+
+		Switches (2 layer device - physical and link)\\
+		- checks \red{MAC} address\\
+		- store and forwards \red{link layer} frames\\
+		- forwards frame to outgoing link or broadcast based on switch forwarding table\\
+		- used in LAN to form star topology\\
+
+		Routers (3 layer device, physical, link, network)\\
+		- Check \red{IP} address\\
+		- stores and forwards \red{IP} datagrams\\
+		- Computes routes to destination\\
+		- used in network core\\
+
+
+
 
 
 
