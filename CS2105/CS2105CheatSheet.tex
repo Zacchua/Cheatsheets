@@ -873,6 +873,20 @@
 		- Computes routes to destination\\
 		- used in network core\\
 
+		{\normalsize\textbf{Multimedia Networking}}\\
+
+		\textbf{Audio}\\
+		- Analog audio signal sampled at a constant rate (aka sampling rate)\\
+		\tab - Telephone: 8000 samples/sec\\
+		\tab - CD music: 44100 samples/sec\\
+		- Each sample is quantised\\
+		\tab - eg 8 bit value gives $2^{8}=256$ values\\
+		\tab - $2^{16} =65,536$ for CD\\
+		- Nyquist-Shannon sampling theorem (minimum sampling frequency to be able to recover signal at recv end)\\
+		\centerline{$f_{s} \geq d \times 2$}\\
+		\tab $f_{s}$: sampling frequency\\
+		\tab $d$: highest signal frequency\\
+		- Bitrate: sampling rate * number of bits per value\\
 
 
 
