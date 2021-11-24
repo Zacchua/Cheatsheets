@@ -887,6 +887,221 @@
 		\tab $f_{s}$: sampling frequency\\
 		\tab $d$: highest signal frequency\\
 		- Bitrate: sampling rate * number of bits per value\\
+		\highlight{NOTE}: There is some quality reduction due to quantisation error\\
+		Eg.\\
+		CD: 16 * 44100 * 2 (stereo has two channels) = 1.411Mbps\\
+		Compressing Audio: remove data that is not critical to perception of audio\\
+
+		\textbf{Video}\\
+		\blue{Sequence of images} displayed at a constant rate. Images are 2D arrays of pixels\\
+		Each pixel is represented by bits (RGB values; 8 bits per value)\\
+		Coding: use redundancy \red{within} and \red{between} images to decrease number of bits.\\
+		1. Spatial - if adjacent bits have same or almost same RGB value, send \red{value and number of repeats}\\
+		2. Temporal - instead of completely sending each subsequent frame, just send \red{differences}\\
+		Motion Compensation - is bg moving or object moving? Eg if camera move 10px left, shift frame by 10px left then take diff\\
+		\highlight{NOTE}: Redundancy depends on content\\
+
+		CBR: constant bit rate (complex frames have lower quality)\\
+		VBR: variable bit rate (all frames have same quality)\\
+
+		\textbf{Application Types}\\
+		1. Streaming stored video\\
+		2. Conversational (2 way live)\\
+		3. Streaming live (1 way live)\\
+
+		\textbf{Streaming stored video}\\
+		Note that media is broken up into chunks (packets) and sent 1 by 1\\
+		\includegraphics[scale=.2]{./assets/streamingStored}
+
+		Challenges\\
+		- \red{Continuous playout constraint}: Once client begins playout, playback must match original timing\\
+		\tab - but network conditions are variable\\
+		\tab - \green{Solution}: client side buffer to store packets before playout\\
+		\tab - \green{Solution}: Playout delay\\
+		- Client interactivity (pause, fast-forward, rewind, jump through video, etc)\\
+		- Packets may be lost, retransmitted\\
+
+		Client Side Buffer\\
+		- if \red{empties}: then stall playout (video buffers)\\
+		- if \red{fill}: then have to throw away data $\rightarrow$ stall playout\\
+		\highlight{NOTE}: playout rate is \blue{constant} if \blue{CBR}, \green{variable} if \green{VBR}\\
+		\includegraphics[scale=.2]{./assets/playoutBuffering}\\
+
+		\textbf{Streaming with UDP/HTTP(TCP)}\\
+		UDP\\
+		- Server sends at rate appropriate for client\\
+		\tab - send rate = encoding rate = constant rate (pushed based / server push)\\
+		\tab - transmission rate can be \red{oblivious to congestion levels} (may drop packets)\\
+		- short playout delay of (2-5 sec) to remove network jitter\\
+		- error recover at \blue{application level}, if time permits\\
+		- UDP may not go through firewalls\\
+		- used in Real Time Protocol (RTP)\\
+
+		HTTP (TCP)\\
+		- file retrieved via HTTP GET\\
+		\tab - pull based streaming (client pull)\\
+		- send at \blue{max possible rate} under TCP (due to TCP congestion control)\\
+		- fill rate fluctuates due to TCP congestion control, retransmission\\
+		- larger playout delay: smooth out TCP delivery rate\\
+		- HTTP/TCP passes more easily through firewalls\\
+		- used in DASH\\
+
+		\textbf{Voice-over-IP (VoIP)}\\
+		- Conversational applications\\
+		- \red{end-end delay requirement}: need to maintain conversational aspect\\
+		\tab - $<$ 150msec: good\\
+		\tab - $>$ 400msec: bad\\
+
+		Characteristics:\\
+		- Speaker's audio: alternating talk spurts, silent periods\\
+		\tab - \blue{64kbps} during talk spurts, packets \red{only generated during talk spurts}\\
+		\tab - 20 msec chucks at 64kbps: 160 bytes of data (uncompressed)\\
+		- Application layer header added to each chunk\\
+		- chunk+header encapsulated into UDP or TCP segment\\
+		- application sends segment to socket every 20msec during talk spurts\\
+
+		Packet losses and delays\\
+		1. \red{Network loss} - loss due to network congestion (router buffer overflow)\\
+		2. \red{Delay loss} - IP datagram arrives \red{too late} for playout (after 400msec)\\
+		\tab - considered as packet is lost as it cannot be played out anyway\\
+		3. \red{Loss tolerance} - depending on \blue{voice encoding}, \blue{loss concealment}, loss rates of 1-10\% can be tolerated\\
+
+		Fixed Playout Delay\\
+		- Receiver tries to play each chunk exactly \blue{q} msec after chunk \red{was generated}\\
+		\tab - chunk has timestamp \blue{t}, then playout time is \blue{t + q}\\
+		\tab - if chunk arrives \red{after} \blue{t + q}, chunk is considered lost (delay loss)\\
+		- \blue{large q} $\rightarrow$ less packet loss\\
+		- \blue{small q} $\rightarrow$ better interactive experience\\
+
+		Adaptive Playout Delay\\
+		\red{Goal}: low playout delay, low delay loss rate\\
+		\green{Approach}: adaptive playout delay adjustment\\
+		\tab - estimate network delay, adjust playout delay at beginning of talk spurt\\
+		\tab - silent periods compressed and elongated\\
+		\tab - chunks still played out every 20msec during talk spurt\\
+		- Uses Estimated Weighted Moving Average (EWMA)\\
+		\centerline{$d_{i} = (1-\alpha)d_{i - 1} + \alpha(r_{i} - t_{i})$}
+		- $d_{i}$: delay estimate after ith packet\\
+		- $\alpha$: small constant eg. 0.1\\
+		- $r_{i}$: time received\\
+		- $t_{i}$: time sent (timestamp)\\
+
+		Recovery from packet loss\\
+		\red{Challenge}: recover from packet loss within the \red{small tolerable delay}\\
+		- each ACK/NAK requires RTT: retransmission takes too long\\
+		- use Forward Error Correction (FEC) instead\\
+		\tab - send enough bits to allow recovery without retransmission\\
+
+		1. Simple FEC\\
+		- for every group of $n$ chunks, create a redundant chunk by \texttt{XOR-ing} $n$ original chunks\\
+		- send $n+1$ chunks, increasing bandwidth factor 1/n\\
+		- can reconstruct if at most one lost chunk from $n+1$ chunks, with playout delay\\
+
+		2. Piggybacking\\
+		- send lower resolution packet as redundant information by adding it as part of next packet\\
+		- Receiver can conceal \blue{non-consecutive loss}\\
+
+		3. Interleaving to conceal loss\\
+		- audio chunks divided into smaller units (eg. 4 5msec chunks)\\
+		- packet contains small units from different chunks\\
+		- if packet loss, still have most of original packet (3 out of 4)\\
+		- no redundancy overhead, but increases playout delay\\
+		- not really recovery, does not cover hole (just spreads it / ``hides'' it)\\
+
+		\textbf{Real Time Protocol (RTP)}\\
+		- Specifies packet structure for packets carrying video and audio data\\
+		- Runs in sender and receivers (not routers)\\
+		- Encapsulated in UDP segments\\
+		- interoperability: if two VoIP apps run RTP, they may be able to work together\\
+
+		RTP suite\\
+		1. RTP: media data\\
+		2. RTCP: status info, transmission stats, QoS\\
+		3. RTSP: for commands (play, pause, etc), \highlight{runs over TCP}\\
+
+		RTP over UDP\\
+		Provides transport-layer interface extending UDP:\\
+		- port number, IP addresses\\
+		- payload type identification\\
+		- packet sequence numbering\\
+		- time stamping\\
+
+		Quality-of-Service\\
+		RTP does \red{not} provide any mechanism to ensure any QoS guarantees (reliable data delivery, etc)\\
+		- RTP \red{not} seen by routers (only end-systems) no special treatment for RTP packets\\
+
+		\textbf{RTP Header}\\
+		Payload type (7 bits)\\
+		- type of encoding being used (eg. PCM (uncompressed audio), H.261, MPEG2 video etc)\\
+
+		Sequence no. (16 bits)\\
+		- for detecting packet loss, restore packet sequence\\
+
+		Timestamp field (32 bit)\\
+		- sampling instant of first byte in RTP data packet\\
+
+		SSRC field (32 bits)\\
+		- identifies source of RTP stream (audio or video $\rightarrow$ can have both simultaneously)\\
+
+		\textbf{Challenges/Advantages of RTP}\\
+		\red{Challenges}\\
+		- Special-purpose server for media (complex)\\
+		- Protocols use TCP and UDP (firewalls)\\
+		- Difficult to cache data (no web caching)\\
+
+		\green{Advantages}\\
+		- Short end-to-end latency\\
+		- \red{still used in WebRTC}\\
+
+		\textbf{Dynamic Adaptive Streaming over HTTP (DASH)}\\
+		- used in streaming stored video / one way streaming\\
+		- Just using HTTP GET to get whole video file can be \red{wasteful} also needs large client buffer\\
+		- Main Idea: use HTTP to ``stream'' media, divide media into small chunks (streamlets)\\
+
+		\textbf{Advantages / Disadvantages of DASH}\\
+		\green{Advantages}\\
+		- Simple server (just a web server)\\
+		- No firewall problems (use port 80 for HTTP)\\
+		- Standard image web caching works\\
+		\red{Disadvantages}\\
+		- DASH is based on media segment transmission, usually 2-10 secs in length (too long for teleconferencing)\\
+		- By buffering segments at client side, DASH does \red{not} provide low latency for interactive applications\\
+
+		\textbf{How DASH works}\\
+		- Encode media into different streamlet files (low, medium, high, etc qualities)\\
+		- Server provides a playlist listing available qualities and streamlets for each quality\\
+		- Client downloads playlist (.mpd file) first\\
+		- Client executes adaptive bitrate algorithm (ABR) to determine which segment to download next\\
+		\tab - based on network quality, after every segment\\
+
+		{\normalsize\textbf{Network Security}}\\
+		- \red{Confidentiality}: only sender, intended receiver understand message\\
+		- \red{Authentication}: confirm sender and receiver identities\\
+		- \red{Message integrity}: ensure that message not altered along the way (without detection)\\
+		- \red{Access and availability}: for services (eg. DDOS)\\
+
+		Bad Actors can:\\
+		- Eavesdrop\\
+		- Insert messages into connection\\
+		- Impersonate: fake src addr of packet\\
+		- Hijacking: Remove sender or receiver and insert himself\\
+		- Denial of service: prevent service from being used (eg.\ by overloading resources)\\
+
+		\textbf{Breaking an encryption scheme}\\
+		Cipher-only attack\\
+		1. Brute force\\
+		2. Statistical Analysis\\
+		\tab 2.1 Known-plaintext attack: Trudy has corresponding plaintext\\
+		\tab 2.2 Chosen-plaintext attack: Trudy can get ciphertext for chosen plaintext\\
+		\tab\tab\tab Convince adversary to transmit your message to get ciphertext\\
+		\tab (use these to figure out encryption scheme)\\
+
+		\textbf{Symmetric Key Cryptography}\\
+
+
+
+
+
 
 
 
