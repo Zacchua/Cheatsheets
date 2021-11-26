@@ -31,24 +31,10 @@
 	\end{center}
 	
 	\begin{multicols*}{3}
-		{\normalsize\textbf{Internet}}\\
-		- The Internet is a network of connected computing devices\\
-		- Devices are known as \highlight{hosts} or \highlight{end systems}\\
-		- Hosts run network applications (like browsers) and communicate over links\\
-		
 		\textbf{Network Edge (Access Network)}\\
 		- Hosts access the Internet through \highlight{access network}\\
 		- eg Home/ Institute access networks\\
-		
-		\textbf{Wireless Access Network}\\
-		1. Wireless LAN (WIFI): Short range (100 ft)\\
-		2. Wide-area wireless access (3G/ 4G): Long range (10s km)\\	
-		
-		\textbf{Physical Media}\\
-		Host connect to access network via physical media
-		- Guided media: signals propogate in solid media (ethernet cable/ fibre optics)\\
-		- Unguided media: signals propagate freely (radio)\\
-		
+
 		\textbf{Network Core}\\
 		A mesh of interconnected routers\\
 		Data transmitted by\\
@@ -75,11 +61,6 @@
 		
 		\highlight{Store and Forward}: entire packet must arrive at a router before it can be transmitted on the next link (check packet integrity; if corrupted, drop packet)\\
 		
-		\textbf{Routing and Addressing}\\
-		Where to forward the packet\\
-		- \red{Routers} determine the source-destination route taken by the packet (using routing algorithms)\\
-		- \red{Addressing}: each packet needs to carry source and destination information\\
-
 		\textbf{Delay and Loss}\\
 		Loss:
 		- Packets queue in router buffers - wait for turn to be sent out one by one\\
@@ -113,20 +94,7 @@
 		- Client-Server\\
 		- Peer-to-peer\\
 
-		\textbf{Client-Server}\\
-		Server:\\
-		- Wait for incoming request\\
-		- Provides requested service to client\\
-		Client:\\
-		- Initiates contact with and request service from server\\
-
-		\textbf{P2P}\\
-		- No always on server\\
-		- peer request service from other peers, provides service to other peers\\
-		- self-scalable\\
-		- complex management - peers are intermittently connected and change IP addresses\\
-
-		\textbf{Transport Service does an app need}\\
+		\textbf{Transport Service an app needs}\\
 		- Data Integrity\\
 		- Throughput - Some apps may need minimum bandwidth (streaming videos)\\
 		- Timing - might need low latency\\
@@ -171,7 +139,6 @@
 
 		\textbf{Persistent HTTP}\\
 		- multiple objects sent over single TCP connection between client and server\\
-
 		(a): Non-persistent\\
 		- $2 * RTT + $ file transmission time for each object (1 RTT for TCP, 1 RTT for object)\\
 		(b): Non-persistent with pipelining\\
@@ -184,7 +151,6 @@
 		- 1 RTT for TCP\\
 		- 1 RTT for HTML\\
 		- as little as 1 RTT for all referenced object\\
-
 		\includegraphics[scale=.12]{./assets/httpDiagrams}
 
 		\textbf{HTTP Request}\\
@@ -254,10 +220,7 @@
 		- Local DNS server acts as proxy and forwards query into hierarchy if answer not found locally\\
 
 		\textbf{DNS Caching}\\
-		Caches mapping once it learns of it\\
-		- may be out of date\\
-		- cached entries expire after some time (TTL)\\
-		- if name host changes IP address, may not be known Internet-wide until TTL expire\\
+		Caches mapping once it learns of it for some time (TTL)\\
 		Runs over \red{UDP}\\
 
 		\textbf{DNS name resolution}\\
@@ -273,30 +236,22 @@
 		- Identified by \red{(IP address, port number)} (port number is a 16 bit int, 1-1023 are reserved)\\
 
 		\textbf{Sockets}\\
-		Socket is the software interfrace between app processes and transport layer protocols
+		Socket is the software interface between app processes and transport layer
 		- Process send/ receives messages to/ from its \red{socket}\\
 		- Programming-wise: a set of APIs\\
-		Application treat the Internet as a black box, sending and receiving messages through sockets\\
+		Application send and receive messages through sockets (blackbox)\\
 
-		Types of sockets:\\
-		1. TCP: reliable, byte stream-oriented socket\\
-		2. UDP: unreliable datagram socket\\
-
-		\textbf{Socket Programming with \red{UDP}}\\
+		\textbf{Socket Programming with \red{UDP} (datagram socket)}\\
 		\red{UDP: no connection between client and server}\\
-		- Sender explicitly attaches destination IP addr and port number to \red{each packet}\\
-		- Receiver extracts sender IP addr and port number from the received packet\\
+		- Sender attaches destination IP addr and port number to \red{each packet}\\
 		\red{1} socket listens to \red{multiple} clients.\\
 
-		\textbf{Socket Programming with \red{TCP}}\\
-		- When client creates socket, client TCP establishes a connection to server TCP\\
+		\textbf{Socket Programming with \red{TCP} (byte stream-oriented socket)}\\
+		- Client TCP establishes a connection to server TCP\\
 		- When contacted by client, server TCP \red{creates} new socket for server process to communicate with that client\\
-		This allows server to talk with multiple clients individually.\\
-		TCP socket pairs (?) are uniquely identified by \blue{(server IP, server port, client IP, client port)}\\
-
-		TCP socket vs UDP socket\\
-		- TCP: two processes communicate as if there is a ``pipe'' between them. Send data $\rightarrow$ write data to pipe, \blue{no need to attach} dest IP and port to each packet. Pipe is there until one of the two processes closes it. Pipe is also \blue{reliable}\\
-		- UDP: Form UDP packet explicitly and \blue{attach} dest IP and port no to every packet.\\
+		- Communicate as if there is a ``pipe'' between them.\\
+		- Just write to pipe, \blue{no need to attach} dest IP, port to each packet. Pipe there until either process closes it. Pipe is \blue{reliable}\\
+		Server can talk with multiple clients individually.\\
 
 		{\normalsize\textbf{Transport Layer}}\\
 		Deliver messages between application processes running on different hosts\\
@@ -306,11 +261,6 @@
 		- Sender: break app message into \blue{segments}, passes them to network (IP) layer\\
 		- Receiver: reassembles segments into message, passes to app layer\\
 		- Routers in between: check dest IP to determine routing\\
-
-		Note:
-		- Each IP datagram contains \blue{source and dest IP addr}\\
-		- Each IP datagram carries \blue{one transport layer segment}\\
-		- Each segment contains \blue{src and dest port numbers}\\
 
 		\textbf{Connectionless Transport: UDP}\\
 		UDP adds the following services (very few)\\
@@ -322,14 +272,12 @@
 		- No connection establishment (less delay)\\
 		- Simple: no connection state at sender, receiver\\
 		- small header size\\
-		- No congestion control: UDP can blast away as fast as desired\\
-
+		- No congestion control: UDP can send as fast as desired\\
 		\textbf{Connectionless Demultiplexing}\\
 		When UDP \red{receiver} recieves UDP segment\\
 		- Checks \blue{dest port no} of segment\\
 		- Directs UDP segment to the socket with that port number\\
-		- IP datagrams (from different soucres) with \blue{same destination port no.} will be directed to the same UDP socket at destination\\
-
+		- IP datagrams (from different soucres) with \blue{same dest port no.} will be directed to the same UDP socket at dest\\
 		\textbf{UDP Header}\\
 		Comprises of (8 bytes / 64 bits)\\
 		- Source port no. (16)\\
@@ -339,7 +287,6 @@
 
 		\textbf{UDP Checksum}\\
 		To detect errors (flipped bits) in transmitted segment\\
-
 		Sender:\\
 		- Compute checksum value\\
 		- put checksum value in UDP checksum field\\
@@ -347,7 +294,6 @@
 		- Compute checksum of received segment\\
 		- Check if computed value = checksum\\
 		\highlight{NOTE:} Just because checksum = computed value \red{does not} mean that there is no error\\
-
 		Computation:\\
 		1. Treat segment as a sequence of \blue{16-bit} integers\\
 		2. Apply binary addition on every 16 bit integer (checksum field is currently 0)\\
@@ -355,12 +301,11 @@
 		4. Compute 1s complement to get UDP checksum\\
 
 		\textbf{Reliable Data Transfer}\\
-		Network layer is \red{unreliable}, need to build reliable data transfer over this\\
 		Network layer may:\\
-		- corrupt, drop, re-order (not considered in this mod) packets, and deliver packets after an arbitrarily long delay\\
+		- corrupt, drop, re-order (not considered in this mod) packets, and deliver packets after delay\\
 
 		rdt 2.0: \red{Bit Errors}\\
-		\green{Solution:} Use checksum to detect bit errors, receiver replies with \blue{ACK/NAK} to acknowledge/ negative acknowledge\\
+		\green{Solution:} Use checksum to detect bit errors, receiver replies \blue{ACK/NAK}\\
 		- ACK: send next packet\\
 		- NAK: resend current packet\\
 		\red{Problem:} ACK may be corrupted. Sender would resend packet, receiver does not know it is duplicate\\
@@ -369,19 +314,13 @@
 		\green{Solution:} rdt 2.0 with packet sequence number\\
 		- ACK/NAK corrupted: Sender retransmits current packet\\
 		- Sender adds sequence number to each packet.\\
-		- Receiver discards (doesnt deliver to application) duplicate packets.\\
-
-		rdt 2.0: \red{Bit Errors}\\
-		\green{Modification}: NAK free. Receiver sends ACK for \blue{last packet received OK}. ACK now contains seq no.\\
-		Duplicate ACK: resend \blue{current packet}\\
+		- Receiver discards duplicate packets.\\
+		rdt 2.2: no NAK, ACK with packet num\\
 
 		rdt 3.0: \red{Errors and Loss}\\
 		Channel may now:\\
-		- flip bits\\
-		- lose packets\\
-		- arbitrarily long delay between packets\\
-		- but \red{WON'T} reorder packets\\
-		\green{Solution:} Sender waits for some time for ACK. Sender \blue{retransmits} if no ACK is received till \blue{timeout}\\
+		- flip bits, lose packets, delay between packets\\
+		\green{Solution:} Sender waits some time for ACK, \blue{retransmits} if no ACK before \blue{timeout}\\
 		\highlight{NOTE:} If packet or ACK is just delayed not lost;\\
 		- Timeout triggers retransmission\\
 		- Retransmission generates \blue{duplicates}, receiver uses seq no to detect\\
@@ -397,19 +336,16 @@
 		2 generic forms:\\
 		- Go-Back-N (GBN)\\
 		- Selective Repeat (SR)\\
-		Same assumptions as rdt 3.0\\
 
 		\textbf{GBN}\\
 		GBN Sender:\\
 		- Can have up to \blue{N unACKed packets} in pipeline\\
-		- insert k-bits seq no in packet header\\
 		- use ``sliding window'' to keep track of unACKed packets\\
 		- keep a \blue{timer} for the \blue{oldest} unACKed packet\\
 		- on timeout, retransmit all packets in sender window\\
-		- \texttt{timeout(n)}: retransmit packet n and all subsequent packets in the window\\
 
 		GBN Receiver:\\
-		- \blue{In order packets}: ACK (simple receiver - only needs to keep track of the next expected seq no)\\
+		- \blue{In order packets}: ACK (keep track of the next expected seq no)\\
 		- \blue{Out of order packets}: Discard and ACK the \blue{last in order packet}\\
 		- \red{Cumulative ACK:} \texttt{ACK m} means all packets up to m are received\\
 
@@ -420,15 +356,15 @@
 
 		SR Receiver:\\
 		- \red{Individually acknowledges} all correctly received packets\\
-		- \blue{buffers out of order packets}, as needed, for eventual in-order delivery to upper layer\\
+		- \blue{buffers out of order packets}, for in-order delivery to upper layer\\
 		\includegraphics[scale=.14]{./assets/selectiveRepeat}
 
 		\textbf{TCP}\\
 		Overview:\\
 		- Point-to-Point: 1 sender, 1 receiver\\
-		- Connection-oriented: handshaking before sending app data\\
-		- Full duplex service: bi-directional data flow in the same connection\\
-		- Reliable, in-order byte stream: use seq no. to label bytes\\
+		- Connection-oriented: handshaking\\
+		- Full duplex service: bi-directional data flow in same connection\\
+		- Reliable, in-order byte stream: use seq no.\ to label bytes\\
 
 		Connection Oriented De-mux:\\
 		A TCP connection socket is identified by the 4-tuple (srcIP, srcPort, destIP, destPort)\\
@@ -443,9 +379,9 @@
 		\blue{Byte number} of the \blue{first} byte of data in a segment\\
 
 		ACK (cumulative):\\
-		TCP ACKs up to the first missing byte in the stream (next expected byte number)\\
+		TCP ACKs next expected byte number)\\
 		Eg. If segment is [0-999], receiver would ACK 1000\\
-		\highlight{NOTE:} TCP does not specify how receiver should handle \blue{out of order} segments, it is up to implementer.\\
+		\highlight{NOTE:} TCP does not specify how to handle \blue{out of order} segments, it is up to implementer.\\
 
 		TCP Sender Events\\
 		\includegraphics[scale=.17]{./assets/tcpSenderEvents}
@@ -454,7 +390,7 @@
 		\includegraphics[scale=.15]{./assets/tcpReceiverEvents}
 
 		TCP Fast Retransmission\\
-		If sender receives \blue{4 duplicate ACKs} (ACK for the same segment), it supposes the segment is lost.\\
+		If sender receives \blue{4 duplicate ACKs} it supposes the segment is lost.\\
 		Immediately resend segment, even before timer expires\\
 
 		Establishing connection - 3-way Handshaking\\
@@ -471,25 +407,23 @@
 		32-bit integer expressed in either binary or decimal\\
 		Hosts get IP addresses via:\\
 		1. Manual configuration by system administrator\\
-		2. Automatically assigned by Dynamic Host Configuration Protocol (DHCP) server\\
-		DHCP is more scalable\\
+		2. Automatically assigned by Dynamic Host Configuration Protocol (DHCP) server (more scalable)\\
 		\highlight{NOTE:} IP addresses are associated with a \blue{network interface}\\
-		- each network interface has its own IP, eg laptop with ethernet port and wifi will have 2 IP addresses\\
+		- Eg laptop with ethernet port and wifi will have 2 IP addresses\\
 		- routers typically have many interfaces\\
 		\textbf{DHCP}\\
 		Allows a host to dynamically obtain its IP address from DHCP server when it joins network\\
-		- IP addr is renewable\\
 		- allows reuse of IP addresses\\
 		- supports mobile users joining network\\
 
 		\blue{4 step process:}\\
-		1. Host boradcasts \blue{``DHCP discover''} message\\
-		2. DHCP server responds with \blue{``DHCP offer''} message (note that a host may get more than 1 offer)\\
-		3. Host requests IP addr with \blue{``DHCP request''} message\\
-		4. DHCP server sends address with \blue{``DHCP ACK''} message\\
+		1. Host broadcasts \blue{``DHCP discover''}\\
+		2. DHCP server responds with \blue{``DHCP offer''} (host may get $>$ 1 offer)\\
+		3. Host requests IP addr with \blue{``DHCP request''}\\
+		4. DHCP server sends address with \blue{``DHCP ACK''}\\
 
 		\includegraphics[scale=.15]{./assets/dhcp}
-		\red{NOTE:} DHCP may also provide additional network information\\
+		\red{NOTE:} DHCP may also provide additional information\\
 		- IP address of \blue{first-hop router} (default gateway)\\
 		- IP address of \blue{local DNS server}\\
 		- \blue{Network mask}\\
@@ -508,7 +442,6 @@
 		- They connect to the outside world through a router\\
 
 		\textbf{CIDR}\\
-		Classless Inter-domain Routing is the Internet's IP address assignment strategy\\
 		- subnet prefix is of arbitrary length\\
 		- address format: \highlight{a.b.c.d/x}, where x is the number of bits in subnet prefix\\
 
@@ -520,15 +453,13 @@
 		\textbf{Hierarchical Addressing}\\
 		Allows efficient advertisement of routing information\\
 		- instead of having a routing table with $2^{32}$ entries, use block allocations\\
-		- Eg. A router could broadcast ``send me anything with addresses beginning with 200.23.16.0/20''\\
 		Can have smaller and more efficient routing tables\\
 		\highlight{NOTE:} These are not subnet masks/ prefixes!!\\
 		Routers use \highlight{longest prefix match} to determine where to route to\\
 
 		\textbf{Routing Algorithms - Intra AS routing}\\
-		- AS: Autonomous System\\
 		- View network as a graph of nodes (routers) and edges (links)\\
-		- Each link can have an associated cost eg. money, congestion, avail bandwidth etc.\\
+		- Each link has an associated cost eg.\ congestion, avail bandwidth etc.\\
 		\red{Goal:} find least cost path between two vertices in graph\\
 
 		\textbf{``link state'' algorithms}\\
@@ -538,7 +469,7 @@
 		\textbf{``distance vector'' algorithms}\\
 		- Routers know physically-connected neighbours and link costs to neighbours\\
 		- Routers \blue{exchange} local views with neighbours and update own local views based on neighbours'\\
-		- Iterative process of computation: Swap local view with neighbours, update own local view, repeat until no change\\
+		- Iterative process: repeate above until no change\\
 		- \blue{Key Difference:} Only broadcast link costs to immediate neighbours\\
 
 		Graph Notations:\\
@@ -548,22 +479,19 @@
 		\textbf{Bellman-Ford Equation}\\
 		\centerline{$d_{x}(y) = min_{v}{c(x, y) + d_{v}(y)}$}\\
 		where min is taken over all direct neighbours $v$ of $x$\\
-
-		Intuitively, shortest path from x to y is the minimum of least cost to each neighbour of x + least cost path from neighbour to y\\
-		- To find the least cost path, x needs to know the cost from each of its direct neighbours to y\\
-		- Each neighbour v sends its \blue{distance vector (y, k)} to x, telling x that the cost from v to y is k\\
+		Shortest path from x to y is minimum of least cost to each neighbour of x + least cost from neighbour to y\\
 
 		Algorithm Steps\\
-		1. Every router \textbf{x, y, z} sends its distance vectors to its directly connected neighbours.\\
-		2. When x finds out that y is advertising a path to z that is cheaper than x currently knows, x will\\
+		1. Every router \textbf{x, y, z} sends its distance vectors to its neighbours.\\
+		2. If y sends a path to z that is cheaper than x currently knows, x will\\
 		\tab 2.1 \blue{update its distance vector to z} accordingly\\
-		\tab 2.2 note that \blue{all packets for z should be sent to y}. This info is used to create x's forwarding table\\
+		\tab 2.2 note to \blue{send all packets for z to y}. Used to create x's forwarding table\\
 		3. After several rounds, all routers know least-cost paths to all other routers\\
 
 		\textbf{Routing Information Protocol (RIP)}\\
 		- RIP implements DV algo, using \blue{hop count} as cost metric (insensitive to network congestion)\\
 		- Exchange routing table every 30 seconds over \blue{UDP port 520}\\
-		- ``self-repair'': is no update from a neighbour router for 3 mins, assume neighbour has failed, remove neighbour entry from table\\
+		- ``self-repair'': if no update from a neighbour router for 3 mins, assume neighbour has failed, remove neighbour entry from table\\
 
 		\textbf{Network Address Translation (NAT)}\\
 		Public IP: unique, $2^{32}$ addresses, many are reserved\\
@@ -572,12 +500,12 @@
 		\textbf{NAT router}\\
 		NAT routers sit between a local network and wider internet\\
 		- \blue{Replace} (src IP addr, port no.) of \red{every outgoing datagram} to (NAT IP addr, new port no.)\\
-		- \blue{Remember} in NAT translation table, the mapping from (src IP addr, port no.) to (NAT IP addr, new port no.)\\
-		- \blue{Replace} (NAT IP addr, new port no.) in dest fields of every \blue{incoming datagram} with corresponding (src IP addr, port no.) stored in NAT translation table\\
+		- \blue{Remember} above mapping in NAT translation table\\
+		- \blue{Replace} (NAT IP addr, new port no.) in dest fields of every \blue{incoming datagram} with corresponding (src IP addr, port no.) in table\\
 		\green{Effect:} \red{all} datagrams \red{leaving} local network have the same src NAT IP addr (new port no. are not the same)\\
 
 		\textbf{Benefits of using NAT}\\
-		- No need to rent a range of public IP addr from ISP; just one for NAT router\\
+		- Rent just one IP addr for NAT router\\
 		- All hosts use private IP addr. Can change address of hosts (within network) without notifying outside world\\
 		- Can change ISP without changing addresses of hosts in local network\\
 		- Hosts insde local network are not explicitly addressable and visible by outside world (security)\\
@@ -605,17 +533,17 @@
 		{\normalsize\textbf{Link Layer}}\\
 		Sending datagrams between adjacent nodes (single link)\\
 		IP datagrams encapsulated in link layer frame for transmission\\
-		Implemented in adapter (NIC) or chip, adapters are semi-autonomous, implementing link and physical layers\\
+		Implemented in adapter (NIC) or chip\\
 
 		\textbf{Link Layer Services (protocols may not implement all)}\\
 		- \blue{Framing}: encapsulate datagram in fram (adding header, trailer)\\
 		- \blue{Link access control}: coordinate which node can send frames and when, when multiple nodes share common link\\
-		- \blue{Reliable delivery}: seldom on low bit error link (fibre) but used on error-prone link (wireless)\\
+		- \blue{Reliable delivery}: seldom on low error (fibre) used on error-prone (wireless)\\
 		- \blue{Error detection}\\
 		- \blue{Error correction}: identifies and corrects bit errors without retransmission\\
 
 		\textbf{Error Detection and Correction}\\
-		Link Layer uses mainly \blue{Parity Checking} and \blue{CRC} (CRC is good but slow in software $\rightarrow$ not used in TCP/UDP/IP)\\
+		Link Layer uses mainly \blue{Parity Checking} and \blue{CRC} (CRC good but slow in software $\rightarrow$ not used in above layers)\\
 		Error detection schemes are not 100\% reliable\\
 
 		Parity Checking\\
@@ -631,35 +559,29 @@
 		\includegraphics[scale=.13]{./assets/crc}
 
 		\textbf{Type of Network Links}\\
-		1. Point to point link: sender and receiver connected by a dedicated link (or switch with star topology)\\
-		2. Broadcast link (shared medium): multiple notes connected to a shared broadcast channel, when a node transmits a frame all other notes receives a copy (wifi, satellite, ethernet with bus topology)\\
+		1. Point-point link: sender and receiver connected by dedicated link\\
+		2. Broadcast link (shared medium): multiple notes connected to a shared broadcast channel\\
+		If two or more nodes transmit simultaneously, every node receives multiple frames at same time $\rightarrow$ frames \blue{collide} and none correctly read\\
 
-		\textbf{Mulitple Access Protocols}\\
-		In broadcast channel, if two or more nodes transmit simultaneously\\
-		- every node receives multiple frames at the same time $\rightarrow$ frames \blue{collide} at nodes and none would be correctly read\\
-
-		\red{Multiple Access Protocols}\\
+		\textbf{Multiple Access Protocols}\\
 		- distributed algorithm that determines how nodes share channel, ie. when a node can transmit\\
 		- However, coordination about channel sharing must use channel itself (no out of band channel signalling)\\
-
-		Types of Multiple Access Protocols\\
+		\textbf{Types of Multiple Access Protocols}\\
 		\red{Channel partitioning}\\
 		- divide channel into fixed smaller ``pieces'' (time slots, frequency)\\
 		- allocate piece to node for exclusive use\\
-		- \red{Cons:} wastage, partitions must be divided beforehand (hard to add new hosts)\\
+		- \red{Cons:} wastage, partitions set beforehand (hard to add new hosts)\\
 		- \green{Pros:} Good if all have equal amount of data to send\\
 		\red{Taking turns}\\
 		- nodes take turns to transmit\\
 		\red{Random Access}\\
 		- Channel is not divided, collisions possible\\
-		- Need to recover from collisions\\
 
 		\textbf{Channel Partitioning}\\
 		Time Division Multiple Access (TDMA)\\
 		- Access to channel in ``rounds''\\
 		- Each node gets fixed length (frame transmission time) slot in each round\\
 		- \blue{Unused slots go idle}\\
-
 		Frequency Division Multiple Access (FDMA)\\
 		- Channel Spectrum is divided into frequency bands\\
 		- Each node is assigned a fixed frequency band\\
@@ -670,46 +592,35 @@
 		- master node ``invites'' slave nodes to transmit in turn\\
 		- Concerns: polling overhead (not huge), single point of failure (master node)\\
 		- Need to be able to detect if master node fails, and choose new master\\
-
 		Token Passing\\
 		- Control token is passed from one node to next sequentially\\
 		- Concerns: token overhead, single point of failure (token)\\
 		- node with token may fail, need algo to generate exactly 1 token\\
 
 		\textbf{Random Access}\\
-		- No prior coordination between nodes on when to transmit\\
-		- two or more transmitting nodes $\rightarrow$ \red{collision}\\
 		Protocols specify:\\
 		- how to detect collisions\\
 		- how to recover from collisions\\
-
 		Slotted ALOHA\\
 		\blue{Assumptions}\\
 		- All frames are of equal size\\
 		- Time is divided into slots of equal length (time to transmit 1 frame)\\
 		- Nodes start to transmit only at the beginning of a slot\\
-
 		\blue{Operations}\\
 		- Listens to channel while transmitting (collision detection)\\
-		- \red{if collision happens:} node \blue{retransmits} a frame in each \blue{subsequent slot} with probability \red{p} until success\\
-		\red{p} is recalculated frequently to take into account things like congestion etc. \\
-		perfect p: 37\%\\
-
+		- \red{if collision:} \blue{retransmit} in each \blue{subsequent slot} with prob \red{p} until success\\
+		- \red{p} is recalculated frequently taking things like congestion etc.\ into account \\
 		Pure ALOHA\\
 		No slots, no synchronisation\\
 		- When there is a fresh frame: transmit immediately\\
-		- Chance of collision increases: frame sent at $t_{0}$ collides with other frames sent in $(t_{0}-1, t_{0} + 1)$\\
-		Rude in the sense that a node may start transmitting while another node is already transmitting (better protocol below)\\
-		16\% max utilisation\\
+		- Chance of collision $\uparrow$: frame at $t_{0}$ collides with frames sent in $(t_{0}-1, t_{0} + 1)$\\
+		Node may start sending while another node is already sending\\
 
 		\textbf{Carrier Sense Multiple Access (CSMA)}\\
-		Sense the channel before transmission, if \green{idle} transmit, if \red{busy}, defer transmission\\
-		- Main idea is not to interrupt others\\
+		Sense the channel, if \green{idle} transmit, if \red{busy}, defer transmission\\
 		But \red{collisions} may still exist\\
-		- when two nodes transmit simultaneously\\
-		- before one detects the other has started due to propagation delay\\
-		Even after detect collision, node still continues to finish transmission of frame, then retransmit later (waste of time)\\
-
+		- transmit at same time/ before detect another has started due to prop delay\\
+		After detect collision, node finishes transmission, then retransmit later\\
 		\textbf{CSMA/CD (collision detection)}\\
 		- Same as CSMA except that when collision is detected, transmission is \blue{aborted immediately} (reduces channel wastage)\\
 		- Retransmit after \blue{random} amount of time\\
@@ -721,29 +632,26 @@
 		\includegraphics[scale=.14]{./assets/csmaMinFrame}
 
 		\textbf{CSMA/CA (Collision Avoidance)}\\
-		Collision detection easy in wired LAN (10V instead of 5V), but difficult in wireless\\
+		Collision detection easy in wired LAN (10V vs 5V), but difficult in wireless\\
 		Hidden Node Problem:\\
 		\includegraphics[scale=.15]{./assets/hiddenNode}\\
 		In CSMA/CA, receiver returns ACK if frame received OK\\
-
 		\red{NOTE: }Switches are \blue{peer-transparent}, just a way of connecting hosts, doesn't manipulate frames going through them\\
 
 		\textbf{MAC Address}\\
 		- Every adapter (NIC) has a \blue{MAC Address} (Media Access Control)\\
 		- MAC address is used to send and receive link layer frames.\\
-		\tab - When adapter recieves frame, check if dest MAC matches its own\\
-		\tab\tab - if \red{yes}: extract datagram and passes to protocol stack\\
-		\tab\tab - if \red{no}: discard frame without interrupting host\\
-		This check is done very fast without disturbing the CPU\\
-		\red{NOTE:} IP identifies host, MAC identifies NIC\\
+		\tab - if MAC match: extract datagram and passes to protocol stack\\
+		\tab - if not: discard frame without interrupting host\\
+		Used because check is done very fast\\
 
-		- Every MAC Address is \blue{gloablly unique}, typically \blue{hardcoded (burned)} into NIC ROM, typically \blue{48 bits}
+		- Every MAC Address is \blue{gloablly unique}, typically \blue{hardcoded (burned)} into NIC ROM, typically \blue{48 bits}\\
 
 		\textbf{MAC Address vs IP Address}\\
 		\includegraphics[scale=.13]{./assets/macVsIp}\\
 
 		\textbf{Address Resolution Protocol (ARP)}\\
-		To get MAC address of receiving host, knowing its IP (using DNS or otherwise)\\
+		To get MAC address of receiver, knowing its IP\\
 		- Each node (host / router) has an \blue{ARP table}\\
 		- ARP table stores the mappings of IP address and MAC address of other nodes in the \red{same subnet}\\
 		- Only stores nodes that it had communications with, not all nodes in subnet
@@ -762,28 +670,19 @@
 		\tab\tab 2.1 Pass up to network layer to check IP addr\\
 		\tab\tab 2.2 Replay frame is sent to A's MAC address (included in query packet)\\
 		\tab 3 A adds B's IP-to-MAC mapping in ARP table (until TTL expires)\\
-		\highlight{NOTE:} Determine if B is in same subnet by checking network mask + network prefix\\
+		\highlight{NOTE:} Determine if B is in same subnet by checking network mask + prefix\\
 		\highlight{NOTE:} Get B IP addr via DNS\\
 
 		\textbf{Sending fram to \red{another} subnet}\\
 		1. A creates a link layer frame with \red{R's MAC addr} (R is default gateway), and \red{B's IP addr} as destination\\
 		2. R will move datagram to outgoing link and construct a new frame with the \red{next node's MAC addr} (not B unless B is next node!)\\
 		3. Repeat until reach B\\
-
 		\textbf{Local Area Network (LAN)}\\
-		- Computer network that interconnects computers within a geographical area, like office or campus\\
+		- Computer network within a geographical area, like office or campus\\
 		- May be made up of multiple subnets\\
 		- Technologies: Token Ring, Ethernet, Wi-Fi, others\\
 
 		\textbf{Ethernet}\\
-
-		Ethernet Standards\\
-		Twisted Pair Copper Connectors\\
-		- Limited in length due to greater attenuation\\
-		Optical Fibre Connections\\
-		- Single-mode fibre can go very long without repeater\\
-		- Multimode: many colours\\
-
 		Ethernet Topology\\
 		- Bus Topology: popular last time when switches were expensive\\
 		\tab - all nodes connect to one ethernet wire\\
@@ -796,25 +695,17 @@
 
 		Ethernet Frame Structure (specifically for CSMA/CD)\\
 		\includegraphics[scale=.16]{./assets/ethernetFrame}
-
 		Preamble:\\
 		- 7 bytes with pattern $AA_{16}$ followed by 1 byte of $AB_{16}$\\
 		- used to synchronise receiver and sender clock rates\\
-		- provides a square wave pattern telling receiver the sender's clock rate\\
 		- tells the receiver the width of a bit (how long each 0 or 1 is)\\
 		- important if there is a long string of bits of the same value\\
 
-		Source and Dest MAC addr:\\
-		- NIC receives frame with \green{matching dest addr or broadcast addr}\\
-		\tab - pass data in frame to network layer protocol\\
-		- \red{Otherwise}\\
-		\tab -NIC discards frame\\
+		Source and Dest MAC addr\\
 
-		Type:\\
-		- Indicates higher layer protocol (usually IP)\\
+		Type: Indicates higher layer protocol (usually IP)\\
 
-		CRC:\\
-		- to check if corrupted, corrupted $\rightarrow$ drop\\
+		CRC\\
 
 		Ethernet Data Delivery Service\\
 		- \red{Connectionless}: no handshaking\\
@@ -824,8 +715,8 @@
 
 		\textbf{Ethernet CSMA/CD Algorithm}\\
 		1. NIC receives datagram from network layer, forms frame\\
-		2. If NIC senses channel idle, start frame transmission, if not, wait until channel idle then transmit\\
-		3. If NIC transmits entire frame without detecting another transmission, then done\\
+		2. If NIC senses channel idle, start transmission, if not, wait until channel idle then transmit\\
+		3. If NIC sends entire frame without detecting another frame, then done\\
 		4. Else, \red{aborts and sends jam signal}\\
 		5. After aborting NIC enters \highlight{binary backoff}\\
 
@@ -834,7 +725,6 @@
 		- After 2nd collision: choose \red{k} from {0, 1, ..., $2^{2}-1$}\\
 		- After \red{$m^{th}$} collision, choose \red{K} from {0, 1, ..., $2^{\red{m}} - 1$}\\
 		NOTE: maximum 16 times\\
-		\green{Goal:} adapt retransmission attempts to estimated current load\\
 		- more collisions $\rightarrow$ heavier load\\
 		- longer back-off intervals when more collisions\\
 
@@ -856,17 +746,15 @@
 		Self-learning switches\\
 		- When receiving a frame from A, note down location of A in switch table\\
 		- if B is \green{found} in the switch forwarding table, forward frame to that link\\
-		- if B is \red{unknown}, broadcast frame to \red{all outgoing links} (finds out when B replies)\\
+		- if B is \red{unknown}, broadcast to \red{all outgoing links} (finds out when B replies)\\
 		\highlight{NOTE}: Switches can be connected in hierarchy\\
 
 		\textbf{Switches vs Routers}\\
-
 		Switches (2 layer device - physical and link)\\
 		- checks \red{MAC} address\\
 		- store and forwards \red{link layer} frames\\
 		- forwards frame to outgoing link or broadcast based on switch forwarding table\\
 		- used in LAN to form star topology\\
-
 		Routers (3 layer device, physical, link, network)\\
 		- Check \red{IP} address\\
 		- stores and forwards \red{IP} datagrams\\
@@ -877,7 +765,6 @@
 
 		\textbf{Audio}\\
 		- Analog audio signal sampled at a constant rate (aka sampling rate)\\
-		\tab - Telephone: 8000 samples/sec\\
 		\tab - CD music: 44100 samples/sec\\
 		- Each sample is quantised\\
 		\tab - eg 8 bit value gives $2^{8}=256$ values\\
@@ -888,19 +775,17 @@
 		\tab $d$: highest signal frequency\\
 		- Bitrate: sampling rate * number of bits per value\\
 		\highlight{NOTE}: There is some quality reduction due to quantisation error\\
-		Eg.\\
-		CD: 16 * 44100 * 2 (stereo has two channels) = 1.411Mbps\\
+		Eg. CD: 16 * 44100 * 2 (stereo has two channels) = 1.411Mbps\\
 		Compressing Audio: remove data that is not critical to perception of audio\\
 
 		\textbf{Video}\\
-		\blue{Sequence of images} displayed at a constant rate. Images are 2D arrays of pixels\\
+		\blue{Sequence of images (2D array of pixels)} displayed at a constant rate.\\
 		Each pixel is represented by bits (RGB values; 8 bits per value)\\
-		Coding: use redundancy \red{within} and \red{between} images to decrease number of bits.\\
-		1. Spatial - if adjacent bits have same or almost same RGB value, send \red{value and number of repeats}\\
-		2. Temporal - instead of completely sending each subsequent frame, just send \red{differences}\\
+		Coding: use redundancy \red{within} and \red{between} images to decrease bits.\\
+		1. Spatial - adjacent bits have similar RGB value, send \red{value , no of repeats}\\
+		2. Temporal - send \red{differences} between frames\\
 		Motion Compensation - is bg moving or object moving? Eg if camera move 10px left, shift frame by 10px left then take diff\\
 		\highlight{NOTE}: Redundancy depends on content\\
-
 		CBR: constant bit rate (complex frames have lower quality)\\
 		VBR: variable bit rate (all frames have same quality)\\
 
@@ -908,7 +793,6 @@
 		1. Streaming stored video\\
 		2. Conversational (2 way live)\\
 		3. Streaming live (1 way live)\\
-
 		\textbf{Streaming stored video}\\
 		Note that media is broken up into chunks (packets) and sent 1 by 1\\
 		\includegraphics[scale=.2]{./assets/streamingStored}
@@ -1097,6 +981,130 @@
 		\tab (use these to figure out encryption scheme)\\
 
 		\textbf{Symmetric Key Cryptography}\\
+		Bob and Alice share same (symmetric) key: $K_{s}$\\
+		- Encrypted message: $K_{s}(m)$\\
+		- To decrypt: $m = K_{s}(K_{s}(m))$\\
+
+		Simple scheme\\
+		- substitution cipher (swap one letter for another)\\
+
+		Better scheme\\
+		- n substitution ciphers $M_{1}, M_{2}, \ldots, M_{n}$\\
+		- cycling pattern: eg. 13432, 13432, $\ldots$\\
+
+		\textbf{Public Key Cryptography}\\
+		- \blue{Public} key known to all\\
+		- \blue{Private} key known only to receiver\\
+		- Eg. Alice send message to Bob\\
+		\tab - encrypt with Bob public key, $K^{+}_{B}$\\
+		\tab - Bob decrypt with his private key, $K^{-}_{B}$\\
+		\tab - \red{$m = K^{-}_{B}(K^{+}_{B}(m)) = K^{+}_{B}(K^{-}_{B}(m))$}\\
+		\highlight{NOTE:} given public key, must be impossible to compute private key\\
+
+		\textbf{Modular Arithmetics}\\
+		- [(a mod n) + (b mod n)] mod n = (a + b) mod n\\
+		- [(a mod n) - (b mod n)] mod n = (a - b) mod n\\
+		- [(a mod n) * (b mod n)] mod n = (a * b) mod n\\
+		Therefore, (a mod n)$^{d}$ mod n = $a^{d}$ mod n\\
+
+		\textbf{RSA}\\
+		- treats message as just a bit patter\\
+		- bit pattern can be uniquely represented by integer number\\
+		- encrypting message == encrypting number\\
+
+		Public and Private keys:\\
+		1. Choose two large (1024 bits each) prime numbers p and q\\
+		2. compute n = pq, z = (p-1)(q- 1)\\
+		3. Choose e (e $<$ n) that has no common factors with z (e, z are ``relatively'' prime)\\
+		4. choose d such that ed-1 is exactly divisible by z (ed mod z = 1)\\
+		5. public key = (n,e), private key is (n,d)\\
+
+		Encryption/Decryption keys\\
+		1. Encrypt messsage m ($<$ n), by computing c = $m^{e}$ mod n\\
+		2. Decrypt by computing m = $c^{d}$ mod n\\
+		\highlight{m = (m$^{e}$ mod n)$^{d}$ mod n}\\
+
+		\highlight{NOTE:} RSA is computationally intensive (Slow)\\
+		Use RSA to exchange session (symmetric) keys, then use symmetric key cryptography\\
+
+		\textbf{Digital Signature}\\
+		To prove that the sender is the one who sent the message\\
+		Must be \blue{verifiable and nonforgeable}\\
+
+		How it works\\
+		1. get a from Bob message m, with signature ($K_{B}^{-}(m)$)\\
+		2. Verify is from Bob by applying Bob's public key
+
+		\textbf{Message Digest}\\
+		Expensive to public key encrypt long messages\\
+		\red{Goal}: fixed-length, easy-to-compute, digital fingerprint\\
+		- Apply hash function H to get \blue{fixed size message digest H(m)}\\
+		- Properties: many-to-1, produces \blue{fixed-size}, computationally infeasible to find m such that H(m) = digest\\
+
+		\textbf{Public-key certification}\\
+		Public keys must \blue{really} be public, so that no one can change the key-pair (impersonate)\\
+
+		Certification Authorities\\
+		CA binds public key to a particular entity, E\\
+		Steps for E to register public key with CA:\\
+		1. E provides ``proof of identity'' to CA\\
+		2. CA creates certificate binding E to its public key encrypted with CA's private key (digital signature)\\
+		3. certificate containing E's public key digitally signed by CA\\
+
+		If Alice wants Bob's public key:\\
+		1. Alicee gets Bob's certificate (from Bob or elsewhere)\\
+		2. apply CA's public key to Bob's certificate, get Bob's public key
+
+		\textbf{VPN}\\
+		\red{Motivation}: create a private network for security\\
+		\tab - Very costly to set up own routers links and DNS infrastructure\\
+		VPN: institution's inter-office traffic sent over public network\\
+		\tab - encrypted first, separated from other traffic\\
+		\highlight{NOTE}: DHCP over VP gives you IP address that is part of organisation's network\\
+
+		\textbf{Firewalls}\\
+		Isolates organisation's internal net from larger internet, allowing some packets to pass, blocking others\\
+		Reasons for using firewall\\
+		- Prevent DDOS attacks: SYN flooding (attacker creates many fake TCP connections)\\
+		- Prevent illegal modification/access of internal data\\
+		- Allow only authorised access to inside network\\
+
+		Three types of firewalls\\
+		1. stateless packet filters\\
+		2. stateful packet filters\\
+		3. application gateways\\
+
+		\textbf{Stateless packet filters}\\
+		- internal net connected via \red{router firewall}\\
+		- router filters \red{packet-by-packet}, deciding based on\\
+		\tab - src and dest IP addr\\
+		\tab - TCP/UDP src and dest port no.\\
+		\tab - ICMP message type\\
+		\tab - TCP SYN and ACK bits\\
+		Eg. Block inbound TCP segments with ACK = 0\\
+		- blocks external hosts from making TCP connections with internal hosts, but allows internal hosts to make connections with outside hosts\\
+
+		\textbf{Stateful packet filtering}\\
+		Tracks status of \blue{every TCP connection}\\
+		- track SYN, FIN: determine whether incoming, outgoing packets ``make sense''\\
+		- timeout inactive connections at firewalls: no longer admits packets\\
+
+		\textbf{Application Gateway}\\
+		Filters packets on \blue{application data} as well as on IP/TCP/UDP fields\\
+		Example:\\
+		1. require all telnet users to telnet through gateway\\
+		2. for authorised users, gateway sets up telnet connection to dest host. Gateway relays data between 2 connections\\
+		3. router filter blocks all telnet connections not originating from gateway\\
+
+		Limitations\\
+		- IP spoofing\\
+		- multiple apps need their own gateway\\
+		- client software must know how to contact gateway\\
+		- filters often use all or nothing policy for UDP\\
+
+
+
+
 
 
 
