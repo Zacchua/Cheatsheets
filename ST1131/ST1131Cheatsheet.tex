@@ -1,0 +1,649 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[a4paper, top=0.5cm, bottom=0.5cm, left=0.5cm, right=0.5cm, landscape]{geometry}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{array}
+
+
+
+\author{Zachary Chua Yan Ern}
+\date{May 2022}
+\setstretch{1.25}
+
+\newcommand{\highlight}[1]{{\color{red}\textbf{#1}}}
+\newcommand{\blue}[1]{{\color{MidnightBlue}#1}}
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color{ForestGreen}#1}}
+\newcommand{\header}[1]{{\normalsize\textbf{#1}}}
+\newcommand{\tab}[0]{\hspace*{2mm}}
+
+\begin{document}
+	\scriptsize %small
+	\setlength\parindent{0pt}
+	\setlength{\columnseprule}{0.1pt}
+	
+	\begin{center}
+		{\large ST1131 CheatSheet}\\
+		by Zachary Chua
+	\end{center}
+
+	\begin{multicols*}{3}
+		\header{R Basics}
+		
+		\textbf{Vector}: set of elements of same type
+
+		\texttt{number<-c(2,4,5,6)}, c for concatenate (can be used to append)
+
+		\texttt{number<-rep(a,b)}, replicates item a, b times
+
+		\texttt{number<-seq(from=2,to=1-,by=2 (length = 5))}
+
+		\textbf{Matrix}: set of elements of same type in rows and columns
+
+		\texttt{v<-c(1:6)}
+
+		\texttt{m<-matrix(v, nrow=2, ncol=3, byrow=F)}, fills by column by default: 135, 246
+
+		\texttt{rbind(v1, v2), cbind(m1, c1)}: to add row / col to matrix respectively
+
+		\textbf{Dataframe}: same as matrix but can have diff modes
+
+		Row contains diff observation, columns contain values for diff vars
+
+		Reading in csv: \texttt{data<-read.csv("file", header=TRUE)}, if not can provide vector of col names 
+		to col.names param
+
+		Access data: \texttt{data[1:4,], data[Gender == "M"]}
+
+		\textbf{Dataframe commands}: names, attach, colMeans, which(data\$col == 1) (gets index)
+
+		\textbf{Vector Commands}: max, min, sum, mean, range, cor(x, y), sort\\
+
+		\header{Exploratory Data Analysis}
+
+		\textbf{Variables and Summaries}
+
+		1. Quantitative: Discrete vs Continuous, check: \underline{meaningful} difference
+
+		2. Categorical: Ordinal (has ordering) vs Nominal
+
+		\textbf{Frequency Tables}: lists all possible values, and its frequencies
+
+		\tab{} - Can be expressed as a proportion or a percentage (relative frequencies)
+
+		\tab{} - When summarizing, mention modal category and prop of modal category
+
+		Code: \texttt{table(data)}, \texttt{prop.table(table(data))} (for proportion)
+
+		Renaming variable: \texttt{Gender <- ifelse(Gender=="0", "Female", "Male")}
+
+		\textbf{Graphical Summaries}:
+
+		1. Bar Plot: display \underline{single categorical variable}
+
+		\tab{} - mention groups w high or low prop, if ordinal, mention trend
+
+		Code: \texttt{barplot(table(data), ylab="", xlab="", main="", col=c(2, 5))}
+
+		2. Histograms: portray frequencies of possible outcomes of quantitative var
+
+		\tab{} - look for pattern, unimodal / bimodal, symmetric / skewed
+
+		Code: \texttt{hist(data, prob=TRUE, xlab="", ylab="", main="")}
+
+		prob=TRUE replaces frequency with density
+
+		3. Boxplot: Portrays 5 number summary of dataset, \texttt{boxplot(data)}
+
+		\tab{} - removes features like mounds / gaps
+
+		\tab{} - if dist is unimodal then gives indication of skewness
+
+		\tab{} - Report: median, outliers (how many, where), compare medians and IQR 
+
+		\textbf{Summary of Centre}: mean and median
+
+		Median $X_{(0.5)}$: middle value, $\frac{n + 1}{2}$ if odd, average of $\frac{n}{2}$ and $\frac{n}{2} + 1$ if even
+
+		Mean is \underline{sensitive} to extreme observations, 
+		
+		\tab{} - for highly skewed data, median, else mean
+
+		For unimodal distributions:
+
+		1. Mean $>$ Median: right skew
+
+		2. Mean = Median: symmetric
+
+		3. Mean $<$ Median: Left skew
+
+		\textbf{Summary of Variability}
+
+		1. Range: diff betw largest and smallest (sensitive to extreme observation)
+
+		2. Variance: average of the squared deviations from the mean
+
+		\centerline{$s^2 = \frac{!}{n - 1} \sum (X_i - \overline{X})^2$}
+
+		\tab{} - SD represents avg distance of observation from mean
+
+		3. IQR: distance between 75th and 25th quantiles, spread of center 50\% 
+
+		\tab{} - used with boxplots
+
+		Generally use var and sd with mean, IQR with median
+
+		\textbf{Outlier}: smaller than $Q_1 - 1.5 \times IQR$ or larger than $Q_3 + 1.5 \times IQR$
+
+		\textbf{Association between 2 Vars}: response and explanatory variable
+
+		Response: variable on which comparisons are made
+
+		Explanatory: variable you believe response depends on
+
+		1. \textbf{2 Categorical Variables}
+
+		1.1 Contingency Table: row --- explanatory, col --- response
+
+		\tab{} - Each entry is the number of observations (or relative proportions)
+
+		\tab{} - Proportions can be row-wise, column-wise or joint
+
+		\tab{} - Relative Risk: ratio of percentages, resp and exp / resp and not exp 
+
+		\tab{} - If v diff from 1 can show association
+
+		Code: \texttt{table(row, col)}, \texttt{prop.table(table, "name")}
+
+		\tab{} - if name is row, then row-wise proportions
+
+		1.2 Barplots: clustered / stacked
+
+		Code (clustered): set \texttt{beside=TRUE}, default is stacked
+
+		2. \textbf{1 Categorical, 1 Quantitative}: side by side boxplot
+
+		Code: \texttt{boxplot(var1~var2)}, \texttt{plot\$out} for outliers
+
+		3. \textbf{2 Quantitative}
+
+		3.1 Scatterplot
+
+		\tab{} - Relationship? +ve / -ve / no assoc
+		
+		\tab{} - can be approx by straight line?, how do points vary about line? outliers?
+
+		Code: \texttt{plot(var1, var2)}
+
+		3.2 Correlation: r, always between -1 and 1, measures linear association
+
+		\centerline{$r = \frac{1}{n - 1}\sum_{i = 1}^{n} (\frac{X_i - \overline{X}}{s_X})(\frac{Y_i - \overline{Y}}{s_Y})$}
+
+		Code: \texttt{cor(v1, v2)}\\
+
+		\header{Data Collection}
+
+		\textbf{Lurking Var}: \underline{unobserved}, influences assoc. between variables of interest
+
+		\textbf{Confounding}: 2 explanatory variables are assoc. with response var, but also with each other,
+		hence cannot tell which is causing the change in response
+
+		\tab{} - Lurking variable has potential for confounding
+
+		\textbf{Sampling Survey for Observational Studies}
+
+		1. Identify Population
+
+		2. Create sampling frame
+
+		\tab{} 2.1 Sampling frame: list of subjects in popn from which sample is taken
+
+		3. Specify method for choosing subjects from 2, aka \underline{sampling method}
+
+		4. Collect data from sample
+
+		\textbf{Simple Random Sample}: each possible sample of that size has same chance of being selected
+
+		\underline{How}: Subjects numbered, generate n random numbers, subjects with those numbers are chosen
+
+		\textbf{Data Collection}
+
+		1. F2F interview: easier to get people to respond, but costly
+
+		2. Telephone: cheaper, but easier for people to refuse 
+
+		3. Self-administered questions: cheaper, less labour, but lower response rate
+
+		\textbf{Bias in Sample Surveys}
+
+		1. Sampling bias: not random, or sampling frame not representative
+
+		2. Nonresponse Bias: sampled subjects unreachable / refuse to participate
+
+		3. Response Bias: not honest / answer wrongly, may be due to how question asked / phrased
+
+		\textbf{Bad Sampling}: Convenience / Volunteer samples
+
+		\textbf{Experimental Studies}: Controlled, random, blind
+
+		- Randomisation: eliminate bias, balance out lurking variables, 
+
+		\header{Random Variables and Probability}
+
+		\textbf{Probability}:
+
+		1. Sensitivity: test positive, given that person has disease
+
+		2. Specificity: test is negative, given that person does not have the disease
+
+		\textbf{Properties of Mean (discrete)}
+
+		1. $E(\overline{X}) = \frac{1}{n}\sum X_i = \mu$, expectation of sample mean is mean
+
+		\textbf{Variance (discrete)}: $\sigma^2 = \sum_x (x - \mu)^2 p_x$
+
+		Properties: 
+		
+		1. $Var(\overline{X}) = \frac{1}{n^2} \sum \sigma^2 = \frac{\sigma^2}{n}$, variance of sample mean
+
+		\textbf{Quantiles}: 100p-th quantile, $q_p$, such that $P(X \leq q_p) = p$
+
+		\textbf{Poisson Approximation for Binomial}
+
+		- Large n, small p can be approx. by Poisson with param $np$
+
+		\textbf{Properties of Normal Distribution}
+
+		1. Adding constant to normal is still normal
+
+		2. Sum of normals is normal
+
+		\tab{} 2.1 $X + a \sim N(a + \mu_X, \sigma_X^2)$
+		
+		\tab{} 2.2 $X + Y \sim N(\mu_X + \mu_Y, \sigma_X^2 + \sigma_Y^2)$
+
+		\tab{} 2.3 $X - Y \sim N(\mu_X - \mu_Y, \sigma_X^2 + \sigma_Y^2)$
+
+		3. Product of normal with constant is normal
+
+		\tab{} 3.1 $aX \sim N(a\mu_X, a^2\sigma^2_X)$
+
+		Standardisation: $\frac{X - \mu}{\sigma}$, \underline{Z-score} of X
+
+		\textbf{Normal Approx for Binomial}
+
+		- n large, p not too extreme $np(1-p) \geq 5$, can be approx by $N(np, np(1-p))$
+
+		\textbf{R}: for normal distribution
+
+		- Generate vector of 6: \texttt{rnorm(6, mean=100, sd=15)}
+
+		- $P(X \leq 115)$: \texttt{pnorm(115, 100, 15, lower.tail=TRUE)}
+
+		- $q_0.9$: \texttt{qnorm(0.9, 170, 10)}\\
+
+		\header{Sampling Distribution}
+
+		\textbf{Definition}: Prob dist of a statistic (prob for value of a statistic)
+
+		\textbf{Central Limit Theorem}: 
+		
+		Suppose iid $X_1, \dots, X_n$, $n \geq 30$ for quant, $np(1-p) \geq 5$ for cat,
+
+		then sample mean/proportion approx $\overline{X} \sim N(\mu, \frac{\sigma^2}{n})$
+
+		\textbf{Sample Distribution of sample proportion, $\hat{p}$}
+
+		Sample proportion, $\hat{p} = \frac{1}{n} \sum_{i = 0}^{n}X_i$
+
+		Sampling Distribution of $\hat{p} \sim N(p, \frac{p(1-p)}{n})$ approximately if $np(1-p) \geq 5$
+
+		Since we do not know $p$, estimate with $\hat{p}$, sd is estimated to be 
+		
+		\centerline{$\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$, \underline{standard error} of $\hat{p}$}
+
+		\textbf{Sampling Distribution of sample mean (normal)}
+
+		If indiv $X_i$s are \underline{normal}, then $\overline{X} \sim N(\mu, \sigma^2 / n)$ (exactly, not approx)
+
+		\textbf{Sampling Distribution of sample mean (not normal)}
+
+		$\overline{X} \sim N(\mu, \sigma^2 / n)$, approximately if $n /geq 30$
+
+		Observations:
+
+		1. \underline{Variability decreases as n increases}
+
+		2. bell shapes are all centered at pop mean
+
+		3. sampling distn of $\overline{X}$ depends on $\mu, \sigma^2, n$ (not N)
+
+		\textbf{Data Distn}: histogram from one sample, if n large, resemble popn dist
+
+		\highlight{Note}: $s$ is sd of \underline{sample}, $s/\sqrt{n}$ is estimated sd of \underline{sample mean}, aka \underline{standard error}\\
+
+		\header{Confidence Intervals}
+
+		A type of statistical inference
+
+		\textbf{Point Estimate}: single number that is best guess of pop param
+
+		1. for mean $\mu$, use sample mean $\overline{X}$
+
+		2. for proportion $p$, use sample proportion $\hat{p}$
+
+		Note: change for each sample, no idea how close to actual param
+
+		Properties of Optimal Point Estimate:
+
+		1. Unbiased, sampling dist should be centered around $\mu$
+
+		2. Small variances
+
+		\textbf{Interval Estimate}: interval within which the param is believed to fall
+
+		point estimate $\pm$ margin of error (multiple of sd of sampling dist)
+
+		\textbf{Confidence Intercal for Population Proportion}
+
+		Formula: $\hat{p} \pm 1.96 \times \sqrt{\frac{p(1-p)}{n}}$, 1.96 for 95\% CI
+
+		Estimate $p$ with $\hat{p}$, becomes standard error (used when $np(1-p) \geq 5$)
+
+		Procedure with 100x CI:
+
+		1. Get $\hat{p}$, ensure $n\hat{p}(1-\hat{p}) \geq 5$, or increase $n$
+
+		2. Find $\alpha = 1 - x$
+
+		3. Find value of $q_{1 - \alpha / 2}$ from $N(0, 1)$
+
+		4. CI  = $\hat{p} \pm q_{1-\alpha / 2} \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$
+
+		\textbf{Determining Sample Size}: $n \geq (\frac{2 \times q_{1 - \alpha / 2}}{D})^2 p(1-p)$, using $p=0.5$
+
+		\tab{} - for a certain CI with width D or less
+
+		\textbf{Confidence Interval for Population Mean}
+
+		\centerline{$\frac{\overline{X} - \mu}{s / \sqrt{n}} \sim t_{n - 1}$, not normal}
+
+		Get Quantile values from R: \texttt{qt(quantile, df)}
+
+		Formula: $\overline{X} \pm t_{n-1, 0.975} \times \frac{s}{\sqrt{n}}$
+
+		Procedure for 100x CI:
+
+		1. find $\overline{X}$ from sample, find $\alpha = 1-x$
+		
+		2. Derive $t_{n - 1, 1- \alpha / 2}$
+
+		3. CI = $\overline{X} \pm t_{n - 1, 1 - \alpha / 2} \times \frac{s}{\sqrt{n}}$
+
+		\textbf{Determine sample size}: $n \geq (\frac{2t_{n - 1, 1 - \alpha / 2}s}{D})^2$
+
+		\tab{} - approx t dist with N(0,1)
+		
+		\tab{} - approx s by looking for similar study or pilot study
+
+		\textbf{Interpreting CI}: Confidence refers to long-run interpretation
+
+		Describes how well method performs over many different random samples (95\% of them will contain pop param)
+
+		\red{Note}: Given a particular 95\% interval, cannot tell whether it contains the true pop param 
+
+		\textbf{CI and sample size}: Width \underline{increases} when \underline{reduce} sample size\\
+
+		\header{Hypothesis Testing}
+
+		\textbf{5 steps of Hypothesis Testing}
+
+		1. Assumptions: data from randomisation, sample size, pop dist (normal?)
+
+		2. State Hypothesis: $H_0$ (no effect) and $H_1$ (some effect)
+
+		\tab{} 2.1 Test side: $\neq$: two-sided, $>$: right-sided, $<$: left sided
+
+		3. Test Statistic: Distance in number of se from point estimate to $H_0$
+
+		\tab{} 3.1 need point estimate, sampling dist (null dist), value under $H_0$
+
+		4. p-value: Prob of value that or more extreme, assuming $H_0$ is true
+
+		\tab{} - small p-value, strong evidence against $H_0$
+
+		5. Conclusion, reject or retain $H_0$, comparing to sig level
+
+		\textbf{Hypothesis Testing for Proportions}
+
+		3. Test Statistic: $Z = \frac{\hat{p} - p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}}$, $Z \sim N(0,1)$
+
+		4. p-value, eg $Z = 3.866$
+
+		\tab{} 4.1 two-sided: pvalue is two areas (left and right tail)
+
+		\tab{} Code: \texttt{2*pnorm(3.866, lower.tail=FALSE)}
+
+		\tab{} 4.2 right-sided: pvalue is right area of test statistic
+
+		\tab{} Code: \texttt{pnorm(3.866, lower.tail=FALSE)}
+
+		\tab{} 4.3 left-sided: pvalue is left area of test statistic
+
+		\tab{} Code: \texttt{pnorm(-3.866)}
+
+		\textbf{Hypothesis Testing for Means}
+
+		Same except that Test Statistic T follows \underline{t dist} with $n -1$ df
+
+		T-test in r:
+
+		\texttt{t.test(data, mu=mean, alternative="two-sided", conf.level=0.95)}
+		
+		alternative can be ``less'' or ``greater''
+
+		\textbf{Errors}
+
+		1. Type 1: reject when it is true, probability is $\alpha$
+
+		2. Type 2: do not reject when it is false, probability is $\beta$
+
+		\tab{} 2.1 power of a test is $1 - \beta$, prob of correctly rejecting 
+
+		Cannot reduce both simultaneously 
+
+		Shapiro test: tests normality (large p $\rightarrow$ normal)
+
+		Wilcoxon test: for when not normal, tests median
+
+		\textbf{2 sample Hypothesis Testing}
+
+		\textbf{Independent Sample, Equal Variance}
+
+		1. Assumptions: quantitative, 2 indep samples, variance is same, normal dist
+
+		\tab{} 1.1 Test for equal variance using \texttt{var.test(x, y)}
+
+		2. Hypothesis: $\mu_1 = \mu_2$ and $\mu_1 \neq \mu_2, \mu_1 < \mu_2, \mu_1 > \mu_2$
+
+		3. Test Statistic: Used pooled estimate of variance
+
+		\tab{} 3.1 $s_p^2 = \frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 -2}$
+
+		\tab{} 3.2 $se = s_p \sqrt{1/n_1 + 1/n_2}$
+
+		\tab{} 3.3 $T = \frac{(\overline{X} - \overline{Y}) - 0}{se}$
+
+		4. T follows t dist with $(n_1 + n_2) - 2$ df
+
+		Code: \texttt{t.test(mu1, mu2, alternative="two.sided", var.equal=TRUE, conf.level=0.95)}
+		
+		\textbf{Independent Samples, Unequal Variance}
+
+		3. Test Statistic: $T = \frac{(\overline{X} - \overline{Y}) - 0}{se}, se=\sqrt{s_1^2/n_1 + s_2^2 / n_2}$
+
+		\tab{} 3.1 T follows t dist with complicated df (let R calc)
+
+		Code: \texttt{t.test(mu1, mu2, alternative="greater", var.equal=FALSE, conf.level=0.99)}
+
+		\textbf{Dependent Samples}: each observation has matched observation in other sample
+
+		Treat as set of differences, let $\mu$ be mean of differences, $H_0: \mu = 0$
+
+		Code: \texttt{t.test(diff, mu=0, alternative="Greater", conf.level=0.99)}
+
+		Code: \texttt{t.test(mu1, mu2, alternative="greater", paired=TRUE, conf.level=0.99)}
+
+		These two lines are equivalent\\
+
+		\header{Linear Regression}
+
+		\textbf{Regression}: mathematical relationship between \underline{mean} of response Y and diff values
+		of X
+
+		\textbf{Linear Regression}: $Y = \beta_0 + \beta_1 X + \epsilon$
+
+		1. $\epsilon \sim N(0,1)$, represents error
+
+		2. $\beta_0$ is y-intercept, $\beta_1$ is slope of line, are pop params
+
+		3. Linear refers to linearity in \underline{parameters}, simple means 1 explanatory
+
+		\textbf{Assumptions}
+
+		1. Data obtained by randomization
+
+		2. Relationship betw X and Y \underline{linear}
+
+		3. Assume $\epsilon \sim N(0,1)$
+
+		4. Equal Variance
+
+		Check 2-4 after model fitted
+
+		\textbf{Specifications}
+
+		1. For any X, resp var observed has normal dist $Y \sim N(\beta_0 + \beta_1 X, \sigma^2)$
+
+		2. For any X, mean of resp var is $\beta_0 + \beta_1 X$
+
+		3. Whatever X, variance of resp var is \underline{always same} $\sigma^2$
+
+		\textbf{Code}: \texttt{M1 = lm(resp~exp, data=dataset)}, then \texttt{summary(M1)}
+
+		\textbf{Fitted Model}: model without $\epsilon$ with values subbed in for $\beta_0$ and $\beta_1$
+
+		eg. $\hat{Y} = 0.5 + 12.67X$, then $\hat{Y}$ is point est of mean of response at X value
+
+		\textbf{Fitted values}: \texttt{new1=data.frame(exp=c(20,30)); predict(M1, newdata=new1)}
+
+		\red{Note}: Can only interpolate, cannot extrapolate
+
+		\textbf{Estimating $\sigma^2$}: point estimate from residuals. $e_i = Y_i - \hat{Y}_i$
+
+		\tab{} - $\hat{\sigma}$ = Residual Standard error in R output
+
+		\textbf{Interval est for $\beta_0$ and $\beta_1$}: \texttt{confint(M1, level=0.95)}, var name optional
+
+		\textbf{Interval est for mean response}: 
+		
+		\texttt{predict(M1, newdata=new1, interval="confidence", level=0.95)}
+
+		\textbf{Significance tests}
+
+		1. t test for one regressor: 
+
+		\tab{} 1.1 Assumptions same as model
+
+		\tab{} 1.2 $H_0: \beta_1 = 0, H_1: \beta_1 \neq 0$, one sided also can
+
+		\tab{} 1.3 Test statistic is t-statistic from R output, p-value also from R output
+
+		\tab{} 1.4 Null dist: t dist, df $= n-2$, n is number of coeff and intercept
+
+		2. F test for whole model
+
+		\tab{} 2.1 $H_0:$ all coeff except intercept, are 0, $H_1$: at least one coeff is non-zero
+
+		\tab{} 2.2 Test statistic and p-value found in R output. 
+
+		\tab{} 2.3 F-test not significant, $\hat{Y} = \hat{\beta_0}$, Y doesnt depend on any regressor
+		
+		\tab{}\tab{} 2.3.1 Then put 1 for explanatory variable in \texttt{lm}
+
+		\textbf{Regresssion Diagnostics}: Checks if adequacy of model
+
+		1. Linearity: check using scatter plot betw X and Y and residual plot
+
+		\tab{} 1.1 Fix: use higher order terms in X
+
+		2. Normality: checked using residuals
+
+		3. Equal Variance: residuals
+
+		\tab{} 3.1 Fix: transform response (ln, sqrt, reciprocal)
+
+		\underline{Getting Residuals}: \texttt{M1\$res} (raw res), \texttt{rstandard(M1)} (Standardised res)
+
+		\textbf{Plots with residuals}: 
+
+		1. Plot $r_i$s on y-axis against $\hat{Y_i} / \hat{X_i}$ on x-axis
+
+		\tab{} 1.1 Expect scatter randomly about 0 (not funnel shaped), within (-3, 3)
+
+		2. Histogram, expect normal
+
+		3. QQ-plot, expect normal
+
+		\textbf{Outlier}: SRs $> 3$ or $ < -3$
+
+		Code (index): \texttt{which(SR > 3 | SR < (-3))}
+
+		\textbf{Influential Point}: affects param value alot, Cook's distance ($> 1$)
+
+		Code: \texttt(C = cooks.distance(M1)) and \texttt{which(C > 1)}
+
+		\textbf{Coefficient of Determination, $R^2$}: Checks goodness of fit
+
+		Measures how much of the variation of the resp can be explained by model
+
+		In simple model, correlation coeff = $\sqrt{R^2}$, if $\hat{\beta_1} > 0$ and vice versa
+		
+		Adding more variables increases $R^2$, but increases complexity of model
+
+		\tab{} - use adjusted $R^2 = 1-\frac{(1-R^2)(n - 1)}{n - k - 1}$, where k is no. of variables in model
+
+		\textbf{Categorical Variables, and Indicator Variables}
+
+		Add categorical variables to model using indicator variables
+
+		\textbf{Interaction terms}: if there is interaction betw 2 variables, add product of them to model
+
+		\red{Note}: if variable is not significant, but interaction term containing var is, need to retain
+		the variable\\
+
+		\header{QQ Plots}
+
+		For sample quantiles on X-axis, and theoretical quantiles on Y-axis,
+
+		1. R tail below / above line: longer / shorter than Normal
+
+		2. L tail below / above line: shorter / longer than Normal
+
+		Opposite if X and Y axis swapped
+
+		\textbf{Code}
+
+		\texttt{qqnorm(SR, datax=TRUE, ylab="SR", xlab="Z scores", main="")}
+		
+		\texttt{qqline(SR, datax=TRUE, col="red")}
+
+
+
+	\end{multicols*}
+\end{document}
